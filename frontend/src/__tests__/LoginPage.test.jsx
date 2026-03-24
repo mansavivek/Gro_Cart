@@ -32,7 +32,7 @@ function renderLogin() {
 describe('LoginPage', () => {
   it('renders login form', () => {
     renderLogin();
-    expect(screen.getByPlaceholderText('you@example.com')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('buddy@gmail.com')).toBeInTheDocument();
     expect(screen.getByPlaceholderText('••••••••')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument();
   });
@@ -43,7 +43,7 @@ describe('LoginPage', () => {
     });
 
     renderLogin();
-    fireEvent.change(screen.getByPlaceholderText('you@example.com'), {
+    fireEvent.change(screen.getByPlaceholderText('buddy@gmail.com'), {
       target: { value: 'bad@email.com', name: 'email' },
     });
     fireEvent.change(screen.getByPlaceholderText('••••••••'), {
@@ -52,7 +52,7 @@ describe('LoginPage', () => {
     fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => {
-      expect(screen.getByText('Invalid email or password')).toBeInTheDocument();
+      expect(screen.getByText('The email or password you entered is incorrect. Please try again.')).toBeInTheDocument();
     });
   });
 });
