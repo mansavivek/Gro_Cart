@@ -30,12 +30,14 @@ function renderHome() {
 describe('HomePage', () => {
   it('renders hero banner', async () => {
     renderHome();
-    expect(screen.getByText(/fresh groceries delivered/i)).toBeInTheDocument();
+    expect(screen.getByText(/farm fresh, always ready/i)).toBeInTheDocument();
   });
 
-  it('renders All category button after categories load', async () => {
+  it('renders category sidebar with All Products button', async () => {
     renderHome();
-    const allBtn = await screen.findByRole('button', { name: /^all$/i });
-    expect(allBtn).toBeInTheDocument();
+    const allProductsBtn = await screen.findByRole('button', { name: /all products/i });
+    expect(allProductsBtn).toBeInTheDocument();
   });
 });
+
+

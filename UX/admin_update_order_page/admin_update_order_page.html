@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gro-Cart Admin | Update Order Status</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#aaaeb0",
+              "on-tertiary-container": "#583400",
+              "on-primary": "#ccffd8",
+              "outline": "#737779",
+              "on-error": "#ffefee",
+              "tertiary": "#835000",
+              "secondary": "#515c6f",
+              "secondary-fixed": "#d8e3fa",
+              "surface-container-highest": "#d8dee1",
+              "on-primary-fixed-variant": "#006c3c",
+              "on-secondary-container": "#475265",
+              "primary-fixed-dim": "#8aebac",
+              "on-secondary-fixed-variant": "#515c6f",
+              "on-secondary": "#eef2ff",
+              "tertiary-fixed": "#fcb259",
+              "primary": "#006a3b",
+              "tertiary-container": "#fcb259",
+              "on-error-container": "#570008",
+              "error": "#b31b25",
+              "on-surface-variant": "#585c5e",
+              "surface-tint": "#006a3b",
+              "inverse-primary": "#98fab9",
+              "error-container": "#fb5151",
+              "tertiary-fixed-dim": "#eca54d",
+              "background": "#f4f7f9",
+              "secondary-dim": "#455063",
+              "on-tertiary": "#fff0e4",
+              "primary-dim": "#005c33",
+              "surface-container": "#e4e9eb",
+              "primary-fixed": "#98fab9",
+              "surface-container-low": "#edf1f3",
+              "primary-container": "#98fab9",
+              "error-dim": "#9f0519",
+              "surface-container-high": "#dee3e6",
+              "secondary-container": "#d8e3fa",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#006035",
+              "on-tertiary-fixed": "#3c2200",
+              "inverse-surface": "#0b0f10",
+              "surface": "#f4f7f9",
+              "secondary-fixed-dim": "#cad5ec",
+              "surface-bright": "#f4f7f9",
+              "on-surface": "#2b2f31",
+              "tertiary-dim": "#734500",
+              "on-background": "#2b2f31",
+              "inverse-on-surface": "#9a9d9f",
+              "surface-variant": "#d8dee1",
+              "on-secondary-fixed": "#354052",
+              "on-primary-fixed": "#004c29",
+              "surface-dim": "#cfd5d8",
+              "on-tertiary-fixed-variant": "#653c00"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .brand-font { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar Component -->
+<aside class="hidden md:flex flex-col h-screen w-64 border-r border-surface-container-high bg-surface-container-low py-6 fixed left-0 top-0 z-40">
+<div class="px-6 mb-8">
+<div class="text-lg font-black text-primary mb-1">Admin Panel</div>
+<div class="text-xs text-on-surface-variant">Gro-Cart Management</div>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-headline text-sm">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-headline text-sm">Inventory</span>
+</div>
+<!-- ACTIVE TAB: Orders -->
+<div class="flex items-center gap-3 px-6 py-3 bg-primary-container text-on-primary-container font-bold rounded-r-full cursor-pointer">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-headline text-sm">Orders</span>
+</div>
+<div class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-headline text-sm">Customers</span>
+</div>
+<div class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-headline text-sm">Analytics</span>
+</div>
+<div class="flex items-center gap-3 px-6 py-3 text-slate-600 hover:bg-surface-container-high hover:translate-x-1 transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-headline text-sm">Settings</span>
+</div>
+</nav>
+<div class="px-6 mt-auto pt-6 border-t border-surface-container-high flex items-center gap-3">
+<img alt="Admin User" class="w-10 h-10 rounded-full object-cover shadow-sm" data-alt="portrait of a professional male manager in a light blue shirt with a friendly and confident expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEOs7B4RD7Z5l3Hsr21GfyTrj8xy6HiyuN_QECILLvMOdSo-GHdm8Emu6L5P6_nJIm5Z5RvSX_jEemR4yO94UyiQVZsbCP4TYBB_UAs6WAMn6dwfaUO8kvrecijgEHXS1tVJN1KPJ5_auZLAGHxKr62qyHfXQww2I4OwZ_IedCENe5FDyREaXb15CekgFtPE3vZnKxZomRhM5gBGXQMgQ1KGBd0dtkc5aevWp8Wtkv-zy8naGTcPQ8FqfHRKtcPd7A8osJlx_agw"/>
+<div>
+<div class="text-sm font-bold text-on-surface">Admin User</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-wider">Super Admin</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 bg-surface p-4 md:p-8">
+<!-- Header Section -->
+<header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h1 class="text-3xl font-extrabold text-on-surface tracking-tight mb-2">Order Status Management</h1>
+<p class="text-on-surface-variant max-w-2xl">Manage and track customer deliveries. Update fulfillment stages to keep your patrons informed in real-time.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 bg-surface-container-lowest text-on-surface px-4 py-2 rounded-lg shadow-sm border border-outline-variant/20 hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+<span class="text-sm font-semibold">Filter Orders</span>
+</button>
+<button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg shadow-md hover:brightness-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+<span class="text-sm font-semibold">Export CSV</span>
+</button>
+</div>
+</header>
+<!-- Table Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_20px_50px_rgba(43,47,49,0.05)] overflow-hidden border border-outline-variant/10">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant uppercase text-[11px] font-bold tracking-widest">
+<th class="px-6 py-4">Order ID</th>
+<th class="px-6 py-4">Customer Name</th>
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4">Total</th>
+<th class="px-6 py-4">Current Status</th>
+<th class="px-6 py-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Row 1: Pending -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="px-6 py-5 font-mono text-sm text-primary font-bold">#ORD-89241</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container text-xs font-bold">ES</div>
+<span class="text-sm font-medium">Eleanor Shellstrop</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">Oct 24, 2024</td>
+<td class="px-6 py-5 text-sm font-bold">$142.50</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-surface-container-highest text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span>
+                                        Pending
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<select class="text-xs font-semibold bg-surface border-outline-variant/30 rounded-lg py-1.5 pl-3 pr-8 focus:ring-primary focus:border-primary transition-all cursor-pointer">
+<option disabled="" selected="">Update Status</option>
+<option>Pending</option>
+<option>In Progress</option>
+<option>Packed</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+<!-- Row 2: In Progress -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="px-6 py-5 font-mono text-sm text-primary font-bold">#ORD-89242</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container text-xs font-bold">CA</div>
+<span class="text-sm font-medium">Chidi Anagonye</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">Oct 24, 2024</td>
+<td class="px-6 py-5 text-sm font-bold">$89.20</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-blue-100 text-blue-700">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+                                        In Progress
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<select class="text-xs font-semibold bg-surface border-outline-variant/30 rounded-lg py-1.5 pl-3 pr-8 focus:ring-primary focus:border-primary transition-all cursor-pointer">
+<option disabled="" selected="">Update Status</option>
+<option>Pending</option>
+<option>In Progress</option>
+<option>Packed</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+<!-- Row 3: Packed -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="px-6 py-5 font-mono text-sm text-primary font-bold">#ORD-89243</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container text-xs font-bold">TA</div>
+<span class="text-sm font-medium">Tahani Al-Jamil</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">Oct 23, 2024</td>
+<td class="px-6 py-5 text-sm font-bold">$210.00</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-100 text-amber-700">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                                        Packed
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<select class="text-xs font-semibold bg-surface border-outline-variant/30 rounded-lg py-1.5 pl-3 pr-8 focus:ring-primary focus:border-primary transition-all cursor-pointer">
+<option disabled="" selected="">Update Status</option>
+<option>Pending</option>
+<option>In Progress</option>
+<option>Packed</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+<!-- Row 4: Out for Delivery -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="px-6 py-5 font-mono text-sm text-primary font-bold">#ORD-89244</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed text-xs font-bold">JM</div>
+<span class="text-sm font-medium">Jason Mendoza</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">Oct 23, 2024</td>
+<td class="px-6 py-5 text-sm font-bold">$45.15</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-purple-100 text-purple-700">
+<span class="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
+                                        Out for Delivery
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<select class="text-xs font-semibold bg-surface border-outline-variant/30 rounded-lg py-1.5 pl-3 pr-8 focus:ring-primary focus:border-primary transition-all cursor-pointer">
+<option disabled="" selected="">Update Status</option>
+<option>Pending</option>
+<option>In Progress</option>
+<option>Packed</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+<!-- Row 5: Delivered -->
+<tr class="hover:bg-surface-container-low/50 transition-colors group">
+<td class="px-6 py-5 font-mono text-sm text-primary font-bold">#ORD-89245</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-800 text-xs font-bold">MB</div>
+<span class="text-sm font-medium">Michael Bear</span>
+</div>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">Oct 22, 2024</td>
+<td class="px-6 py-5 text-sm font-bold">$312.40</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-primary-container text-on-primary-container">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                                        Delivered
+                                    </span>
+</td>
+<td class="px-6 py-5 text-right">
+<select class="text-xs font-semibold bg-surface border-outline-variant/30 rounded-lg py-1.5 pl-3 pr-8 focus:ring-primary focus:border-primary transition-all cursor-pointer">
+<option disabled="" selected="">Update Status</option>
+<option>Pending</option>
+<option>In Progress</option>
+<option>Packed</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer -->
+<div class="px-6 py-4 bg-surface-container-low flex justify-between items-center border-t border-surface-container-high">
+<span class="text-xs text-on-surface-variant">Showing 5 of 124 orders</span>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="px-3 py-1 text-xs font-bold bg-primary text-on-primary rounded-lg">1</button>
+<button class="px-3 py-1 text-xs font-bold text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors">2</button>
+<button class="px-3 py-1 text-xs font-bold text-on-surface hover:bg-surface-container-highest rounded-lg transition-colors">3</button>
+<button class="p-1 rounded hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Stats Overlay Cards (Asymmetric UI touch) -->
+<div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-primary">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Active Deliveries</div>
+<div class="text-2xl font-black text-on-surface">42</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-amber-500">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">To Be Packed</div>
+<div class="text-2xl font-black text-on-surface">18</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-error">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Pending Review</div>
+<div class="text-2xl font-black text-on-surface">07</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl border-l-4 border-blue-500">
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Total Today</div>
+<div class="text-2xl font-black text-on-surface">156</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom Nav -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-white dark:bg-slate-950 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 rounded-t-2xl border-t border-slate-100">
+<div class="flex flex-col items-center justify-center text-slate-500 py-1">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 py-1">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Categories</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 py-1">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Search</span>
+</div>
+<!-- Active Tab for Orders/Cart Context -->
+<div class="flex flex-col items-center justify-center bg-emerald-50 text-primary rounded-xl px-3 py-1">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Cart</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 py-1">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Account</span>
+</div>
+</nav>
+<!-- Footer Component -->
+<footer class="md:ml-64 w-full border-t border-slate-100 bg-slate-50">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 max-w-7xl mx-auto gap-8">
+<div class="font-manrope font-bold text-primary text-lg">Gro-Cart Marketplace</div>
+<div class="flex gap-8">
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="#">Sustainability</a>
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<div class="font-inter text-xs text-slate-500">© 2024 Gro-Cart Marketplace. The Organic Curator.</div>
+</div>
+</footer>
+</body></html>
