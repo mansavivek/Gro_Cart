@@ -1,79 +1,151 @@
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import grocartLogo from '../assets/grocart-logo.png';
 
-export default function Navbar() {
+export default function Navbar({ showSearch = false, searchQuery = '', onSearchChange }) {
   const { user, logout } = useAuth();
   const { cart } = useCart();
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const handleLogout = () => {
+    setMenuOpen(false);
     logout();
     navigate('/login');
   };
 
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
+
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl">🛒</span>
-            <span className="text-xl font-bold text-green-600">Gro-Cart</span>
+    <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-200 px-6 lg:px-10 py-3">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-8">
+        <div className="flex items-center gap-12 flex-1">
+          <Link to="/" className="flex items-center gap-2 text-primary">
+            <img
+              alt="Gro-Cart Logo"
+              className="h-20 w-auto object-contain"
+              src={grocartLogo}
+            />
           </Link>
 
-          {/* Right side */}
-          <div className="flex items-center gap-4">
-            {user ? (
-              <>
+          {showSearch && (
+            <div className="hidden md:flex flex-1 max-w-xl relative">
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                search
+              </span>
+              <input
+                className="w-full bg-gray-100 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary focus:bg-white transition-all"
+                placeholder="Search fresh groceries..."
+                type="text"
+                value={searchQuery}
+                onChange={(e) => onSearchChange?.(e.target.value)}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="flex items-center gap-4 lg:gap-6">
+          {user ? (
+            <>
+              <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-600">
                 {user.is_admin && (
-                  <Link
-                    to="/admin"
-                    className="text-sm font-medium text-gray-600 hover:text-green-600"
-                  >
-                    Admin
-                  </Link>
+                  <Link to="/admin" className="hover:text-primary transition-colors">Admin</Link>
                 )}
+                <Link to="/orders" className="hover:text-primary transition-colors">Orders</Link>
+              </nav>
+
+              <div className="h-6 w-px bg-gray-200 hidden lg:block" />
+
+              <div className="flex items-center gap-3" ref={menuRef}>
                 <Link
-                  to="/orders"
-                  className="text-sm font-medium text-gray-600 hover:text-green-600"
+                  to="/cart"
+                  className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                  aria-label="Cart"
                 >
-                  Orders
-                </Link>
-                <Link to="/cart" className="relative">
-                  <span className="text-2xl">🛒</span>
-                  {cart.total_items > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                      {cart.total_items}
+                  <span className="material-symbols-outlined">shopping_cart</span>
+                  {cart.items.length > 0 && (
+                    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
+                      {cart.items.length}
                     </span>
                   )}
                 </Link>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">Hi, {user.name?.split(' ')[0]}</span>
-                  <button
-                    onClick={handleLogout}
-                    className="text-sm text-red-500 hover:text-red-700"
-                  >
-                    Logout
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-green-600">
-                  Login
-                </Link>
-                <Link
-                  to="/register"
-                  className="text-sm font-medium bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
+
+                <button
+                  type="button"
+                  onClick={() => setMenuOpen((open) => !open)}
+                  className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full border-2 border-gray-200 text-gray-600 hover:bg-gray-100 transition-colors"
+                  aria-haspopup="menu"
+                  aria-expanded={menuOpen}
+                  aria-label="Account menu"
                 >
-                  Sign Up
-                </Link>
-              </>
-            )}
-          </div>
+                  <span className="material-symbols-outlined">account_circle</span>
+                </button>
+
+                {menuOpen && (
+                  <div className="absolute right-0 top-full mt-3 w-52 rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
+                    <button
+                      type="button"
+                      className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Addresses
+                    </button>
+                    <button
+                      type="button"
+                      className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-50"
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Payment Methods
+                    </button>
+                    <button
+                      type="button"
+                      className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-red-600 hover:bg-red-50"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="text-sm font-medium text-gray-600 hover:text-primary transition-colors">
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className="text-sm font-medium bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dim transition-colors"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
+
+          {!user && (
+            <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full border-2 border-gray-200 text-gray-600">
+              <span className="material-symbols-outlined">account_circle</span>
+            </div>
+          )}
+          {user && (
+            <button className="p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors lg:hidden" type="button">
+              <span className="material-symbols-outlined">menu</span>
+            </button>
+          )}
         </div>
       </div>
-    </nav>
+    </header>
   );
 }

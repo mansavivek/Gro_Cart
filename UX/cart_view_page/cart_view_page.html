@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gro-Cart | Your Shopping Cart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#aaaeb0",
+              "on-tertiary-container": "#583400",
+              "on-primary": "#ccffd8",
+              "outline": "#737779",
+              "on-error": "#ffefee",
+              "tertiary": "#835000",
+              "secondary": "#515c6f",
+              "secondary-fixed": "#d8e3fa",
+              "surface-container-highest": "#d8dee1",
+              "on-primary-fixed-variant": "#006c3c",
+              "on-secondary-container": "#475265",
+              "primary-fixed-dim": "#8aebac",
+              "on-secondary-fixed-variant": "#515c6f",
+              "on-secondary": "#eef2ff",
+              "tertiary-fixed": "#fcb259",
+              "primary": "#006a3b",
+              "tertiary-container": "#fcb259",
+              "on-error-container": "#570008",
+              "error": "#b31b25",
+              "on-surface-variant": "#585c5e",
+              "surface-tint": "#006a3b",
+              "inverse-primary": "#98fab9",
+              "error-container": "#fb5151",
+              "tertiary-fixed-dim": "#eca54d",
+              "background": "#f4f7f9",
+              "secondary-dim": "#455063",
+              "on-tertiary": "#fff0e4",
+              "primary-dim": "#005c33",
+              "surface-container": "#e4e9eb",
+              "primary-fixed": "#98fab9",
+              "surface-container-low": "#edf1f3",
+              "primary-container": "#98fab9",
+              "error-dim": "#9f0519",
+              "surface-container-high": "#dee3e6",
+              "secondary-container": "#d8e3fa",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#006035",
+              "on-tertiary-fixed": "#3c2200",
+              "inverse-surface": "#0b0f10",
+              "surface": "#f4f7f9",
+              "secondary-fixed-dim": "#cad5ec",
+              "surface-bright": "#f4f7f9",
+              "on-surface": "#2b2f31",
+              "tertiary-dim": "#734500",
+              "on-background": "#2b2f31",
+              "inverse-on-surface": "#9a9d9f",
+              "surface-variant": "#d8dee1",
+              "on-secondary-fixed": "#354052",
+              "on-primary-fixed": "#004c29",
+              "surface-dim": "#cfd5d8",
+              "on-tertiary-fixed-variant": "#653c00"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, .font-headline { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen pb-24 md:pb-0">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-md shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<div class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-2 text-xl font-bold text-[#006a3b] dark:text-emerald-500">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span>Gro-Cart</span>
+</div>
+<div class="hidden md:flex gap-8 font-manrope text-sm font-medium tracking-tight">
+<a class="text-slate-500 hover:text-[#006a3b] transition-colors duration-200" href="#">Home</a>
+<a class="text-slate-500 hover:text-[#006a3b] transition-colors duration-200" href="#">Deals</a>
+<a class="text-slate-500 hover:text-[#006a3b] transition-colors duration-200" href="#">Orders</a>
+<a class="text-slate-500 hover:text-[#006a3b] transition-colors duration-200" href="#">Recipes</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 text-primary border-b-2 border-primary pb-1 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-24 pb-12 px-4 md:px-8 max-w-7xl mx-auto">
+<header class="mb-10">
+<h1 class="text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight mb-2">Shopping Cart</h1>
+<p class="text-on-surface-variant font-medium">You have 3 items in your curator’s selection.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+<!-- Cart Items Section -->
+<section class="lg:col-span-8 space-y-6">
+<!-- Cart Item 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 group hover:translate-y-[-4px] transition-all duration-300 shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<div class="w-32 h-32 flex-shrink-0 overflow-hidden rounded-lg bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="close-up of fresh organic strawberries in a rustic bowl with soft natural window lighting and vibrant red colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4OHeu_ehdGpsk6V5p7Nh7hMqzRQK9UrFcCp_hUxI-TS-_zkvZtzI-0R4ka6QuI7JNewLBJwU3rVOAmwWN-GcrtfxaqHN3umNdYSodGaDF_hZ8kf7KKg1f8K4LRlX9PEDO9Hh7A-baXX9EW4WUOg-lAUAgqPLyzZVEbyscqwDVDJb5Cyuy8KMO2yvW740WLmzIpbC1_9se1CPb5YLvhQTZHi9Tac3W9lVOWirOD7gRdiAjxvVfhJc2MtWlWR7jUAEXYmwrQp4GSg"/>
+</div>
+<div class="flex-grow text-center md:text-left">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-lg font-bold text-on-surface font-headline">Organic Heritage Strawberries</h3>
+<span class="hidden md:block material-symbols-outlined text-outline-variant hover:text-error cursor-pointer transition-colors">delete</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">400g • Farm Fresh</p>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="text-primary font-bold text-lg">$6.49 <span class="text-xs text-outline font-normal">/ unit</span></div>
+<!-- Quantity Stepper -->
+<div class="flex items-center justify-center bg-surface-container-low rounded-full px-2 py-1">
+<button class="w-8 h-8 flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="px-4 font-bold text-on-surface">2</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+<div class="text-right">
+<p class="text-xs text-outline uppercase tracking-wider font-semibold">Subtotal</p>
+<p class="text-lg font-black text-on-surface">$12.98</p>
+</div>
+</div>
+</div>
+<button class="md:hidden text-error mt-2 flex items-center gap-1 text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">delete</span> Remove Item
+                    </button>
+</div>
+<!-- Cart Item 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 group hover:translate-y-[-4px] transition-all duration-300 shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<div class="w-32 h-32 flex-shrink-0 overflow-hidden rounded-lg bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="artisanal cold-pressed olive oil in a dark glass bottle on a marble surface with a sprig of rosemary" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzhk7-6zoCcUlGBiXTCjW7jHbJpTNxsNbGtvhDqY_eiXyJxDcExVMjHnYMAlo0mPSIcEoAPJEi4JuHWAl_HKe2IA11NTs8SAwxTH7XG5kzSpINDbkccz-7RYBE5n5z9p7sRWDARPfGLvTucjPns26B6dH7RwIE152kgQVwSS714IMlGnu8Ya3Ffz001ITARktb_Vi_pgOh6eedqxt5wUqIYAMXxL8CVOdppyufPyZqwe_ziF-DWzd6BcHgscbFe2fiTxGcZ9uc-g"/>
+</div>
+<div class="flex-grow text-center md:text-left">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-lg font-bold text-on-surface font-headline">Cold Pressed Extra Virgin Olive Oil</h3>
+<span class="hidden md:block material-symbols-outlined text-outline-variant hover:text-error cursor-pointer transition-colors">delete</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">500ml • Mediterranean Gold</p>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="text-primary font-bold text-lg">$18.00 <span class="text-xs text-outline font-normal">/ unit</span></div>
+<div class="flex items-center justify-center bg-surface-container-low rounded-full px-2 py-1">
+<button class="w-8 h-8 flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="px-4 font-bold text-on-surface">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+<div class="text-right">
+<p class="text-xs text-outline uppercase tracking-wider font-semibold">Subtotal</p>
+<p class="text-lg font-black text-on-surface">$18.00</p>
+</div>
+</div>
+</div>
+<button class="md:hidden text-error mt-2 flex items-center gap-1 text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">delete</span> Remove Item
+                    </button>
+</div>
+<!-- Cart Item 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 group hover:translate-y-[-4px] transition-all duration-300 shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<div class="w-32 h-32 flex-shrink-0 overflow-hidden rounded-lg bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="freshly baked artisanal sourdough bread on a wooden board with flour dusting and golden crust" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDi1gGGmihJm-vtTzHglyr0AyyIPdOJr0adKB1jV7clvd-Iz20MwgPA_NCoAbvwxslxHKI96hnbhGH7ehhFGkyO63PzT-sOr9rIkRcuvHaosURhsQg7hrJ6PU74dZwSHgHRWDAscZzg1u9XaOEcjYSri9dnGpWVLBvZiTFmmvx-AyunHScmADdmMWrTb3Qjz4yyfiijy4ha6DP_-TTCA1RNWPLTPY2SNvgBI4HmwwiomU7VEZR7S2NLst6ev_MyMsG--8byLOxZg"/>
+</div>
+<div class="flex-grow text-center md:text-left">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-lg font-bold text-on-surface font-headline">Wild Yeast Sourdough Boule</h3>
+<span class="hidden md:block material-symbols-outlined text-outline-variant hover:text-error cursor-pointer transition-colors">delete</span>
+</div>
+<p class="text-sm text-on-surface-variant mb-4">750g • Stone Ground</p>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="text-primary font-bold text-lg">$5.50 <span class="text-xs text-outline font-normal">/ unit</span></div>
+<div class="flex items-center justify-center bg-surface-container-low rounded-full px-2 py-1">
+<button class="w-8 h-8 flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-lg">remove</span>
+</button>
+<span class="px-4 font-bold text-on-surface">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-primary active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-lg">add</span>
+</button>
+</div>
+<div class="text-right">
+<p class="text-xs text-outline uppercase tracking-wider font-semibold">Subtotal</p>
+<p class="text-lg font-black text-on-surface">$5.50</p>
+</div>
+</div>
+</div>
+<button class="md:hidden text-error mt-2 flex items-center gap-1 text-sm font-semibold">
+<span class="material-symbols-outlined text-sm">delete</span> Remove Item
+                    </button>
+</div>
+</section>
+<!-- Summary Section -->
+<aside class="lg:col-span-4 sticky top-24">
+<div class="bg-surface-container-lowest rounded-2xl p-6 shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<h2 class="text-xl font-bold font-headline mb-6 text-on-surface">Order Summary</h2>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between text-on-surface-variant">
+<span>Total items (4)</span>
+<span class="font-semibold text-on-surface">$36.48</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Delivery charges</span>
+<span class="font-semibold text-primary">FREE</span>
+</div>
+<div class="flex items-center gap-2 py-3 px-4 bg-tertiary-container/10 rounded-lg text-on-tertiary-container">
+<span class="material-symbols-outlined text-tertiary">schedule</span>
+<div class="text-xs">
+<p class="font-bold">Estimated Delivery</p>
+<p>Today, 4:00 PM - 6:00 PM</p>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-surface-container-high mb-8">
+<div class="flex justify-between items-end">
+<span class="text-on-surface font-medium">Total Amount</span>
+<span class="text-3xl font-black text-on-surface tracking-tighter">$36.48</span>
+</div>
+<p class="text-[10px] text-outline text-right mt-1 uppercase tracking-widest font-bold">Including VAT</p>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary-dim active:scale-[0.98] transition-all">
+                        Proceed to Checkout
+                        <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<div class="mt-6 flex items-center justify-center gap-2 text-outline-variant">
+<span class="material-symbols-outlined text-sm">lock</span>
+<span class="text-xs font-medium uppercase tracking-tighter">Secure SSL Encryption</span>
+</div>
+</div>
+<!-- Empty State Preview (Hidden usually, showing for design completion) -->
+<!-- 
+                <div class="mt-10 text-center py-12 px-6 bg-surface-container-low rounded-2xl border-2 border-dashed border-outline-variant/30">
+                    <span class="material-symbols-outlined text-6xl text-outline-variant mb-4">shopping_basket</span>
+                    <h3 class="text-xl font-bold font-headline text-on-surface mb-2">Your basket is empty</h3>
+                    <p class="text-on-surface-variant text-sm mb-6">Looks like you haven't curated any fresh finds yet.</p>
+                    <button class="text-primary font-bold hover:underline">Start Browsing</button>
+                </div>
+                -->
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 max-w-7xl mx-auto">
+<div class="font-manrope font-bold text-[#006a3b] mb-6 md:mb-0">
+                Gro-Cart Marketplace
+            </div>
+<div class="flex flex-wrap justify-center gap-6 mb-8 md:mb-0 font-inter text-xs text-slate-500 dark:text-slate-400">
+<a class="hover:text-[#006a3b] transition-colors" href="#">About Us</a>
+<a class="hover:text-[#006a3b] transition-colors" href="#">Sustainability</a>
+<a class="hover:text-[#006a3b] transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-[#006a3b] transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-[#006a3b] transition-colors" href="#">Contact</a>
+</div>
+<div class="font-inter text-xs text-slate-500 dark:text-slate-400">
+                © 2024 Gro-Cart Marketplace. The Organic Curator.
+            </div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-4 pt-2 bg-white dark:bg-slate-950 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-2xl border-t border-slate-100 dark:border-slate-800 z-50">
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-2">
+<span class="material-symbols-outlined">home</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-2">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Categories</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-2">
+<span class="material-symbols-outlined">search</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Search</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-emerald-50 dark:bg-emerald-900/30 text-[#006a3b] dark:text-emerald-300 rounded-xl px-3 py-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Cart</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 p-2">
+<span class="material-symbols-outlined">person</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Account</span>
+</div>
+</nav>
+</body></html>

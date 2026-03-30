@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Add New Product | Gro-Cart Admin</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#aaaeb0",
+              "on-tertiary-container": "#583400",
+              "on-primary": "#ccffd8",
+              "outline": "#737779",
+              "on-error": "#ffefee",
+              "tertiary": "#835000",
+              "secondary": "#515c6f",
+              "secondary-fixed": "#d8e3fa",
+              "surface-container-highest": "#d8dee1",
+              "on-primary-fixed-variant": "#006c3c",
+              "on-secondary-container": "#475265",
+              "primary-fixed-dim": "#8aebac",
+              "on-secondary-fixed-variant": "#515c6f",
+              "on-secondary": "#eef2ff",
+              "tertiary-fixed": "#fcb259",
+              "primary": "#006a3b",
+              "tertiary-container": "#fcb259",
+              "on-error-container": "#570008",
+              "error": "#b31b25",
+              "on-surface-variant": "#585c5e",
+              "surface-tint": "#006a3b",
+              "inverse-primary": "#98fab9",
+              "error-container": "#fb5151",
+              "tertiary-fixed-dim": "#eca54d",
+              "background": "#f4f7f9",
+              "secondary-dim": "#455063",
+              "on-tertiary": "#fff0e4",
+              "primary-dim": "#005c33",
+              "surface-container": "#e4e9eb",
+              "primary-fixed": "#98fab9",
+              "surface-container-low": "#edf1f3",
+              "primary-container": "#98fab9",
+              "error-dim": "#9f0519",
+              "surface-container-high": "#dee3e6",
+              "secondary-container": "#d8e3fa",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#006035",
+              "on-tertiary-fixed": "#3c2200",
+              "inverse-surface": "#0b0f10",
+              "surface": "#f4f7f9",
+              "secondary-fixed-dim": "#cad5ec",
+              "surface-bright": "#f4f7f9",
+              "on-surface": "#2b2f31",
+              "tertiary-dim": "#734500",
+              "on-background": "#2b2f31",
+              "inverse-on-surface": "#9a9d9f",
+              "surface-variant": "#d8dee1",
+              "on-secondary-fixed": "#354052",
+              "on-primary-fixed": "#004c29",
+              "surface-dim": "#cfd5d8",
+              "on-tertiary-fixed-variant": "#653c00"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-screen w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-6 sticky top-0">
+<div class="px-6 mb-10">
+<span class="text-lg font-black text-[#006a3b]">Gro-Cart</span>
+<p class="text-xs text-slate-500 font-medium">Management</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-manrope text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 bg-emerald-100 dark:bg-emerald-900/50 text-[#006a3b] dark:text-emerald-200 font-bold rounded-r-full cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-manrope text-sm">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-manrope text-sm">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-manrope text-sm">Customers</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-manrope text-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-6 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-1 transition-transform duration-200 cursor-pointer" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope text-sm">Settings</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<div class="flex items-center gap-3 p-3 rounded-xl bg-white shadow-sm border border-slate-100">
+<img alt="Admin User" class="w-8 h-8 rounded-full object-cover" data-alt="Professional headshot of a confident male administrator in a clean office setting with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp3so4w28EVvQ57gywGwFnq6nbyWmBCV3W3rP_Onrz5ztcaU-RFTnp3KsWGWaAWlEIKD0Rduv2PMHiNwhcHbdqjGTlWIHkloWxGrVjwTT4a5wi4M_wiKiGdA_iMemrU_HPY2d1Y0GiZDtJD_8uzKbzDe41Wj8EdnTjTdi--04RWmmWtUK9bOxibAwvLvjfgzLcH-72I37pmQHbqFvuRxc4eWEgjktGaC3Cah3whVTOHbb2xQcuMt-lMnVxB88Af6y6wP2V8Q06Sw"/>
+<div class="overflow-hidden">
+<p class="text-xs font-bold truncate">Admin User</p>
+<p class="text-[10px] text-slate-500">Store Manager</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 bg-surface min-h-screen overflow-y-auto">
+<!-- Top Bar -->
+<header class="h-16 flex items-center justify-between px-8 bg-surface/80 backdrop-blur-md sticky top-0 z-30">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline" data-icon="arrow_back">arrow_back</span>
+<h1 class="text-xl font-extrabold tracking-tight text-on-surface">Add New Product</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 text-sm font-medium text-outline hover:text-on-surface transition-colors">Discard</button>
+<button class="px-6 py-2 bg-primary text-on-primary rounded-lg font-bold shadow-lg shadow-primary/20 active:scale-95 transition-all">
+                        Add Product
+                    </button>
+</div>
+</header>
+<div class="max-w-7xl mx-auto px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Form Section -->
+<div class="lg:col-span-8 space-y-8 pb-24">
+<!-- Basic Information -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_50px_rgba(43,47,49,0.05)] border border-transparent">
+<h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+                            Basic Information
+                        </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="md:col-span-2 space-y-2">
+<label class="text-xs font-semibold text-outline uppercase tracking-wider">Product Name</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="e.g. Organic Hass Avocados" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-semibold text-outline uppercase tracking-wider">Category</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all">
+<option>Fresh Produce</option>
+<option>Dairy &amp; Eggs</option>
+<option>Pantry</option>
+<option>Bakery</option>
+<option>Meat &amp; Seafood</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-semibold text-outline uppercase tracking-wider">Stock Quantity</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="0" type="number"/>
+<span class="absolute right-3 top-3 text-xs text-outline">Units</span>
+</div>
+</div>
+<div class="md:col-span-2 space-y-2">
+<label class="text-xs font-semibold text-outline uppercase tracking-wider">Description</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="Describe the origin, flavor profile, and quality of the product..." rows="4"></textarea>
+</div>
+</div>
+</section>
+<!-- Media Assets -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="image">image</span>
+                            Product Media
+                        </h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="aspect-square rounded-lg border-2 border-dashed border-outline-variant flex flex-col items-center justify-center bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary mb-2" data-icon="add_a_photo">add_a_photo</span>
+<span class="text-[10px] font-bold text-outline group-hover:text-primary">UPLOAD</span>
+</div>
+<div class="aspect-square rounded-lg bg-surface-container-low overflow-hidden relative group">
+<img alt="Avocado Preview" class="w-full h-full object-cover" data-alt="Close-up of a perfectly ripe sliced avocado on a clean neutral background with soft shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZIf6UQADZv_z1ukHtUTDUVnNdmE5ur7ZdDLa5e3sdjOHV6kRSS3AmNU0yDQsezv_rYOWYqGBYwCZI3gUHPh7gtDYYozidZgMSbu-CY1VdtQzwB9Pw4yz2rV-JeHBFslKwc6STc9Dw63tE1kKVxASEolzhMLhKaAszVcv6h0UFU91QJuo3L1hNTDOxeJnk2nO8HeDbxtmEB8ScBK4_BDIUaN8X_RAT8YnfulM23U568HECgfsK2qGwN0St8TcX5JzRu68BEWZiBw"/>
+<button class="absolute top-2 right-2 w-6 h-6 bg-error rounded-full text-on-error flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm" data-icon="close">close</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Pricing & Inventory -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+                            Pricing &amp; Offers
+                        </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-semibold text-outline uppercase tracking-wider">Base Price</label>
+<div class="relative">
+<span class="absolute left-3 top-3 text-outline">$</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg p-3 pl-8 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="0.00" step="0.01" type="number"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-semibold text-outline uppercase tracking-wider">Discount Percentage</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg p-3 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="0" type="number"/>
+<span class="absolute right-3 top-3 text-outline">%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Nutrition Details (Dynamic Rows) -->
+<section class="bg-surface-container-lowest p-8 rounded-xl shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="nutrition">nutrition</span>
+                                Nutrition Details
+                            </h2>
+<button class="flex items-center gap-1 text-xs font-bold text-primary hover:bg-primary-container/20 px-3 py-1 rounded-full transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                                ADD ROW
+                            </button>
+</div>
+<div class="space-y-3">
+<div class="grid grid-cols-12 gap-3 items-center">
+<div class="col-span-6">
+<input class="w-full text-xs font-medium bg-surface-container-low border-none rounded-lg p-2" type="text" value="Calories"/>
+</div>
+<div class="col-span-4">
+<input class="w-full text-xs bg-surface-container-low border-none rounded-lg p-2" type="text" value="160 kcal"/>
+</div>
+<div class="col-span-2 flex justify-end">
+<button class="text-outline-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-3 items-center">
+<div class="col-span-6">
+<input class="w-full text-xs font-medium bg-surface-container-low border-none rounded-lg p-2" type="text" value="Total Fat"/>
+</div>
+<div class="col-span-4">
+<input class="w-full text-xs bg-surface-container-low border-none rounded-lg p-2" type="text" value="15g"/>
+</div>
+<div class="col-span-2 flex justify-end">
+<button class="text-outline-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-3 items-center">
+<div class="col-span-6">
+<input class="w-full text-xs font-medium bg-surface-container-low border-none rounded-lg p-2" placeholder="Nutrient name" type="text"/>
+</div>
+<div class="col-span-4">
+<input class="w-full text-xs bg-surface-container-low border-none rounded-lg p-2" placeholder="Value (e.g. 5g)" type="text"/>
+</div>
+<div class="col-span-2 flex justify-end">
+<button class="text-outline-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="delete">delete</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Preview Sidebar -->
+<aside class="lg:col-span-4 sticky top-24 h-fit space-y-6">
+<div class="bg-surface-container-high/50 p-6 rounded-2xl border border-surface-container-highest">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xs font-black uppercase tracking-widest text-outline">Product Card Preview</h3>
+<span class="material-symbols-outlined text-outline text-sm" data-icon="visibility">visibility</span>
+</div>
+<!-- Premium Product Card -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(43,47,49,0.05)] border border-transparent hover:-translate-y-1 transition-all">
+<div class="aspect-[4/3] bg-surface-container-low relative">
+<img alt="Avocado Preview" class="w-full h-full object-cover" data-alt="Premium organic avocados in a rustic wooden bowl, natural lighting, moody shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5a_ebagMepMXJwtbw-qoOQj9Tc85xq-_pAlIi5LBBPmEon-ha-yC1dnN6dbfv2T-zcFLtCEElkGXW232XIbQhqe6Ue0UDhQ1ZUTHh-spRZVltmA8lcm_AdD9CIB8rCTG_Ux2sxUEM2wceM6kc1Im9VVveNCH2Tb5_CCrmlwEhF3LC6qPPfX2qHMnjEYbxSC1ZhsGB_G6mvhW6UmrutxEZFHtJhIw5ogUMhLQuDqUY2UhBWeq8Jz1AoFp_di5VOdrH9O3ysruEpQ"/>
+<div class="absolute top-3 left-3 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-tighter">
+                                    Organic
+                                </div>
+</div>
+<div class="p-4 space-y-2">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-[10px] text-primary font-bold uppercase tracking-widest">Fresh Produce</p>
+<h4 class="font-headline font-bold text-on-surface">Organic Hass Avocados</h4>
+</div>
+<div class="text-right">
+<p class="text-sm font-black text-on-surface">$4.50</p>
+<p class="text-[10px] text-outline line-through">$5.99</p>
+</div>
+</div>
+<div class="pt-4 flex items-center justify-between">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-[10px] font-bold">4.9</span>
+</div>
+<button class="bg-primary-container text-on-primary-container p-2 rounded-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="add_shopping_cart">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+<div class="mt-8 space-y-4">
+<div class="flex items-center gap-3 text-xs text-outline bg-white/50 p-3 rounded-xl border border-white">
+<span class="material-symbols-outlined text-primary" data-icon="verified">verified</span>
+                                Quality score: <span class="text-on-surface font-bold">98/100</span>
+</div>
+<div class="flex items-center gap-3 text-xs text-outline bg-white/50 p-3 rounded-xl border border-white">
+<span class="material-symbols-outlined text-primary" data-icon="eco">eco</span>
+                                Eco-footprint: <span class="text-on-surface font-bold">Low Impact</span>
+</div>
+</div>
+</div>
+<!-- Guidelines -->
+<div class="p-6 bg-secondary-container/30 rounded-2xl">
+<h4 class="text-xs font-bold text-secondary mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="tips_and_updates">tips_and_updates</span>
+                            Admin Tips
+                        </h4>
+<ul class="text-[11px] text-secondary space-y-2 leading-relaxed">
+<li>• Use high-resolution images with white backgrounds for better consistency.</li>
+<li>• Descriptions should highlight freshness and origin.</li>
+<li>• Set stock alerts for high-demand seasonal items.</li>
+</ul>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-white dark:bg-slate-950 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-2xl border-t border-slate-100 dark:border-slate-800 z-50">
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-emerald-50 dark:bg-emerald-900/30 text-[#006a3b] dark:text-emerald-300 rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Categories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Account</span>
+</a>
+</nav>
+</body></html>

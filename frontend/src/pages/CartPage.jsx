@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
-import Button from '../components/ui/Button';
-import Card from '../components/ui/Card';
 import Spinner from '../components/ui/Spinner';
 import { useCart } from '../context/CartContext';
 
@@ -13,12 +11,15 @@ export default function CartPage() {
   if (cart.items.length === 0) {
     return (
       <MainLayout>
-        <div className="text-center py-20">
-          <p className="text-6xl mb-4">🛒</p>
-          <h2 className="text-xl font-semibold text-gray-600 mb-4">Your cart is empty</h2>
-          <Link to="/">
-            <Button>Start Shopping</Button>
-          </Link>
+        <div className="max-w-3xl mx-auto py-20 text-center">
+          <div className="bg-surface-container-lowest rounded-2xl p-10 shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+            <span className="material-symbols-outlined text-6xl text-outline-variant mb-4">shopping_basket</span>
+            <h2 className="font-headline text-2xl font-bold text-on-surface mb-3">Your cart is empty</h2>
+            <p className="text-on-surface-variant mb-6">Add fresh items to begin your curated checkout.</p>
+            <Link className="inline-flex bg-primary text-on-primary px-6 py-3 rounded-lg font-bold" to="/">
+              Start Shopping
+            </Link>
+          </div>
         </div>
       </MainLayout>
     );
@@ -26,75 +27,101 @@ export default function CartPage() {
 
   return (
     <MainLayout>
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">Shopping Cart</h1>
-          <button onClick={emptyCart} className="text-sm text-red-500 hover:text-red-700">
+      <div className="max-w-7xl mx-auto px-2 font-body">
+        <header className="mb-10 flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight mb-2">Shopping Cart</h1>
+            <p className="text-on-surface-variant font-medium">You have {cart.items.length} item(s) in your selection.</p>
+          </div>
+          <button onClick={emptyCart} className="text-sm text-error hover:text-error-dim font-semibold">
             Clear Cart
           </button>
-        </div>
+        </header>
 
-        <div className="grid lg:grid-cols-3 gap-6">
-          {/* Cart items */}
-          <div className="lg:col-span-2 space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <section className="lg:col-span-8 space-y-6">
             {cart.items.map((item) => (
-              <Card key={item.id} className="p-4">
-                <div className="flex items-center gap-4">
-                  <div className="bg-gray-100 h-16 w-16 rounded-lg flex items-center justify-center flex-shrink-0">
+              <div key={item.id} className="bg-surface-container-lowest rounded-xl p-4 md:p-6 flex flex-col md:flex-row items-center gap-6 group hover:translate-y-[-4px] transition-all duration-300 shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+                <div className="w-32 h-32 flex-shrink-0 overflow-hidden rounded-lg bg-surface-container-low">
                     {item.product?.image_url ? (
-                      <img src={item.product.image_url} alt={item.product.name} className="h-full w-full object-cover rounded-lg" />
+                      <img alt={item.product.name} className="h-full w-full object-cover" src={item.product.image_url} />
                     ) : (
-                      <span className="text-2xl">🥦</span>
+                      <div className="h-full w-full flex items-center justify-center">
+                        <span className="material-symbols-outlined text-4xl text-outline-variant">shopping_basket</span>
+                      </div>
                     )}
                   </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-800">{item.product?.name}</p>
-                    <p className="text-green-600 font-semibold">${item.product?.price.toFixed(2)}</p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center border rounded-lg overflow-hidden">
-                      <button
-                        className="px-2 py-1 text-gray-600 hover:bg-gray-100 text-sm"
-                        onClick={() => updateItem(item.id, item.quantity - 1)}
-                        disabled={item.quantity <= 1}
-                      >−</button>
-                      <span className="px-3 py-1 text-sm">{item.quantity}</span>
-                      <button
-                        className="px-2 py-1 text-gray-600 hover:bg-gray-100 text-sm"
-                        onClick={() => updateItem(item.id, item.quantity + 1)}
-                      >+</button>
-                    </div>
-                    <button onClick={() => removeItem(item.id)} className="text-red-400 hover:text-red-600">
-                      ✕
-                    </button>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
 
-          {/* Order summary */}
-          <Card className="p-6 h-fit">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Order Summary</h2>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-gray-500">Items ({cart.total_items})</span>
-                <span>${cart.total_price.toFixed(2)}</span>
+                  <div className="flex-grow text-center md:text-left">
+                    <div className="flex justify-between items-start mb-1">
+                      <h3 className="text-lg font-bold text-on-surface font-headline">{item.product?.name}</h3>
+                      <button className="hidden md:block material-symbols-outlined text-outline-variant hover:text-error cursor-pointer transition-colors" onClick={() => removeItem(item.id)} type="button">
+                        delete
+                      </button>
+                    </div>
+                    <p className="text-sm text-on-surface-variant mb-4">{item.product?.category?.name || 'Groceries'}</p>
+
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div className="text-primary font-bold text-lg">${item.product?.price?.toFixed(2)} <span className="text-xs text-outline font-normal">/ unit</span></div>
+
+                      <div className="flex items-center justify-center bg-surface-container-low rounded-full px-2 py-1">
+                        <button className="w-8 h-8 flex items-center justify-center text-primary active:scale-90 transition-transform" disabled={item.quantity <= 1} onClick={() => updateItem(item.id, item.quantity - 1)} type="button">
+                          <span className="material-symbols-outlined text-lg">remove</span>
+                        </button>
+                        <span className="px-4 font-bold text-on-surface">{item.quantity}</span>
+                        <button className="w-8 h-8 flex items-center justify-center text-primary active:scale-90 transition-transform" onClick={() => updateItem(item.id, item.quantity + 1)} type="button">
+                          <span className="material-symbols-outlined text-lg">add</span>
+                        </button>
+                      </div>
+
+                      <div className="text-right">
+                        <p className="text-xs text-outline uppercase tracking-wider font-semibold">Subtotal</p>
+                        <p className="text-lg font-black text-on-surface">${((item.product?.price || 0) * item.quantity).toFixed(2)}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button className="md:hidden text-error mt-2 flex items-center gap-1 text-sm font-semibold" onClick={() => removeItem(item.id)} type="button">
+                    <span className="material-symbols-outlined text-sm">delete</span> Remove Item
+                  </button>
+                </div>
+              ))}
+          </section>
+
+          <aside className="lg:col-span-4 sticky top-24">
+            <div className="bg-surface-container-lowest rounded-2xl p-6 shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+              <h2 className="text-xl font-bold font-headline mb-6 text-on-surface">Order Summary</h2>
+
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between text-on-surface-variant">
+                  <span>Total items ({cart.total_items})</span>
+                  <span className="font-semibold text-on-surface">${cart.total_price.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-on-surface-variant">
+                  <span>Delivery charges</span>
+                  <span className="font-semibold text-primary">FREE</span>
+                </div>
+                <div className="pt-6 border-t border-surface-container-high mb-2">
+                  <div className="flex justify-between items-end">
+                    <span className="text-on-surface font-medium">Total Amount</span>
+                    <span className="text-3xl font-black text-on-surface tracking-tighter">${cart.total_price.toFixed(2)}</span>
+                  </div>
+                  <p className="text-[10px] text-outline text-right mt-1 uppercase tracking-widest font-bold">Including VAT</p>
+                </div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Delivery</span>
-                <span className="text-green-600">Free</span>
+
+              <Link className="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary-dim active:scale-[0.98] transition-all" to="/checkout">
+                Proceed to Checkout
+                <span className="material-symbols-outlined">arrow_forward</span>
+              </Link>
+
+              <div className="mt-6 flex items-center justify-center gap-2 text-outline-variant">
+                <span className="material-symbols-outlined text-sm">lock</span>
+                <span className="text-xs font-medium uppercase tracking-tighter">Secure SSL Encryption</span>
               </div>
-              <hr className="my-3" />
-              <div className="flex justify-between font-bold text-base">
-                <span>Total</span>
-                <span>${cart.total_price.toFixed(2)}</span>
-              </div>
-            </div>
-            <Link to="/checkout" className="block mt-4">
-              <Button className="w-full" size="lg">Proceed to Checkout</Button>
-            </Link>
-          </Card>
+
+          </div>
+          </aside>
         </div>
       </div>
     </MainLayout>

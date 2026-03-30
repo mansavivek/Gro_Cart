@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order History | Gro-Cart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#aaaeb0",
+              "on-tertiary-container": "#583400",
+              "on-primary": "#ccffd8",
+              "outline": "#737779",
+              "on-error": "#ffefee",
+              "tertiary": "#835000",
+              "secondary": "#515c6f",
+              "secondary-fixed": "#d8e3fa",
+              "surface-container-highest": "#d8dee1",
+              "on-primary-fixed-variant": "#006c3c",
+              "on-secondary-container": "#475265",
+              "primary-fixed-dim": "#8aebac",
+              "on-secondary-fixed-variant": "#515c6f",
+              "on-secondary": "#eef2ff",
+              "tertiary-fixed": "#fcb259",
+              "primary": "#006a3b",
+              "tertiary-container": "#fcb259",
+              "on-error-container": "#570008",
+              "error": "#b31b25",
+              "on-surface-variant": "#585c5e",
+              "surface-tint": "#006a3b",
+              "inverse-primary": "#98fab9",
+              "error-container": "#fb5151",
+              "tertiary-fixed-dim": "#eca54d",
+              "background": "#f4f7f9",
+              "secondary-dim": "#455063",
+              "on-tertiary": "#fff0e4",
+              "primary-dim": "#005c33",
+              "surface-container": "#e4e9eb",
+              "primary-fixed": "#98fab9",
+              "surface-container-low": "#edf1f3",
+              "primary-container": "#98fab9",
+              "error-dim": "#9f0519",
+              "surface-container-high": "#dee3e6",
+              "secondary-container": "#d8e3fa",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#006035",
+              "on-tertiary-fixed": "#3c2200",
+              "inverse-surface": "#0b0f10",
+              "surface": "#f4f7f9",
+              "secondary-fixed-dim": "#cad5ec",
+              "surface-bright": "#f4f7f9",
+              "on-surface": "#2b2f31",
+              "tertiary-dim": "#734500",
+              "on-background": "#2b2f31",
+              "inverse-on-surface": "#9a9d9f",
+              "surface-variant": "#d8dee1",
+              "on-secondary-fixed": "#354052",
+              "on-primary-fixed": "#004c29",
+              "surface-dim": "#cfd5d8",
+              "on-tertiary-fixed-variant": "#653c00"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .order-card-gradient {
+            background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(244,247,249,0.5) 100%);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface min-h-screen pb-20 md:pb-0">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-8">
+<a class="flex items-center gap-2 text-xl font-bold text-primary font-headline tracking-tighter" href="#">
+<span class="material-symbols-outlined text-2xl" data-icon="shopping_basket">shopping_basket</span>
+                    Gro-Cart
+                </a>
+<div class="hidden md:flex gap-6 font-headline text-sm font-medium tracking-tight">
+<a class="text-on-surface hover:text-primary transition-colors duration-200" href="#">Home</a>
+<a class="text-on-surface hover:text-primary transition-colors duration-200" href="#">Deals</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="#">Orders</a>
+<a class="text-on-surface hover:text-primary transition-colors duration-200" href="#">Recipes</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden lg:flex items-center bg-surface-container-high rounded-full px-4 py-1.5 gap-2">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 font-body" placeholder="Search orders..." type="text"/>
+</div>
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-28 pb-12 px-4 max-w-5xl mx-auto">
+<!-- Page Header & Filters -->
+<section class="mb-10">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="space-y-1">
+<p class="font-headline text-primary font-bold text-sm tracking-widest uppercase">My Activity</p>
+<h1 class="font-headline text-4xl font-extrabold tracking-tight text-on-surface">Order History</h1>
+</div>
+<div class="flex flex-wrap gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border-none rounded-lg pl-4 pr-10 py-2.5 text-sm font-medium text-on-surface shadow-sm focus:ring-2 focus:ring-primary/20 cursor-pointer">
+<option>All Statuses</option>
+<option>Pending</option>
+<option>In Progress</option>
+<option>Packed</option>
+<option>Out for Delivery</option>
+<option>Delivered</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline-variant" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border-none rounded-lg pl-4 pr-10 py-2.5 text-sm font-medium text-on-surface shadow-sm focus:ring-2 focus:ring-primary/20 cursor-pointer">
+<option>Newest First</option>
+<option>Oldest First</option>
+<option>Price: High to Low</option>
+<option>Price: Low to High</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline-variant" data-icon="sort">sort</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Orders Grid/List -->
+<div class="space-y-6">
+<!-- Order Card 1: Delivered -->
+<div class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(43,47,49,0.05)] transition-all hover:-translate-y-1">
+<div class="p-6">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+<div class="flex gap-4">
+<div class="h-16 w-16 bg-surface-container-low rounded-lg flex items-center justify-center overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="close-up of fresh colorful bell peppers and greens in a paper grocery bag with soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWPPH56Ok3nQKZfsCJLQ-znTMT5xnrZ_a5D3U3OpVZndwWdzHRbvclGVEu2I3nP_-Twaw9vsePPHLHw0z3jPcUNZOX0wMRG0wctylinL0NFAewp2MztaLgtQiRREDtCwWYqNYKGamWnhgBmIY5dJZ7LKP5ckljD3oXZvRDUy19ZCO8OaS-5-roiP-y_3IXw5XKO2kraGt6SKtVfh9tMYOhXNWN5B_O3BrZyuSwIq90sPKmdINaX-xadwt-r_vZ8Delb465b-ll1g"/>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg text-on-surface">Order #GC-88421</h3>
+<p class="text-sm text-on-surface-variant font-medium">Placed on Oct 24, 2023</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<span class="px-3 py-1 rounded-full bg-emerald-100 text-primary text-xs font-bold uppercase tracking-wider">Delivered</span>
+<p class="font-headline font-extrabold text-xl text-on-surface">$124.50</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-surface-container">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+<div class="text-sm">
+<p class="font-semibold text-on-surface">Delivery Address</p>
+<p class="text-on-surface-variant leading-relaxed">2458 Orchard Lane, Suite 402<br/>East Side, NY 10021</p>
+</div>
+</div>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="local_shipping">local_shipping</span>
+<div class="text-sm">
+<p class="font-semibold text-on-surface">Estimated Delivery</p>
+<p class="text-on-surface-variant leading-relaxed">Delivered on Oct 25, 10:30 AM<br/>by Courier Mark S.</p>
+</div>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex -space-x-3 overflow-hidden">
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white" data-alt="macro photo of fresh organic green broccoli florets" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm5ut544YNhj62pjFmlq-rglZ3D5I-gHgLvr0RYaivcs72cjBqKYml_k-RlsYEk3Id4AuvafYO5TK8HuX4wGnccfdo2KSswIaNMBe-yVZMUOHgiF5d5TW-m8-j4-fc-TNCJsh8JlPHPi2-1EKqcGUcvxw-IwyOeA9zWYsCkuSQibF25e4A03_9KLgnUjIvIp2DvaO3uB9z6ZvtwPDxAmIn0Vv0zh28O7K_xJ8ljto99furbRys9pizNX3oh9qRncz-WwGb_US69A"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white" data-alt="detailed shot of ripe red tomatoes on a wooden table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD089t7gwEWTgv7jhsSmB9gCqHlcJkxt8pRPBoy6v_CUgSmqkMNtoQgSM6Zdo7YGGjzphojN5h4JjA3YyVgJU2UtTqbS2Nn4_ynz9127HUMhX5FSE8xRdSihgKo3cvhZjYYnCXCbgglwcbnWBGHewslkAnncX25l4OGuMc1GFt4QljGi6gZX8sG2zXmiPXVrFuhGeS5_3m0eEtBxN4hLQQ2Q5-VbW4Z8KDJ4-IfjjP4msHCjeCPPNnsXzOl5SU0Qz2y8Vi0KPOFqg"/>
+<img alt="" class="inline-block h-8 w-8 rounded-full ring-2 ring-white" data-alt="overhead shot of a fresh avocado cut in half" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYCA4wVvPNeqv7x54Rup4jnmpcAIPi-_P3YYJPqAIOBYSDsYvignTX8D0BTk-OZbkCDeZKh7VQ-2YjxQwMT6T83C76nJebwEhTOGqlOBy2wUyEZBFLoeAb7UyIDfvEV4wTt902T1M6j2oh-3G-VA-rXy9d8TYxQSsUmZl2T1_B5Px7b_hCPv3VXR7n7chQ3JUT1dmPVT36UM8EnH5Kl-qr09QYr5tEozcnKXT00uxo0-8ErWuNvi9NZQI2VBwxmopcaGywmjbjvw"/>
+<div class="flex h-8 w-8 items-center justify-center rounded-full bg-surface-container text-[10px] font-bold ring-2 ring-white">+5</div>
+</div>
+<button class="text-primary font-headline text-sm font-bold flex items-center gap-1 hover:underline">
+                            View 8 Items
+                            <span class="material-symbols-outlined text-lg" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+<!-- Expanded Items List (Shown as an example state) -->
+<div class="bg-surface-container-low/50 px-6 py-4 space-y-3">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface">2x Organic Hass Avocados</span>
+<span class="font-semibold text-on-surface">$5.50</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface">1x Wild-Caught Atlantic Salmon (500g)</span>
+<span class="font-semibold text-on-surface">$18.90</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface">1x Artisanal Sourdough Loaf</span>
+<span class="font-semibold text-on-surface">$7.25</span>
+</div>
+</div>
+</div>
+<!-- Order Card 2: Out for Delivery -->
+<div class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(43,47,49,0.05)] transition-all hover:-translate-y-1">
+<div class="p-6">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+<div class="flex gap-4">
+<div class="h-16 w-16 bg-surface-container-low rounded-lg flex items-center justify-center overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="vibrant farmer's market stall with fresh organic vegetables and fruits in baskets" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgs2nzX7xt967_DwM9FOuFFtM-ahlHjR_T7g3lAfTW-e6HGNZlfY3fZeakVtCJAWVDy7ruIF-mGfc-cXzhjn3sBdSZwN4r7XjRmzSN0LOoh405AYkr0yp2ayCI4tslxeua3MohznDgwJow4EbnEXJoaA9yaxr7rvitkE862cieG3VRL650wKUYv7-xoUzGlezUabCp_PBqxlnbIPhwcGHhQ0pLv7dPYbzQ6qal2ps0jACSeIxRUqP_kokuYvh6TSGMfXEfaunNzA"/>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg text-on-surface">Order #GC-88509</h3>
+<p class="text-sm text-on-surface-variant font-medium">Placed Today, 8:45 AM</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider">Out for Delivery</span>
+<p class="font-headline font-extrabold text-xl text-on-surface">$62.20</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
+<div class="text-sm">
+<p class="font-semibold text-on-surface">Delivery Address</p>
+<p class="text-on-surface-variant leading-relaxed">2458 Orchard Lane, Suite 402<br/>East Side, NY 10021</p>
+</div>
+</div>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="timer">timer</span>
+<div class="text-sm">
+<p class="font-semibold text-on-surface">Live Tracking</p>
+<p class="text-on-surface-variant leading-relaxed">Expected arrival in 15-20 mins<br/>Courier is 2 miles away</p>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-surface-container flex items-center justify-between">
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-headline font-bold text-sm transition-all hover:bg-primary-dim active:scale-95">
+                            Track Order
+                        </button>
+<button class="text-primary font-headline text-sm font-bold flex items-center gap-1 hover:underline">
+                            View 4 Items
+                            <span class="material-symbols-outlined text-lg" data-icon="keyboard_arrow_right">keyboard_arrow_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Order Card 3: Pending -->
+<div class="group bg-surface-container-lowest rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(43,47,49,0.05)] transition-all hover:-translate-y-1">
+<div class="p-6">
+<div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+<div class="flex gap-4">
+<div class="h-16 w-16 bg-surface-container-low rounded-lg flex items-center justify-center overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="interior view of a modern high-end grocery store with wooden shelves and organized produce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7G3uVfisHRafbfrBQyeOWmi_lor096yjN6rTtuUKcQNurnitFbVvIKfGqWyj2JG9G_hCz3erVFuUSJ9XHEP-y1YsaVCwdGQ7F0wzV0rhXJE6VARiDihSnsBnCiWEPw2lvYy2oeJZk8Ee8z5HzVtrnMYK2-FXXgI_9ISMaJ8aSAFWRxXfpwgzOBDjK7SFQwmiHUg42i47ydCsYrvI3_urGqeGC-cHcExqlSMZhcvZyS0q1KMN_zzrdbKNpe2Ep8-ImQpyvFBAvhA"/>
+</div>
+<div>
+<h3 class="font-headline font-bold text-lg text-on-surface">Order #GC-88512</h3>
+<p class="text-sm text-on-surface-variant font-medium">Placed Today, 11:30 AM</p>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-xs font-bold uppercase tracking-wider">Pending</span>
+<p class="font-headline font-extrabold text-xl text-on-surface">$34.15</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<p class="text-sm text-on-surface-variant italic">Payment processing...</p>
+<button class="text-primary font-headline text-sm font-bold flex items-center gap-1 hover:underline">
+                            Details
+                            <span class="material-symbols-outlined text-lg" data-icon="keyboard_arrow_right">keyboard_arrow_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Help Section (Asymmetric / Bento Style) -->
+<section class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 bg-primary-container/30 rounded-xl p-8 flex flex-col md:flex-row items-center gap-8 border border-primary/10">
+<div class="flex-1 space-y-4">
+<h2 class="font-headline text-2xl font-bold text-on-primary-container">Need help with an order?</h2>
+<p class="text-on-secondary-container leading-relaxed">Our support team is available 24/7 to assist with delivery issues, damaged items, or refund requests.</p>
+<button class="bg-primary text-on-primary px-6 py-2 rounded-lg font-headline font-bold text-sm transition-all hover:shadow-lg">
+                        Contact Support
+                    </button>
+</div>
+<div class="w-48 h-48 rounded-full overflow-hidden border-8 border-white shadow-xl rotate-3">
+<img class="h-full w-full object-cover" data-alt="friendly customer service representative with headset smiling in a bright modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQQ29Aek5d970g3ecAACujoQ6FsMJDHADmBYz2aUYb794kiT9qbTETn-yvIOE1tG8qb62_lf7MfETqW5G-8VlYoWkBiXfU7y8c6v22NfHS5ScXROuDa6OOi1yhETZk2fZIdpYHzHt8gw7BaolPIPuL7mqsXV5p7jTLc-7BCKPriQ5zjko-5Kd-tuGFvJNz7EaNlLaJBJ-eHmGiQfbSZMi5WkiixmO1z7lrnmYp4i7dvYJUlUB77jeNNZ4FTatA-sL2sLSgCJReYg"/>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-8 flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-3xl text-primary mb-4" data-icon="policy">policy</span>
+<h3 class="font-headline font-bold text-lg text-on-surface">Return Policy</h3>
+<p class="text-sm text-on-surface-variant mt-2">Freshness guaranteed. Return any item within 24 hours if it doesn't meet your standards.</p>
+</div>
+<a class="text-primary text-sm font-bold mt-4 flex items-center gap-1 group" href="#">
+                    Learn more
+                    <span class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-100 bg-slate-50">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 max-w-7xl mx-auto">
+<div class="mb-8 md:mb-0">
+<p class="font-manrope font-bold text-primary text-lg">Gro-Cart</p>
+<p class="font-inter text-xs text-slate-500 mt-2">© 2024 Gro-Cart Marketplace. The Organic Curator.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="#">About Us</a>
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="#">Sustainability</a>
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors underline text-primary" href="#">Privacy Policy</a>
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="font-inter text-xs text-slate-500 hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+</div>
+</footer>
+<!-- Bottom Navigation Bar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-white border-t border-slate-100 z-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-500 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Categories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-emerald-50 text-primary rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider">Account</span>
+</a>
+</nav>
+</body></html>

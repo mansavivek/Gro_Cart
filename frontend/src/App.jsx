@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { initMockMode } from './services/mockData';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -15,6 +17,11 @@ import AdminProductsPage from './pages/AdminProductsPage';
 import AdminOrdersPage from './pages/AdminOrdersPage';
 
 export default function App() {
+  useEffect(() => {
+    // Initialize mock mode if enabled
+    initMockMode();
+  }, []);
+
   return (
     <BrowserRouter>
       <AuthProvider>

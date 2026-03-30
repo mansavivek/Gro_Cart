@@ -3,11 +3,20 @@ import { login as loginApi, register as registerApi } from '../services/authServ
 
 const AuthContext = createContext(null);
 
+function normalizeUser(user) {
+  if (!user) return null;
+  const isAdmin = Boolean(user.is_admin) || user.role === 'admin';
+  return {
+    ...user,
+    is_admin: isAdmin,
+  };
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     try {
       const stored = localStorage.getItem('user');
-      return stored ? JSON.parse(stored) : null;
+      return stored ? normalizeUser(JSON.parse(stored)) : null;
     } catch {
       return null;
     }
@@ -20,10 +29,11 @@ export function AuthProvider({ children }) {
     setError(null);
     try {
       const { data } = await loginApi({ email, password });
+      const normalizedUser = normalizeUser(data.user);
       localStorage.setItem('token', data.access_token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      setUser(data.user);
-      return data.user;
+      localStorage.setItem('user', JSON.stringify(normalizedUser));
+      setUser(normalizedUser);
+      return normalizedUser;
     } catch (err) {
       setError(err.response?.data?.detail || 'Login failed');
       throw err;
