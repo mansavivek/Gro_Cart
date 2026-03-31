@@ -16,6 +16,9 @@ export default function ProductDetailsPage() {
   const { cart, addItem, updateItem, removeItem } = useCart();
   const { user } = useAuth();
   const cartItem = cart.items.find((item) => item.product_id === product?.id);
+  const pageBackgroundStyle = {
+    backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
+  };
 
   useEffect(() => {
     getProduct(id)
@@ -64,8 +67,8 @@ export default function ProductDetailsPage() {
     }
   };
 
-  if (loading) return <MainLayout><Spinner /></MainLayout>;
-  if (!product) return <MainLayout><p className="text-center text-on-surface-variant">Product not found.</p></MainLayout>;
+  if (loading) return <MainLayout backgroundStyle={pageBackgroundStyle}><Spinner /></MainLayout>;
+  if (!product) return <MainLayout backgroundStyle={pageBackgroundStyle}><p className="text-center text-on-surface-variant">Product not found.</p></MainLayout>;
 
   const gallery = [
     ...(Array.isArray(product.image_urls) ? product.image_urls : []),
@@ -74,9 +77,11 @@ export default function ProductDetailsPage() {
   ].filter(Boolean);
 
   const inStock = product.quantity > 0;
+  const ratingValue = Number(product.avg_rating ?? 4.8);
+  const filledStars = Math.round(Math.max(0, Math.min(5, ratingValue)));
 
   return (
-    <MainLayout>
+    <MainLayout backgroundStyle={pageBackgroundStyle}>
       <div className="pt-2 pb-20 max-w-7xl mx-auto px-2 sm:px-4">
         <nav className="flex items-center gap-2 mb-8 text-xs font-medium uppercase tracking-wider text-slate-400 font-label">
           <Link to="/" className="hover:text-primary transition-colors">Shop</Link>
@@ -129,9 +134,19 @@ export default function ProductDetailsPage() {
               </div>
               <h1 className="font-headline text-4xl font-extrabold text-on-surface leading-tight mb-2">{product.name}</h1>
               <div className="mb-3 flex items-center gap-2 text-sm">
-                <span className="material-symbols-outlined text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                <span className="font-semibold text-on-surface">4.8</span>
-                <span className="text-on-surface-variant">(248 reviews)</span>
+                <div className="flex items-center gap-0.5" aria-label={`Rating ${ratingValue} out of 5`}>
+                  {Array.from({ length: 5 }).map((_, idx) => (
+                    <span
+                      className="material-symbols-outlined text-amber-500 text-[18px]"
+                      key={idx}
+                      style={{ fontVariationSettings: `'FILL' ${idx < filledStars ? 1 : 0}` }}
+                    >
+                      star
+                    </span>
+                  ))}
+                </div>
+                <span className="font-semibold text-on-surface">{ratingValue.toFixed(1)}</span>
+                <span className="text-on-surface-variant">{`(${product.reviews_count || 0} reviews)`}</span>
               </div>
               <div className="flex items-baseline gap-3">
                 <span className="text-3xl font-headline font-black text-primary">${product.price.toFixed(2)}</span>

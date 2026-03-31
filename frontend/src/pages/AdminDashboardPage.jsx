@@ -21,8 +21,19 @@ export default function AdminDashboardPage() {
     { name: 'Calories', value: '160 kcal' },
     { name: 'Total Fat', value: '15g' },
   ]);
+  const [orderSearch, setOrderSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('newest');
+  const [minTotal, setMinTotal] = useState('');
+  const [maxTotal, setMaxTotal] = useState('');
+  const [inventorySearch, setInventorySearch] = useState('');
+  const [inventoryPage, setInventoryPage] = useState(1);
+  const [itemsPerPage] = useState(10);
   const [toast, setToast] = useState('');
   const [error, setError] = useState('');
+  const pageBackgroundStyle = {
+    backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
+  };
 
   const load = async () => {
     setLoading(true);
@@ -50,9 +61,60 @@ export default function AdminDashboardPage() {
     const totalOrders = orders.length;
     const revenue = orders.reduce((sum, order) => sum + (order.total_amount || 0), 0);
     const activeOrders = orders.filter((order) => ['pending', 'in_progress', 'packed', 'out_for_delivery'].includes(order.status)).length;
-    const lowStock = products.filter((product) => (product.quantity || 0) <= 10).length;
+    const lowStock = products.filter((product) => (product.quantity || 0) <= 5).length;
     return { totalOrders, revenue, activeOrders, lowStock };
   }, [orders, products]);
+
+  const filteredOrders = useMemo(() => {
+    let list = [...orders];
+
+    if (statusFilter !== 'all') {
+      list = list.filter((order) => order.status === statusFilter);
+    }
+
+    const query = orderSearch.trim().toLowerCase();
+    if (query) {
+      list = list.filter((order) => {
+        const customerName = (order.user?.name || '').toLowerCase();
+        return `${order.id}`.includes(query) || customerName.includes(query);
+      });
+    }
+
+    const min = minTotal === '' ? null : Number(minTotal);
+    const max = maxTotal === '' ? null : Number(maxTotal);
+    if (min !== null && !Number.isNaN(min)) {
+      list = list.filter((order) => Number(order.total_amount || 0) >= min);
+    }
+    if (max !== null && !Number.isNaN(max)) {
+      list = list.filter((order) => Number(order.total_amount || 0) <= max);
+    }
+
+    list.sort((a, b) => {
+      if (sortBy === 'oldest') return new Date(a.created_at) - new Date(b.created_at);
+      if (sortBy === 'total_low') return Number(a.total_amount || 0) - Number(b.total_amount || 0);
+      if (sortBy === 'total_high') return Number(b.total_amount || 0) - Number(a.total_amount || 0);
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
+
+    return list;
+  }, [orders, statusFilter, orderSearch, minTotal, maxTotal, sortBy]);
+
+  const filteredInventory = useMemo(() => {
+    const query = inventorySearch.trim().toLowerCase();
+    if (!query) return products;
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(query) ||
+      product.description?.toLowerCase().includes(query) ||
+      categories.find((c) => c.id === product.category_id)?.name.toLowerCase().includes(query)
+    );
+  }, [products, inventorySearch, categories]);
+
+  const paginatedInventory = useMemo(() => {
+    const startIdx = (inventoryPage - 1) * itemsPerPage;
+    return filteredInventory.slice(startIdx, startIdx + itemsPerPage);
+  }, [filteredInventory, inventoryPage, itemsPerPage]);
+
+  const totalInventoryPages = Math.ceil(filteredInventory.length / itemsPerPage);
 
   const handleStatusChange = async (orderId, status) => {
     setUpdatingOrderId(orderId);
@@ -110,6 +172,7 @@ export default function AdminDashboardPage() {
   const startEditProduct = (product) => {
     setActiveTab('products');
     setEditingProductId(product.id);
+    setInventoryPage(1);
     setForm({
       name: product.name || '',
       description: product.description || '',
@@ -121,24 +184,32 @@ export default function AdminDashboardPage() {
   };
 
   const handleDeleteProduct = async (id) => {
-    await deleteProduct(id);
-    const latest = await getProducts();
-    setProducts(latest.data || []);
-    if (editingProductId === id) {
-      resetProductForm();
+    if (!window.confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+      return;
+    }
+    try {
+      await deleteProduct(id);
+      const latest = await getProducts();
+      setProducts(latest.data || []);
+      setToast(' Product deleted ');
+      if (editingProductId === id) {
+        resetProductForm();
+      }
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Failed to delete product.');
     }
   };
 
   if (loading) {
-    return <MainLayout><Spinner /></MainLayout>;
+    return <MainLayout backgroundStyle={pageBackgroundStyle}><Spinner /></MainLayout>;
   }
 
   return (
-    <MainLayout hideFooter>
+    <MainLayout backgroundStyle={pageBackgroundStyle}>
       <main className="max-w-[1600px] mx-auto w-full p-2 space-y-8">
         <header className="pt-2">
           <h1 className="text-2xl font-extrabold text-[#006a3b] tracking-tight">Analytics Overview</h1>
-          <p className="text-sm text-outline font-body">Welcome back, here's what's happening today.</p>
+          <p className="text-sm text-outline font-body">Welcome back!</p>
         </header>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -177,46 +248,106 @@ export default function AdminDashboardPage() {
               >
                 Add Product
               </button>
+              <button
+                className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${activeTab === 'inventory' ? 'bg-primary text-on-primary' : 'text-on-surface-variant'}`}
+                onClick={() => setActiveTab('inventory')}
+                type="button"
+              >
+                Manage Inventory
+              </button>
             </div>
           </div>
 
           {activeTab === 'orders' ? (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
-                <thead>
-                  <tr className="bg-surface-container-low/50">
-                    <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Order ID</th>
-                    <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Customer</th>
-                    <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Date</th>
-                    <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Total</th>
-                    <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders.map((order) => (
-                    <tr className="border-b border-surface-container" key={order.id}>
-                      <td className="px-6 py-4 font-semibold text-primary">#{order.id}</td>
-                      <td className="px-6 py-4 text-on-surface">{order.user?.name || 'Customer'}</td>
-                      <td className="px-6 py-4 text-on-surface-variant">{new Date(order.created_at).toLocaleDateString()}</td>
-                      <td className="px-6 py-4 text-on-surface font-semibold">${order.total_amount}</td>
-                      <td className="px-6 py-4">
-                        <select
-                          className="text-xs font-semibold bg-surface border-outline-variant/30 rounded-lg py-1.5 pl-3 pr-8 focus:ring-primary focus:border-primary"
-                          disabled={updatingOrderId === order.id}
-                          onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                          value={order.status}
-                        >
-                          {STATUS_OPTIONS.map((s) => (
-                            <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>
-                          ))}
-                        </select>
-                      </td>
-                    </tr>
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3 p-4 border-b border-surface-container bg-surface-container-low/40">
+                <input
+                  className="lg:col-span-2 rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm focus:ring-primary focus:border-primary"
+                  onChange={(e) => setOrderSearch(e.target.value)}
+                  placeholder="Search by order id or customer"
+                  type="text"
+                  value={orderSearch}
+                />
+                <select
+                  className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm focus:ring-primary focus:border-primary"
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  value={statusFilter}
+                >
+                  <option value="all">All statuses</option>
+                  {STATUS_OPTIONS.map((s) => (
+                    <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>
                   ))}
-                </tbody>
-              </table>
+                </select>
+                <div className="flex items-center gap-2">
+                  <input
+                    className="w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm focus:ring-primary focus:border-primary"
+                    min="0"
+                    onChange={(e) => setMinTotal(e.target.value)}
+                    placeholder="Min $"
+                    type="number"
+                    value={minTotal}
+                  />
+                  <input
+                    className="w-full rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm focus:ring-primary focus:border-primary"
+                    min="0"
+                    onChange={(e) => setMaxTotal(e.target.value)}
+                    placeholder="Max $"
+                    type="number"
+                    value={maxTotal}
+                  />
+                </div>
+                <select
+                  className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-2 text-sm focus:ring-primary focus:border-primary"
+                  onChange={(e) => setSortBy(e.target.value)}
+                  value={sortBy}
+                >
+                  <option value="newest">Newest first</option>
+                  <option value="oldest">Oldest first</option>
+                  <option value="total_high">Total high-low</option>
+                  <option value="total_low">Total low-high</option>
+                </select>
+              </div>
+
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-surface-container-low/50">
+                      <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Order ID</th>
+                      <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Customer</th>
+                      <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Date</th>
+                      <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Total</th>
+                      <th className="px-6 py-4 text-xs font-bold text-outline uppercase tracking-wider">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredOrders.map((order) => (
+                      <tr className="border-b border-surface-container" key={order.id}>
+                        <td className="px-6 py-4 font-semibold text-primary">#{order.id}</td>
+                        <td className="px-6 py-4 text-on-surface">{order.user?.name || 'Customer'}</td>
+                        <td className="px-6 py-4 text-on-surface-variant">{new Date(order.created_at).toLocaleDateString()}</td>
+                        <td className="px-6 py-4 text-on-surface font-semibold">${order.total_amount}</td>
+                        <td className="px-6 py-4">
+                          <select
+                            className="text-xs font-semibold bg-surface border-outline-variant/30 rounded-lg py-1.5 pl-3 pr-8 focus:ring-primary focus:border-primary"
+                            disabled={updatingOrderId === order.id}
+                            onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                            value={order.status}
+                          >
+                            {STATUS_OPTIONS.map((s) => (
+                              <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>
+                            ))}
+                          </select>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {!filteredOrders.length ? (
+                  <p className="px-6 py-10 text-center text-sm text-on-surface-variant">No orders match the current filters.</p>
+                ) : null}
+              </div>
             </div>
-          ) : (
+          ) : activeTab === 'products' ? (
             <div className="p-6">
               <header className="mb-6 flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -366,35 +497,135 @@ export default function AdminDashboardPage() {
                       </div>
                     </div>
                   </div>
+                </aside>
+              </div>
+            </div>
+          ) : (
+            <div className="p-6 space-y-4">
+              <header className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <h2 className="text-xl font-extrabold tracking-tight text-on-surface">Manage Inventory</h2>
+                  <p className="text-sm text-on-surface-variant">Edit and delete product records from your catalog.</p>
+                </div>
+                <button
+                  className="rounded-lg border border-outline-variant/25 px-4 py-2 text-sm font-semibold text-on-surface hover:bg-surface-container"
+                  onClick={() => {
+                    resetProductForm();
+                    setActiveTab('products');
+                  }}
+                  type="button"
+                >
+                  Add New Product
+                </button>
+              </header>
 
-                  <div className="bg-surface rounded-xl shadow-[0_20px_50px_rgba(43,47,49,0.05)] overflow-hidden border border-outline-variant/10">
-                    <div className="p-5 border-b border-surface-container-low flex items-center justify-between">
-                      <h3 className="text-sm font-bold text-on-surface">Dashboard Products</h3>
-                    </div>
-                    <div className="max-h-[480px] overflow-y-auto">
-                      {products.map((product) => (
-                        <div className="p-4 border-b border-surface-container-low last:border-0" key={product.id}>
-                          <p className="font-semibold text-sm">{product.name}</p>
-                          <p className="text-xs text-on-surface-variant">${product.price?.toFixed?.(2) || product.price} · Stock {product.quantity}</p>
-                          <div className="mt-2 flex items-center gap-2">
-                            <button className="rounded-md border border-outline-variant/25 px-2 py-1 text-xs font-semibold text-on-surface" onClick={() => startEditProduct(product)} type="button">
+              <div className="mb-4">
+                <input
+                  className="rounded-lg border border-outline-variant/30 bg-surface px-4 py-2.5 text-sm w-full focus:ring-primary focus:border-primary"
+                  onChange={(e) => {
+                    setInventorySearch(e.target.value);
+                    setInventoryPage(1);
+                  }}
+                  placeholder="Search product by name, description, or category..."
+                  type="text"
+                  value={inventorySearch}
+                />
+              </div>
+
+              <div className="overflow-x-auto rounded-xl border border-outline-variant/15">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="bg-surface-container-low/60">
+                      <th className="px-5 py-3 text-xs font-bold text-outline uppercase tracking-wider">Product</th>
+                      <th className="px-5 py-3 text-xs font-bold text-outline uppercase tracking-wider">Category</th>
+                      <th className="px-5 py-3 text-xs font-bold text-outline uppercase tracking-wider">Price</th>
+                      <th className="px-5 py-3 text-xs font-bold text-outline uppercase tracking-wider">Stock</th>
+                      <th className="px-5 py-3 text-xs font-bold text-outline uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginatedInventory.map((product) => (
+                      <tr className="border-b border-surface-container" key={product.id}>
+                        <td className="px-5 py-4 font-semibold text-on-surface">{product.name}</td>
+                        <td className="px-5 py-4 text-sm text-on-surface-variant">{categories.find((category) => category.id === product.category_id)?.name || 'Uncategorized'}</td>
+                        <td className="px-5 py-4 text-sm text-on-surface">${product.price?.toFixed?.(2) || product.price}</td>
+                        <td className="px-5 py-4 text-sm text-on-surface">{product.quantity}</td>
+                        <td className="px-5 py-4 text-right">
+                          <div className="inline-flex items-center gap-2">
+                            <button
+                              className="rounded-md border border-outline-variant/25 px-3 py-1.5 text-xs font-semibold text-on-surface"
+                              onClick={() => startEditProduct(product)}
+                              type="button"
+                            >
                               Edit
                             </button>
                             <button
                               aria-label="Delete product"
-                              className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-red-300 text-red-600 hover:bg-red-50"
+                              className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-red-300 text-red-600 hover:bg-red-50"
                               onClick={() => handleDeleteProduct(product.id)}
                               type="button"
                             >
                               <span className="material-symbols-outlined text-sm">delete</span>
                             </button>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </aside>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {!filteredInventory.length ? (
+                  <p className="px-6 py-10 text-center text-sm text-on-surface-variant">
+                    {inventorySearch ? 'No products match your search.' : 'No inventory items available.'}
+                  </p>
+                ) : null}
               </div>
+
+              {filteredInventory.length > 0 ? (
+                <div className="mt-4 flex items-center justify-between">
+                  <p className="text-xs text-on-surface-variant">
+                    Showing {((inventoryPage - 1) * itemsPerPage) + 1} to {Math.min(inventoryPage * itemsPerPage, filteredInventory.length)} of {filteredInventory.length} products
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <button
+                      className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-1.5 text-sm font-medium disabled:opacity-50"
+                      disabled={inventoryPage === 1}
+                      onClick={() => setInventoryPage(Math.max(1, inventoryPage - 1))}
+                      type="button"
+                    >
+                      Previous
+                    </button>
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: totalInventoryPages }).map((_, idx) => {
+                        const page = idx + 1;
+                        const isVisible = Math.abs(page - inventoryPage) <= 1 || page === 1 || page === totalInventoryPages;
+                        if (!isVisible && idx > 0 && idx < totalInventoryPages - 1) return null;
+                        return (
+                          <button
+                            key={page}
+                            className={`rounded-lg px-2.5 py-1.5 text-xs font-semibold ${
+                              page === inventoryPage
+                                ? 'bg-primary text-on-primary'
+                                : 'border border-outline-variant/30 bg-surface hover:bg-surface-container'
+                            }`}
+                            onClick={() => setInventoryPage(page)}
+                            type="button"
+                          >
+                            {page}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <button
+                      className="rounded-lg border border-outline-variant/30 bg-surface px-3 py-1.5 text-sm font-medium disabled:opacity-50"
+                      disabled={inventoryPage === totalInventoryPages}
+                      onClick={() => setInventoryPage(Math.min(totalInventoryPages, inventoryPage + 1))}
+                      type="button"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              ) : null}
             </div>
           )}
         </div>
