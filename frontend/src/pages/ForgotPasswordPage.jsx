@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import grocartLogo from '../assets/grocart-logo.png';
+import grocartLogo from '../assets/grocart-logo1.png';
 import {
   requestPasswordReset,
   verifyPasswordResetOtp,
@@ -155,7 +155,15 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="font-body text-[#0b361d] min-h-screen flex flex-col bg-white">
+    <div
+      className="font-body text-[#0b361d] min-h-screen flex flex-col bg-white"
+      style={{
+        backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
       <main className="flex-grow flex items-center justify-center px-4 py-8 sm:px-6">
         <div className="w-full max-w-md">
           <div className="flex flex-col items-center mb-10">

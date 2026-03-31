@@ -12,6 +12,9 @@ export default function CartPage() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const pageBackgroundStyle = {
+    backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
+  };
 
   useEffect(() => {
     if (location.state?.openCheckoutModal) {
@@ -20,11 +23,11 @@ export default function CartPage() {
     }
   }, [location.state, navigate]);
 
-  if (loading) return <MainLayout><Spinner /></MainLayout>;
+  if (loading) return <MainLayout backgroundStyle={pageBackgroundStyle}><Spinner /></MainLayout>;
 
   if (cart.items.length === 0 && !checkoutOpen) {
     return (
-      <MainLayout>
+      <MainLayout backgroundStyle={pageBackgroundStyle}>
         <div className="max-w-3xl mx-auto py-20 text-center">
           <div className="bg-surface-container-lowest rounded-2xl p-10 shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
             <span className="material-symbols-outlined text-6xl text-outline-variant mb-4">shopping_basket</span>
@@ -46,13 +49,15 @@ export default function CartPage() {
     );
   }
 
+  console.log(cart);
+
   return (
-    <MainLayout>
+    <MainLayout backgroundStyle={pageBackgroundStyle}>
       <div className="max-w-7xl mx-auto px-2 font-body">
         <header className="mb-10 flex items-start justify-between gap-4">
           <div>
             <h1 className="text-3xl md:text-4xl font-extrabold text-on-surface tracking-tight mb-2">Shopping Cart</h1>
-            <p className="text-on-surface-variant font-medium">You have {cart.items.length} item(s) in your selection.</p>
+            <p className="text-on-surface-variant font-medium">You have {cart.total_items} item(s) in your selection.</p>
           </div>
           <button onClick={emptyCart} className="text-sm text-error hover:text-error-dim font-semibold">
             Clear Cart
