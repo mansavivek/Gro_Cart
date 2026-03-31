@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import grocartLogo from '../assets/grocart-logo.png'; 
+import grocartLogo from '../assets/grocart-logo1.png'; 
 
 export default function LoginPage() {
   const { login, loading, error } = useAuth();

@@ -20,6 +20,12 @@ export default function OrderHistoryPage() {
   const [sortBy, setSortBy] = useState('newest');
   const [search, setSearch] = useState('');
   const [expandedOrders, setExpandedOrders] = useState({});
+  const pageBackgroundStyle = {
+    backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+  };
 
   const visibleOrders = useMemo(() => {
     let list = [...orders];
@@ -52,7 +58,7 @@ export default function OrderHistoryPage() {
   }, [orders, search, sortBy, statusFilter]);
 
   return (
-    <MainLayout>
+    <MainLayout backgroundStyle={pageBackgroundStyle}>
       <main className="pt-2 pb-12 px-2 max-w-5xl mx-auto font-body">
         <section className="mb-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">

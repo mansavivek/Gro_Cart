@@ -22,6 +22,9 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState('');
   const { products, loading: productsLoading } = useProducts(selectedCategory);
   const { categories, loading: categoriesLoading } = useCategories();
+  const pageBackgroundStyle = {
+    backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
+  };
 
   // Filter products by search query
   const filteredProducts = products.filter(
@@ -32,7 +35,7 @@ export default function HomePage() {
 
   return (
     <MainLayout
-      hideFooter
+      backgroundStyle={pageBackgroundStyle}
       contentClassName="p-0"
       navbarProps={{
         showSearch: true,
@@ -40,8 +43,8 @@ export default function HomePage() {
         onSearchChange: setSearchQuery,
       }}
     >
-      <div className="flex flex-1 overflow-hidden">
-        <aside className="hidden lg:flex w-64 flex-col border-r border-gray-200 bg-white p-6 sticky top-[65px] h-[calc(100vh-65px)]">
+      <div className="flex flex-1">
+        <aside className="hidden lg:flex w-64 flex-col border-r border-gray-200 bg-white p-6 sticky top-[65px] h-screen overflow-y-auto flex-shrink-0">
           <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-4 px-4">Categories</p>
           <nav className="flex flex-col gap-1">
             <button
@@ -156,25 +159,6 @@ export default function HomePage() {
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
-            )}
-
-            {/* Recommended Section */}
-            {filteredProducts.length > 0 && (
-              <section className="pt-8 border-t border-outline-variant/10">
-                <div className="mb-6">
-                  <p className="text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-1">
-                    Just For You
-                  </p>
-                  <h3 className="text-2xl font-bold tracking-tight text-[#111813]">
-                    Frequently Paired With Your Items
-                  </h3>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                  {products.slice(0, 3).map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                  ))}
-                </div>
-              </section>
             )}
           </section>
           </div>

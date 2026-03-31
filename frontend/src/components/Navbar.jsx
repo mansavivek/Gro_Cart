@@ -35,8 +35,8 @@ export default function Navbar({ showSearch = false, searchQuery = '', onSearchC
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-gray-200 px-6 lg:px-10 py-3">
-      <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-8">
-        <div className="flex items-center gap-12 flex-1">
+      <div className="flex w-full items-center justify-between gap-8">
+        <div className="flex items-center gap-16 flex-1">
           <Link to="/" className="flex items-center gap-2 text-primary">
             <img
               alt="Gro-Cart Logo"
@@ -76,7 +76,7 @@ export default function Navbar({ showSearch = false, searchQuery = '', onSearchC
 
               <div className="h-6 w-px bg-gray-200 hidden lg:block" />
 
-              <div className="flex items-center gap-3" ref={menuRef}>
+              <div className="relative flex items-center gap-3" ref={menuRef}>
                 <Link
                   to="/cart"
                   className={`relative rounded-full p-2 transition-colors ${cartActive ? 'text-primary bg-primary/10' : 'text-gray-600 hover:bg-gray-100'}`}
@@ -85,7 +85,7 @@ export default function Navbar({ showSearch = false, searchQuery = '', onSearchC
                   <span className="material-symbols-outlined">shopping_cart</span>
                   {cart.items.length > 0 && (
                     <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
-                      {cart.items.length}
+                      {cart.total_items}
                     </span>
                   )}
                 </Link>
@@ -102,7 +102,7 @@ export default function Navbar({ showSearch = false, searchQuery = '', onSearchC
                 </button>
 
                 {menuOpen && (
-                  <div className="absolute right-0 top-full mt-3 w-52 rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
+                  <div className="absolute right-0 top-full mt-0 w-52 rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
                     <button
                       type="button"
                       className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-50"
