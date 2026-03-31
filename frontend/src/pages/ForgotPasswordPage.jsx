@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import grocartLogo from '../assets/grocart-logo.png';
+import grocartLogo from '../assets/grocart-logo1.png';
 import {
   requestPasswordReset,
   verifyPasswordResetOtp,

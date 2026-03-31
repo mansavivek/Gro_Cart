@@ -23,6 +23,9 @@ export default function AddressesPage() {
   const [selectedId, setSelectedId] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
+  const pageBackgroundStyle = {
+    backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -92,7 +95,7 @@ export default function AddressesPage() {
   };
 
   return (
-    <MainLayout>
+    <MainLayout backgroundStyle={pageBackgroundStyle}>
       <div className="mx-auto max-w-5xl px-2 py-2">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
