@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gro-Cart | Product Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#aaaeb0",
+              "on-tertiary-container": "#583400",
+              "on-primary": "#ccffd8",
+              "outline": "#737779",
+              "on-error": "#ffefee",
+              "tertiary": "#835000",
+              "secondary": "#515c6f",
+              "secondary-fixed": "#d8e3fa",
+              "surface-container-highest": "#d8dee1",
+              "on-primary-fixed-variant": "#006c3c",
+              "on-secondary-container": "#475265",
+              "primary-fixed-dim": "#8aebac",
+              "on-secondary-fixed-variant": "#515c6f",
+              "on-secondary": "#eef2ff",
+              "tertiary-fixed": "#fcb259",
+              "primary": "#006a3b",
+              "tertiary-container": "#fcb259",
+              "on-error-container": "#570008",
+              "error": "#b31b25",
+              "on-surface-variant": "#585c5e",
+              "surface-tint": "#006a3b",
+              "inverse-primary": "#98fab9",
+              "error-container": "#fb5151",
+              "tertiary-fixed-dim": "#eca54d",
+              "background": "#f4f7f9",
+              "secondary-dim": "#455063",
+              "on-tertiary": "#fff0e4",
+              "primary-dim": "#005c33",
+              "surface-container": "#e4e9eb",
+              "primary-fixed": "#98fab9",
+              "surface-container-low": "#edf1f3",
+              "primary-container": "#98fab9",
+              "error-dim": "#9f0519",
+              "surface-container-high": "#dee3e6",
+              "secondary-container": "#d8e3fa",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#006035",
+              "on-tertiary-fixed": "#3c2200",
+              "inverse-surface": "#0b0f10",
+              "surface": "#f4f7f9",
+              "secondary-fixed-dim": "#cad5ec",
+              "surface-bright": "#f4f7f9",
+              "on-surface": "#2b2f31",
+              "tertiary-dim": "#734500",
+              "on-background": "#2b2f31",
+              "inverse-on-surface": "#9a9d9f",
+              "surface-variant": "#d8dee1",
+              "on-secondary-fixed": "#354052",
+              "on-primary-fixed": "#004c29",
+              "surface-dim": "#cfd5d8",
+              "on-tertiary-fixed-variant": "#653c00"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-md shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<nav class="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-xl font-bold text-[#006a3b] dark:text-emerald-500 font-headline">
+                    Gro-Cart
+                </div>
+<div class="hidden md:flex items-center gap-6 font-headline text-sm font-medium tracking-tight">
+<a class="text-slate-500 hover:text-[#006a3b] transition-colors duration-200" href="#">Home</a>
+<a class="text-slate-500 hover:text-[#006a3b] transition-colors duration-200" href="#">Deals</a>
+<a class="text-slate-500 hover:text-[#006a3b] transition-colors duration-200" href="#">Orders</a>
+<a class="text-slate-500 hover:text-[#006a3b] transition-colors duration-200" href="#">Recipes</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:text-[#006a3b] active:scale-95 transition-transform">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-[#006a3b] active:scale-95 transition-transform relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 text-slate-500 hover:text-[#006a3b] active:scale-95 transition-transform">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="pt-24 pb-32 max-w-7xl mx-auto px-6">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-8 text-xs font-medium uppercase tracking-wider text-slate-400 font-label">
+<a class="hover:text-primary transition-colors" href="#">Shop</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Pantry</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface-variant">Organic Cold Pressed Oils</span>
+</nav>
+<!-- Product Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+<!-- Left: Product Image Gallery -->
+<div class="lg:col-span-7 space-y-4">
+<div class="aspect-square rounded-xl bg-surface-container-low overflow-hidden group">
+<img alt="Main Product" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Premium glass bottle of golden olive oil on a rustic wooden table with fresh rosemary and olives in soft morning sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhgLZouxhdh0g_QYjuWTjAdQb6YC_7DJo3Z7z6PMcdaZ_vAo-0gkvptRNHYMa-ANxH-7cAZECQYb6RI046-OfwJrQ4Li6YiuY2MBCCA5UBTcWOKsmKq971QTm8IjHhzJkc0tfYTRp6fM4G12f1QNowol-9lYs3uSoljXu6sFuVpwuxXbyKLbrAV1aW4Tf5pHoNA9wBnDOKYo9JxxHXnYrRLw5Zv704o17TDQvdkeKhfeFLLOPbTDBAJUcLtA41l6aLibeYf2WI1Q"/>
+</div>
+<div class="grid grid-cols-4 gap-4">
+<div class="aspect-square rounded-lg bg-surface-container-low overflow-hidden cursor-pointer ring-2 ring-primary">
+<img alt="Detail 1" class="w-full h-full object-cover" data-alt="Close-up of extra virgin olive oil being poured into a small ceramic bowl showing rich texture and clarity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA75qcRmX2JEea7xcqre8W3FwaMAT7SKMu2Fez-Hk50BQvXD5bf93HqCyyiV7LSCC8uMm7_s5qiypMW0wNYnchy0wD9JyQ6A4rMitrtd8hWG-SMnwO9AaHnofDdD3eBdEquFgZeijkmvAN436rG-qw4pY03YdV0yHhCQHVohThKL2SLjwZQwXg0OCC2iMa1l0Ye0_KiP-4Et9iCTpdGUuB5pmx0hwyrzkGr7lRNusILTKITVIeYdCnZReYkf8CNUH5QtEHuTf5SKg"/>
+</div>
+<div class="aspect-square rounded-lg bg-surface-container-low overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
+<img alt="Detail 2" class="w-full h-full object-cover" data-alt="Minimalist product labeling on a dark green glass bottle showcasing elegant typography and organic certification logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLXH8o81AtHcnv1IUWeTSv9l62f1N2yA6iiL3JAT4EYbCKqhQ1iUCwmulqvuX4nUlFvPbyHlGOW27cjzQcblbmdToL0YSZcUe5e801dV1Uzmg9e4TZk1Wagixh2XnJs2s2ILSOYGp8eCs8U7T295aM14wCNqZQaHuKFLr63TyVTiWWwRqMxaAoADJKdv4vsLpgfbIJG4UkJcRQPStqThuDnRw7cNrN7JoVsxCtHtULXVxtPwoOkTQvzy1lBUsqdMPdkL8Ti_0SoA"/>
+</div>
+<div class="aspect-square rounded-lg bg-surface-container-low overflow-hidden cursor-pointer hover:opacity-80 transition-opacity">
+<img alt="Detail 3" class="w-full h-full object-cover" data-alt="Artisanal glass bottles arranged on a shelf in a boutique grocery store with warm ambient lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNssN3Z9d_wERqV2XfxQU5seRgrloHl22eqJI0B3pR8d9XcHZ5SyjvkLKfyBw20LWKIHFeD_fdBX26okxDxD4aMr_PjV2CpCZMKTnpfmtztKfuBFz8CsY44RTdrlil9Urp5rHeW0dmixUhwGeitG3kUNeXaHPIr0YiqyATQ5nYwz7zswBdaiJxnickOySSx8Bwl5f_-WszVpRJFLDZWHQXI2PXWh78OcdAWkeP_9XjZXa5UvVYIoMPtjG6ho1l_umUYFtq3zT0Eg"/>
+</div>
+<div class="aspect-square rounded-lg bg-surface-container-low overflow-hidden cursor-pointer hover:opacity-80 transition-opacity flex items-center justify-center border-2 border-dashed border-outline-variant">
+<span class="material-symbols-outlined text-outline">play_circle</span>
+</div>
+</div>
+</div>
+<!-- Right: Product Details -->
+<div class="lg:col-span-5 space-y-8">
+<div>
+<div class="flex items-center gap-3 mb-4">
+<span class="px-3 py-1 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold uppercase tracking-widest rounded-full">Organic</span>
+<span class="flex items-center gap-1 text-primary text-xs font-bold">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            In Stock
+                        </span>
+</div>
+<h1 class="font-headline text-4xl font-extrabold text-on-surface leading-tight mb-2">Artisan Cold-Pressed Extra Virgin Olive Oil</h1>
+<div class="flex items-center gap-4 mb-6">
+<div class="flex items-center">
+<span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-outline-variant text-lg">star</span>
+</div>
+<span class="text-sm font-medium text-on-surface-variant">(124 Reviews)</span>
+</div>
+<div class="flex items-baseline gap-3">
+<span class="text-3xl font-headline font-black text-primary">$24.99</span>
+<span class="text-lg text-outline-variant line-through decoration-error/40">$32.00</span>
+<span class="text-xs font-bold text-error bg-error-container/10 px-2 py-0.5 rounded">SAVE 22%</span>
+</div>
+</div>
+<p class="text-on-surface-variant leading-relaxed">
+                    Harvested from the high-altitude groves of Andalusia, our single-estate olive oil is cold-pressed within 4 hours of picking. It features a robust profile with notes of green tomato and a peppery finish, perfect for finishing salads or dipping crusty bread.
+                </p>
+<!-- Nutrition Table -->
+<div class="bg-surface-container-low rounded-xl p-6 border border-white/40">
+<h3 class="font-headline text-sm font-bold uppercase tracking-wider mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">nutrition</span>
+                        Nutrition Information
+                    </h3>
+<div class="space-y-3">
+<div class="flex justify-between py-2 border-b border-outline-variant/10">
+<span class="text-sm text-on-surface-variant">Serving Size</span>
+<span class="text-sm font-bold">1 tbsp (15ml)</span>
+</div>
+<div class="flex justify-between py-2 border-b border-outline-variant/10">
+<span class="text-sm text-on-surface-variant">Calories</span>
+<span class="text-sm font-bold">120</span>
+</div>
+<div class="flex justify-between py-2 border-b border-outline-variant/10">
+<span class="text-sm text-on-surface-variant">Total Fat</span>
+<span class="text-sm font-bold">14g (18% DV)</span>
+</div>
+<div class="flex justify-between py-2">
+<span class="text-sm text-on-surface-variant">Sodium</span>
+<span class="text-sm font-bold">0mg</span>
+</div>
+</div>
+</div>
+<!-- Action Controls -->
+<div class="space-y-4 pt-4">
+<div class="flex items-center gap-4">
+<div class="flex items-center bg-surface-container-high rounded-lg px-2">
+<button class="p-3 text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span class="w-12 text-center font-bold font-headline">1</span>
+<button class="p-3 text-primary hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<button class="flex-1 bg-primary text-on-primary font-headline font-bold py-4 px-8 rounded-lg shadow-lg shadow-primary/20 hover:bg-primary-dim active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">shopping_bag</span>
+                            Add to Cart
+                        </button>
+</div>
+<button class="w-full py-3 border border-outline-variant/30 rounded-lg text-sm font-semibold text-on-surface-variant hover:bg-surface-container-low transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">favorite</span>
+                        Save to Wishlist
+                    </button>
+</div>
+</div>
+</div>
+<!-- Reviews Placeholder Section -->
+<section class="mt-24">
+<div class="flex justify-between items-end mb-10 border-b border-outline-variant/20 pb-6">
+<div>
+<h2 class="font-headline text-3xl font-extrabold mb-2">Customer Experience</h2>
+<p class="text-on-surface-variant">Verified buyers share their thoughts on this harvest.</p>
+</div>
+<button class="text-primary font-bold hover:underline">Write a Review</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Review Card 1 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/5">
+<div class="flex items-center gap-1 text-tertiary mb-4">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface mb-6 italic">"The freshest olive oil I've ever tasted. The peppery finish is exquisite on sourdough."</p>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">EM</div>
+<div>
+<p class="text-sm font-bold">Elena Martinez</p>
+<p class="text-xs text-on-surface-variant">Verified Buyer • 2 days ago</p>
+</div>
+</div>
+</div>
+<!-- Review Card 2 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/5">
+<div class="flex items-center gap-1 text-tertiary mb-4">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface mb-6 italic">"Premium quality packaging and even better oil. Worth every penny for special dinners."</p>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">JD</div>
+<div>
+<p class="text-sm font-bold">Julian Davies</p>
+<p class="text-xs text-on-surface-variant">Verified Buyer • 1 week ago</p>
+</div>
+</div>
+</div>
+<!-- Review Card 3 -->
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border border-outline-variant/5">
+<div class="flex items-center gap-1 text-tertiary mb-4">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+</div>
+<p class="text-on-surface mb-6 italic">"Excellent for dressings. A bit bold for light frying but that's exactly what I wanted."</p>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">SH</div>
+<div>
+<p class="text-sm font-bold">Sarah H.</p>
+<p class="text-xs text-on-surface-variant">Verified Buyer • 2 weeks ago</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- You May Also Like (Asymmetric Layout) -->
+<section class="mt-32">
+<h2 class="font-headline text-3xl font-extrabold mb-12">You may also like</h2>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Related Item 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] rounded-xl bg-surface-container-lowest overflow-hidden mb-4 relative shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<img alt="Balsamic Vinegar" class="w-full h-full object-cover" data-alt="Aged balsamic vinegar in a sleek narrow bottle resting on a stone block with soft atmospheric lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABo2SOjQrZTdVC4rj9LYVtHEIdGvbLTYvFYa5kvHDBPRyeaFwHhTm8sOPTzDA4jdceKquHq9pCyEu8OgnpurrJ2KzQPZMI2VlTJ2DK1SJMwHU5Pza1flUVhX4BD55epkbmkhPBTLgqFTDNi7cs3oICNcWAVJcSwnLxKd23VW3OEDKuIkQBsg9tKwZibXEiqw85YgGnRA_ACLn4Dys28E44cjdRkfO7d83WctwmFGNqps6C4vwDFmycCHYujexNxAe-GNkLN9MVeg"/>
+<button class="absolute bottom-4 right-4 bg-primary text-white p-3 rounded-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+<p class="text-xs font-bold text-primary uppercase tracking-widest font-label mb-1">Aged Balsamic</p>
+<h3 class="font-bold text-on-surface truncate">Modena Reserve Vinegar</h3>
+<p class="text-primary font-black mt-1">$18.50</p>
+</div>
+<!-- Related Item 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] rounded-xl bg-surface-container-lowest overflow-hidden mb-4 relative shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<img alt="Sea Salt" class="w-full h-full object-cover" data-alt="Handcrafted ceramic sea salt cellar with a wooden spoon and large flaky white crystals of gourmet sea salt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtC7onqCes9KjRQWC6KU4sWP8a8Tyv5sK1T17uJhZnHrDfV10sOHlVugEB_YGEWkkLkqbf7jpKaYspupGWNJZSq1oZs4aBheEKVoqzI48wWCOLYoVaRMHLl8n2ghNjsju6rtiu2U9LgcKnihmYkxrgOGlXm5dV8tI35C2mjyxlf2luj5IAjDYPYFUyW7KibXt2WNCsYyFLUnuXHXRwAmvtiOIhznKLof2SU6OAN5QU6LavM2tc0_fbOfjg6cKrq4TeHBkGN2hb9Q"/>
+<button class="absolute bottom-4 right-4 bg-primary text-white p-3 rounded-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+<p class="text-xs font-bold text-primary uppercase tracking-widest font-label mb-1">Seasoning</p>
+<h3 class="font-bold text-on-surface truncate">Maldon Smoked Sea Salt</h3>
+<p class="text-primary font-black mt-1">$9.00</p>
+</div>
+<!-- Related Item 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] rounded-xl bg-surface-container-lowest overflow-hidden mb-4 relative shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<img alt="Herbs" class="w-full h-full object-cover" data-alt="Bundle of dried organic oregano tied with twine on a white plaster background in minimalist editorial style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqCtd2s0MgOB0Q5Ah3-9OASUERIcFxgxpdbnRg0r3NVubTuxqj3fQu0MT2zxh3lViYJVZQYHa_gnnJRjQ1ifTBizfldXfEus3MjsFzlo1UvfRKWB9BNAU11JviKutPNDsPRu9xlAuo67awkh9bAg_9I4qHRhU4z-jgKAy8ijOxLD4XRVWB6EgVFggFGitJWC5a7RCvH6AMPvJzvtF3PDvWUTJSfDX1G7hu_GI4jqbxsuHyQPT0ZKzLvoqKU5S1dgbWGNJc5jJMCg"/>
+<button class="absolute bottom-4 right-4 bg-primary text-white p-3 rounded-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+<p class="text-xs font-bold text-primary uppercase tracking-widest font-label mb-1">Dried Herbs</p>
+<h3 class="font-bold text-on-surface truncate">Wild Mountain Oregano</h3>
+<p class="text-primary font-black mt-1">$7.25</p>
+</div>
+<!-- Related Item 4 -->
+<div class="group cursor-pointer">
+<div class="aspect-[4/5] rounded-xl bg-surface-container-lowest overflow-hidden mb-4 relative shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-[0_20px_50px_rgba(43,47,49,0.05)]">
+<img alt="Bread" class="w-full h-full object-cover" data-alt="Artisan sourdough loaf with beautiful scoring on a dark wooden board with flour dusting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjfFK05O_rCmntI4GXExSCb25U2RD5U4mS3BW4nc9bE16bV_1jeTCIwlXvqdSyThrh5_1Hgc84_5qBovCM1dNmwOFnLzbCbpyTxpdfQ3s7Rugv70LHwJtZVmE_0r8JBbpydYGOkOrUVJIXSuSnCqDAzwvIuJde9wRNRjjN0VZGSk2uwH7yYutio6Pphc5XGqla_I65WSOJVGSt9NujlktIvijl9h7SZUmIUNqKISzF2UUkBLuEMHu2c6esWXNe6UulJPDTf0jV6A"/>
+<button class="absolute bottom-4 right-4 bg-primary text-white p-3 rounded-lg opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+<p class="text-xs font-bold text-primary uppercase tracking-widest font-label mb-1">Bakery</p>
+<h3 class="font-bold text-on-surface truncate">Signature Sourdough</h3>
+<p class="text-primary font-black mt-1">$6.50</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 max-w-7xl mx-auto">
+<div class="mb-8 md:mb-0">
+<span class="font-manrope font-bold text-[#006a3b] text-xl">Gro-Cart</span>
+<p class="font-inter text-xs text-slate-500 dark:text-slate-400 mt-2">© 2024 Gro-Cart Marketplace. The Organic Curator.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-inter text-xs text-slate-500 hover:text-[#006a3b] transition-colors" href="#">About Us</a>
+<a class="font-inter text-xs text-slate-500 hover:text-[#006a3b] transition-colors" href="#">Sustainability</a>
+<a class="font-inter text-xs text-slate-500 hover:text-[#006a3b] transition-colors" href="#">Privacy Policy</a>
+<a class="font-inter text-xs text-slate-500 hover:text-[#006a3b] transition-colors" href="#">Terms of Service</a>
+<a class="font-inter text-xs text-slate-500 hover:text-[#006a3b] transition-colors" href="#">Contact</a>
+</div>
+</div>
+</footer>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-safe pt-2 bg-white dark:bg-slate-950 z-50 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-500 py-3" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 py-3" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Categories</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 py-3" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-emerald-50 dark:bg-emerald-900/30 text-[#006a3b] dark:text-emerald-300 rounded-xl px-3 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_cart</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-500 py-3" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-inter text-[10px] font-semibold uppercase tracking-wider mt-1">Account</span>
+</a>
+</nav>
+</body></html>
