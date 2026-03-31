@@ -1,14 +1,28 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Spinner from '../components/ui/Spinner';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import CheckoutModal from '../components/CheckoutModal';
 
 export default function CartPage() {
-  const { cart, loading, updateItem, removeItem, emptyCart } = useCart();
+  const { cart, loading, updateItem, removeItem, emptyCart, fetchCart } = useCart();
+  const { user } = useAuth();
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state?.openCheckoutModal) {
+      setCheckoutOpen(true);
+      navigate('/cart', { replace: true, state: null });
+    }
+  }, [location.state, navigate]);
 
   if (loading) return <MainLayout><Spinner /></MainLayout>;
 
-  if (cart.items.length === 0) {
+  if (cart.items.length === 0 && !checkoutOpen) {
     return (
       <MainLayout>
         <div className="max-w-3xl mx-auto py-20 text-center">
@@ -21,6 +35,13 @@ export default function CartPage() {
             </Link>
           </div>
         </div>
+        <CheckoutModal
+          open={checkoutOpen}
+          onClose={() => setCheckoutOpen(false)}
+          cart={cart}
+          fetchCart={fetchCart}
+          user={user}
+        />
       </MainLayout>
     );
   }
@@ -110,20 +131,31 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <Link className="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary-dim active:scale-[0.98] transition-all" to="/checkout">
+              <button
+                className="w-full bg-primary text-on-primary py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:bg-primary-dim active:scale-[0.98] transition-all"
+                onClick={() => setCheckoutOpen(true)}
+                type="button"
+              >
                 Proceed to Checkout
                 <span className="material-symbols-outlined">arrow_forward</span>
-              </Link>
+              </button>
 
               <div className="mt-6 flex items-center justify-center gap-2 text-outline-variant">
                 <span className="material-symbols-outlined text-sm">lock</span>
                 <span className="text-xs font-medium uppercase tracking-tighter">Secure SSL Encryption</span>
               </div>
 
-          </div>
+            </div>
           </aside>
         </div>
       </div>
+      <CheckoutModal
+        open={checkoutOpen}
+        onClose={() => setCheckoutOpen(false)}
+        cart={cart}
+        fetchCart={fetchCart}
+        user={user}
+      />
     </MainLayout>
   );
 }

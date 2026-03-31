@@ -19,6 +19,7 @@ export default function OrderHistoryPage() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
   const [search, setSearch] = useState('');
+  const [expandedOrders, setExpandedOrders] = useState({});
 
   const visibleOrders = useMemo(() => {
     let list = [...orders];
@@ -100,11 +101,7 @@ export default function OrderHistoryPage() {
                   <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
                     <div className="flex gap-4">
                       <div className="h-16 w-16 bg-surface-container-low rounded-lg flex items-center justify-center overflow-hidden">
-                        {order.items?.[0]?.product?.image_url ? (
-                          <img alt="order item" className="h-full w-full object-cover" src={order.items[0].product.image_url} />
-                        ) : (
-                          <span className="material-symbols-outlined text-on-surface-variant">shopping_bag</span>
-                        )}
+                        <span className="material-symbols-outlined text-primary">local_grocery_store</span>
                       </div>
                       <div>
                         <h3 className="font-headline font-bold text-lg text-on-surface">Order #{order.id}</h3>
@@ -137,12 +134,22 @@ export default function OrderHistoryPage() {
                   </div>
 
                   {order.items?.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {order.items.map((item) => (
-                        <span key={item.id} className="text-xs bg-surface-container-low px-2.5 py-1 rounded-full text-on-surface-variant">
-                          {item.product?.name} x {item.quantity}
-                        </span>
+                    <div className="mt-4 rounded-lg bg-surface-container-low p-3">
+                      {(expandedOrders[order.id] ? order.items : order.items.slice(0, 3)).map((item) => (
+                        <div className="mb-2 flex items-center justify-between text-sm last:mb-0" key={item.id}>
+                          <span className="text-on-surface-variant">{item.product?.name} x {item.quantity}</span>
+                          <span className="font-semibold text-on-surface">${((item.unit_price || item.product?.price || 0) * item.quantity).toFixed(2)}</span>
+                        </div>
                       ))}
+                      {order.items.length > 3 ? (
+                        <button
+                          className="mt-2 text-xs font-semibold text-primary hover:text-primary-dim"
+                          onClick={() => setExpandedOrders((prev) => ({ ...prev, [order.id]: !prev[order.id] }))}
+                          type="button"
+                        >
+                          {expandedOrders[order.id] ? 'View Less' : 'View All Items'}
+                        </button>
+                      ) : null}
                     </div>
                   )}
                 </div>

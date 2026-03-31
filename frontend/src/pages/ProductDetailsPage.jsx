@@ -118,20 +118,24 @@ export default function ProductDetailsPage() {
           <div className="lg:col-span-5 space-y-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="px-3 py-1 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold uppercase tracking-widest rounded-full">Organic</span>
-                <span className="flex items-center gap-1 text-primary text-xs font-bold">
-                  <span className="material-symbols-outlined text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                  Verified Product
+                <span className="px-3 py-1 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold uppercase tracking-widest rounded-full">
+                  {product.category?.name || 'Groceries'}
                 </span>
+                {inStock ? (
+                  <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">IN STOCK</span>
+                ) : (
+                  <span className="text-xs font-bold text-error bg-error-container/20 px-2 py-0.5 rounded-full">OUT OF STOCK</span>
+                )}
               </div>
               <h1 className="font-headline text-4xl font-extrabold text-on-surface leading-tight mb-2">{product.name}</h1>
+              <div className="mb-3 flex items-center gap-2 text-sm">
+                <span className="material-symbols-outlined text-amber-500" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                <span className="font-semibold text-on-surface">4.8</span>
+                <span className="text-on-surface-variant">(248 reviews)</span>
+              </div>
               <div className="flex items-baseline gap-3">
                 <span className="text-3xl font-headline font-black text-primary">${product.price.toFixed(2)}</span>
-                {!inStock ? (
-                  <span className="text-xs font-bold text-error bg-error-container/10 px-2 py-0.5 rounded">OUT OF STOCK</span>
-                ) : (
-                  <span className="text-xs font-bold text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded">{product.quantity} available</span>
-                )}
+                <span className="text-xs text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded">Fresh quality guaranteed</span>
               </div>
             </div>
 
@@ -148,10 +152,6 @@ export default function ProductDetailsPage() {
                 <div className="flex justify-between py-2 border-b border-outline-variant/10">
                   <span className="text-sm text-on-surface-variant">Serving Size</span>
                   <span className="text-sm font-bold">1 unit</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-outline-variant/10">
-                  <span className="text-sm text-on-surface-variant">Availability</span>
-                  <span className="text-sm font-bold">{inStock ? 'In Stock' : 'Unavailable'}</span>
                 </div>
                 <div className="flex justify-between py-2">
                   <span className="text-sm text-on-surface-variant">Category</span>

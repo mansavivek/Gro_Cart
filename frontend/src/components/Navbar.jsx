@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import grocartLogo from '../assets/grocart-logo.png';
@@ -8,8 +8,13 @@ export default function Navbar({ showSearch = false, searchQuery = '', onSearchC
   const { user, logout } = useAuth();
   const { cart } = useCart();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const ordersActive = pathname.startsWith('/orders');
+  const cartActive = pathname.startsWith('/cart');
+  const adminActive = pathname.startsWith('/admin');
+  const storeActive = pathname === '/';
 
   const handleLogout = () => {
     setMenuOpen(false);
@@ -61,9 +66,12 @@ export default function Navbar({ showSearch = false, searchQuery = '', onSearchC
             <>
               <nav className="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-600">
                 {user.is_admin && (
-                  <Link to="/admin" className="hover:text-primary transition-colors">Admin</Link>
+                  <>
+                    {!adminActive ? <Link to="/admin" className={`transition-colors ${adminActive ? 'text-primary font-semibold' : 'hover:text-primary'}`}>Admin</Link> : null}
+                    {adminActive ? <Link to="/" className={`transition-colors ${storeActive ? 'text-primary font-semibold' : 'hover:text-primary'}`}>Store</Link> : null}
+                  </>
                 )}
-                <Link to="/orders" className="hover:text-primary transition-colors">Orders</Link>
+                <Link to="/orders" className={`transition-colors ${ordersActive ? 'text-primary font-semibold' : 'hover:text-primary'}`}>Orders</Link>
               </nav>
 
               <div className="h-6 w-px bg-gray-200 hidden lg:block" />
@@ -71,7 +79,7 @@ export default function Navbar({ showSearch = false, searchQuery = '', onSearchC
               <div className="flex items-center gap-3" ref={menuRef}>
                 <Link
                   to="/cart"
-                  className="relative p-2 text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                  className={`relative rounded-full p-2 transition-colors ${cartActive ? 'text-primary bg-primary/10' : 'text-gray-600 hover:bg-gray-100'}`}
                   aria-label="Cart"
                 >
                   <span className="material-symbols-outlined">shopping_cart</span>
@@ -98,14 +106,20 @@ export default function Navbar({ showSearch = false, searchQuery = '', onSearchC
                     <button
                       type="button"
                       className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-50"
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() => {
+                        setMenuOpen(false);
+                        navigate('/addresses');
+                      }}
                     >
                       Addresses
                     </button>
                     <button
                       type="button"
                       className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-gray-700 hover:bg-gray-50"
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() => {
+                        setMenuOpen(false);
+                        navigate('/payment-methods');
+                      }}
                     >
                       Payment Methods
                     </button>
