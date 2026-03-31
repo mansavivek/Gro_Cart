@@ -7,10 +7,10 @@ file_path = "groceries_dataset.xlsx"
 df = pd.read_excel(file_path)
 
 conn = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Welcome*2025",
-    database="gro_cart"
+    host="",
+    user="",
+    password="",
+    database=""
 )
 
 cursor = conn.cursor()
