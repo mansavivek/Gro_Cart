@@ -1,37 +1,43 @@
-from sqlalchemy.orm import Session
-from fastapi import HTTPException, status
-from app.models.user import User
-from app.schemas.user import UserCreate
-from app.core.security import get_password_hash, verify_password, create_access_token
+from app.database.connection import get_db
+import bcrypt
 
+# Register
+def register_user(data):
+    conn = get_db()
+    cursor = conn.cursor()
 
-def create_user(db: Session, user_data: UserCreate) -> User:
-    existing = db.query(User).filter(User.email == user_data.email).first()
-    if existing:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered",
+    hashed_pw = bcrypt.hashpw(data["password"].encode(), bcrypt.gensalt())
+
+    try:
+        cursor.execute(
+            "INSERT INTO Users (name, email, password_hash) VALUES (%s, %s, %s)",
+            (data["name"], data["email"], hashed_pw.decode())
         )
-    user = User(
-        name=user_data.name,
-        email=user_data.email,
-        phone_number=user_data.phone_number,
-        address=user_data.address,
-        date_of_birth=user_data.date_of_birth,
-        hashed_password=get_password_hash(user_data.password),
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
-    return user
+        conn.commit()
+        return {"message": "User registered successfully"}
+    except Exception as e:
+        return {"error": str(e)}
 
 
-def authenticate_user(db: Session, email: str, password: str) -> dict:
-    user = db.query(User).filter(User.email == email).first()
-    if not user or not verify_password(password, user.hashed_password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid email or password",
-        )
-    token = create_access_token({"sub": str(user.id)})
-    return {"access_token": token, "token_type": "bearer", "user": user}
+# Login
+def login_user(data):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM Users WHERE email=%s", (data["email"],))
+    user = cursor.fetchone()
+
+    if not user:
+        return {"error": "User not found"}
+
+    if bcrypt.checkpw(data["password"].encode(), user["password_hash"].encode()):
+        return {
+            "message": "Login successful",
+            "user": {
+                "user_id": user["id"],
+                "name": user["name"],
+                "email": user["email"]
+            }
+        }
+
+    return {"error": "Invalid password"}

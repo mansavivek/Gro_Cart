@@ -1,70 +1,127 @@
-from sqlalchemy.orm import Session
-from fastapi import HTTPException, status
-from app.models.cart import CartItem
-from app.models.product import Product
-from app.schemas.cart import CartResponse
+from app.database.connection import get_db
 
+# Add to cart
+def add_to_cart(user_id, data):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
 
-def get_cart(db: Session, user_id: int) -> CartResponse:
-    items = db.query(CartItem).filter(CartItem.user_id == user_id).all()
-    total_price = sum(item.product.price * item.quantity for item in items if item.product)
-    return CartResponse(
-        items=items,
-        total_items=len(items),
-        total_price=round(total_price, 2),
-    )
+    product_id = data["product_id"]
+    quantity = data.get("quantity", 1)
 
+    cursor.execute("""
+        SELECT * FROM cart_items 
+        WHERE user_id = %s AND product_id = %s
+    """, (user_id, product_id))
 
-def add_to_cart(db: Session, user_id: int, product_id: int, quantity: int) -> CartItem:
-    product = db.query(Product).filter(Product.id == product_id).first()
-    if not product:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
-    if product.quantity < quantity:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Insufficient stock")
+    item = cursor.fetchone()
 
-    existing = db.query(CartItem).filter(
-        CartItem.user_id == user_id, CartItem.product_id == product_id
-    ).first()
+    if item:
+        cursor.execute("""
+            UPDATE cart_items 
+            SET quantity = quantity + %s
+            WHERE id = %s
+        """, (quantity, item["id"]))
+    else:
+        cursor.execute("""
+            INSERT INTO cart_items (user_id, product_id, quantity)
+            VALUES (%s, %s, %s)
+        """, (user_id, product_id, quantity))
 
-    if existing:
-        existing.quantity += quantity
-        db.commit()
-        db.refresh(existing)
-        return existing
+    conn.commit()
+    return {"message": "Added to cart"}
 
-    cart_item = CartItem(user_id=user_id, product_id=product_id, quantity=quantity)
-    db.add(cart_item)
-    db.commit()
-    db.refresh(cart_item)
-    return cart_item
+# Get cart
+def get_cart(user_id):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
 
+    cursor.execute("""
+        SELECT 
+            ci.id,
+            ci.product_id,
+            ci.quantity,
+            p.name,
+            p.price,
+            p.images
+        FROM cart_items ci
+        JOIN products p ON ci.product_id = p.sku
+        WHERE ci.user_id = %s
+    """, (user_id,))
 
-def update_cart_item(db: Session, user_id: int, item_id: int, quantity: int) -> CartItem:
-    item = db.query(CartItem).filter(
-        CartItem.id == item_id, CartItem.user_id == user_id
-    ).first()
-    if not item:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cart item not found")
-    if quantity <= 0:
-        db.delete(item)
-        db.commit()
-        raise HTTPException(status_code=status.HTTP_200_OK, detail="Item removed")
-    item.quantity = quantity
-    db.commit()
-    db.refresh(item)
-    return item
+    items = cursor.fetchall()
 
+    import json
 
-def remove_from_cart(db: Session, user_id: int, item_id: int) -> None:
-    item = db.query(CartItem).filter(
-        CartItem.id == item_id, CartItem.user_id == user_id
-    ).first()
-    if not item:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Cart item not found")
-    db.delete(item)
-    db.commit()
+    formatted_items = []
 
+    for item in items:
+        try:
+            if isinstance(item["images"], str):
+                imgs = json.loads(item["images"])
+            else:
+                imgs = item["images"]
 
-def clear_cart(db: Session, user_id: int) -> None:
-    db.query(CartItem).filter(CartItem.user_id == user_id).delete()
-    db.commit()
+            image_url = imgs[0] if imgs else None
+        except:
+            image_url = None
+
+        product = {
+            "name": item["name"],
+            "price": float(item["price"]) if item.get("price") else 0,
+            "image_url": image_url
+        }
+
+        formatted_items.append({
+            "id": item["id"],
+            "product_id": item["product_id"],
+            "quantity": item["quantity"],
+            "product": product
+        })
+
+    total_items = sum(i["quantity"] for i in formatted_items)
+    total_price = sum(i["quantity"] * i["product"]["price"] for i in formatted_items)
+
+    return {
+        "items": formatted_items,
+        "total_items": total_items,
+        "total_price": total_price
+    }
+
+# Update cart
+def update_cart_item(user_id, item_id, data):
+    conn = get_db()
+    cursor = conn.cursor()
+
+    quantity = data["quantity"]
+
+    cursor.execute("""
+        UPDATE cart_items 
+        SET quantity = %s
+        WHERE id = %s AND user_id = %s
+    """, (quantity, item_id, user_id))
+
+    conn.commit()
+    return {"message": "Updated"}
+
+# Remove cart
+def remove_cart_item(user_id, item_id):
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        DELETE FROM cart_items 
+        WHERE id = %s AND user_id = %s
+    """, (item_id, user_id))
+
+    conn.commit()
+    return {"message": "Removed"}
+
+# Clear cart
+def clear_cart(user_id):
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM cart_items WHERE user_id = %s", (user_id,))
+    conn.commit()
+
+    return {"message": "Cart cleared"}

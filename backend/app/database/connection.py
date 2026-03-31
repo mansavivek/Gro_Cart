@@ -1,30 +1,13 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from app.core.config import settings
+import os
+import mysql.connector
+from dotenv import load_dotenv
 
-# Configure engine with connection pooling
-# For AWS RDS (PostgreSQL):
-#   DATABASE_URL = "postgresql://user:password@rds-endpoint:5432/dbname"
-# For local SQLite:
-#   DATABASE_URL = "sqlite:///./grocery.db"
-
-connect_args = {}
-if settings.DATABASE_URL.startswith("sqlite"):
-    connect_args = {"check_same_thread": False}
-
-engine = create_engine(
-    settings.DATABASE_URL,
-    connect_args=connect_args,
-    pool_pre_ping=True,
-)
-
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
+load_dotenv()
 
 def get_db():
-    """Dependency that provides a SQLAlchemy database session."""
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+    return mysql.connector.connect(
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
+    )

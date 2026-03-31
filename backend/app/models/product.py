@@ -1,41 +1,35 @@
-"""
-Database Models for Gro-Cart
-
-Table Structure:
-  categories: id, name, description, image_url, created_at
-  products:   id, name, description, price, quantity, image_url, category_id, created_at, updated_at
-"""
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, Text
-from sqlalchemy.orm import relationship
-from datetime import datetime
+from sqlalchemy import Column, String, Float, Text, Integer, DateTime
+from sqlalchemy.sql import func
 from app.database.base import Base
-
-
-class Category(Base):
-    __tablename__ = "categories"
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(100), unique=True, nullable=False)
-    description = Column(Text, nullable=True)
-    image_url = Column(String(500), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-
-    products = relationship("Product", back_populates="category")
-
 
 class Product(Base):
     __tablename__ = "products"
 
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String(200), nullable=False)
-    description = Column(Text, nullable=True)
-    price = Column(Float, nullable=False)
-    quantity = Column(Integer, default=0)
-    image_url = Column(String(500), nullable=True)
-    category_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    sku = Column(String(100), primary_key=True, index=True) 
 
-    category = relationship("Category", back_populates="products")
-    cart_items = relationship("CartItem", back_populates="product")
-    order_items = relationship("OrderItem", back_populates="product")
+    name = Column(String(255), nullable=False)
+    price = Column(Float)
+
+    currency = Column(String(10), default="USD")
+    availability = Column(String(20)) 
+
+    description = Column(Text)
+    brand = Column(String(100))
+
+    breadcrumbs = Column(Text)
+    images = Column(Text) 
+
+    avg_rating = Column(Float)
+    reviews_count = Column(Integer)
+
+    pack_size = Column(String(50))
+
+    ingredients = Column(Text)
+    storage_details = Column(Text)
+
+    percentage_alcohol = Column(Float)
+    serving_size = Column(String(50))
+
+    nutrition = Column(Text)
+
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
