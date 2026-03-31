@@ -1,59 +1,134 @@
-from typing import List, Optional
-from sqlalchemy.orm import Session
-from fastapi import HTTPException, status
-from app.models.product import Product, Category
-from app.schemas.product import ProductCreate, ProductUpdate
+from app.database.connection import get_db
+import json
+
+def transform_product(p):
+
+    p["id"] = p.get("sku")
+    images = []
+
+    if p.get("images"):
+        try:
+            raw = json.loads(p["images"])
+
+            if isinstance(raw, list):
+                for item in raw:
+                    if isinstance(item, str):
+                        if "~" in item:
+                            images.extend(item.split("~"))
+                        else:
+                            images.append(item)
+        except:
+            images = []
+
+    images = [img.strip() for img in images if img and img.startswith("http")]
+
+    p["images"] = images
+
+    p["image_url"] = images[0] if images else "https://via.placeholder.com/300"
+
+    return p
 
 
-def get_all_products(db: Session, category_id: Optional[int] = None) -> List[Product]:
-    query = db.query(Product)
-    if category_id:
-        query = query.filter(Product.category_id == category_id)
-    return query.all()
+# Get products
+def get_products():
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM products")
+    products = cursor.fetchall()
+
+    return [transform_product(p) for p in products]
 
 
-def get_product_by_id(db: Session, product_id: int) -> Product:
-    product = db.query(Product).filter(Product.id == product_id).first()
-    if not product:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product not found")
-    return product
+# Get single product
+def get_product(product_id):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM products WHERE sku = %s", (product_id,))
+    p = cursor.fetchone()
+
+    if p:
+        return transform_product(p)
+
+    return None
 
 
-def get_all_categories(db: Session) -> List[Category]:
-    return db.query(Category).all()
+# Get categories
+def get_categories():
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT DISTINCT breadcrumbs FROM products")
+    rows = cursor.fetchall()
+
+    categories = []
+    seen = set()
+
+    for r in rows:
+        breadcrumb = r.get("breadcrumbs", "")
+        if breadcrumb:
+            cat = breadcrumb.split(">")[0].strip()
+            if cat not in seen:
+                seen.add(cat)
+                categories.append({"id": len(categories) + 1, "name": cat})
+
+    return categories
 
 
-def create_product(db: Session, product_data: ProductCreate) -> Product:
-    product = Product(**product_data.model_dump())
-    db.add(product)
-    db.commit()
-    db.refresh(product)
-    return product
+# Create product
+def create_product(data):
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO products (
+            sku, name, price, currency, availability,
+            description, brand, breadcrumbs, images
+        )
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """, (
+        data["sku"],  
+        data["name"],
+        data["price"],
+        "USD",
+        data.get("availability", "InStock"),
+        data.get("description"),
+        data.get("brand"),
+        data.get("breadcrumbs"),
+        json.dumps(data.get("images", []))
+    ))
+
+    conn.commit()
+    return {"message": "Product created"}
 
 
-def update_product(db: Session, product_id: int, product_data: ProductUpdate) -> Product:
-    product = get_product_by_id(db, product_id)
-    update_data = product_data.model_dump(exclude_unset=True)
-    for field, value in update_data.items():
-        setattr(product, field, value)
-    db.commit()
-    db.refresh(product)
-    return product
+# Update product
+def update_product(product_id, data):
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE products 
+        SET name=%s, price=%s, description=%s
+        WHERE sku=%s
+    """, (
+        data["name"],
+        data["price"],
+        data.get("description"),
+        product_id
+    ))
+
+    conn.commit()
+    return {"message": "Product updated"}
 
 
-def delete_product(db: Session, product_id: int) -> None:
-    product = get_product_by_id(db, product_id)
-    db.delete(product)
-    db.commit()
+# Delete product
+def delete_product(product_id):
+    conn = get_db()
+    cursor = conn.cursor()
 
+    cursor.execute("DELETE FROM products WHERE sku=%s", (product_id,))
+    conn.commit()
 
-def create_category(db: Session, name: str, description: Optional[str] = None,
-                    image_url: Optional[str] = None) -> Category:
-    existing = db.query(Category).filter(Category.name == name).first()
-    if existing:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Category already exists")
-    category = Category(name=name, description=description, image_url=image_url)
-    db.add(category)
-    db.commit()
-    db.refresh(category)
-    return category
+    return {"message": "Product deleted"}

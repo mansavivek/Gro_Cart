@@ -1,57 +1,107 @@
-from typing import List
-from sqlalchemy.orm import Session
-from fastapi import HTTPException, status
-from app.models.order import Order, OrderItem, OrderStatus
-from app.models.cart import CartItem
-from app.schemas.order import OrderPlace, OrderStatusUpdate
+from app.database.connection import get_db
+import json
+
+def place_order(user_id):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT 
+            ci.product_id,
+            ci.quantity,
+            p.price
+        FROM cart_items ci
+        JOIN products p ON ci.product_id = p.sku
+        WHERE ci.user_id = %s
+    """, (user_id,))
+
+    items = cursor.fetchall()
+
+    if not items:
+        return {"error": "Cart is empty"}
+
+    total_price = sum(i["quantity"] * float(i["price"]) for i in items)
+
+    cursor.execute("""
+        INSERT INTO orders (user_id, total_price)
+        VALUES (%s, %s)
+    """, (user_id, total_price))
+
+    order_id = cursor.lastrowid
+
+    for item in items:
+        cursor.execute("""
+            INSERT INTO order_items (order_id, product_id, quantity, price)
+            VALUES (%s, %s, %s, %s)
+        """, (
+            order_id,
+            item["product_id"],
+            item["quantity"],
+            float(item["price"])
+        ))
+
+    cursor.execute("DELETE FROM cart_items WHERE user_id = %s", (user_id,))
+
+    conn.commit()
+
+    return {
+        "message": "Order placed successfully",
+        "order_id": order_id,
+        "total_price": total_price
+    }
+
+def get_orders(user_id):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT id, total_price, status, created_at
+        FROM orders
+        WHERE user_id = %s
+        ORDER BY created_at DESC
+    """, (user_id,))
+
+    orders = cursor.fetchall()
+
+    return {
+        "orders": orders
+    }
 
 
-def place_order(db: Session, user_id: int, order_data: OrderPlace) -> Order:
-    cart_items = db.query(CartItem).filter(CartItem.user_id == user_id).all()
-    if not cart_items:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Cart is empty")
+def get_order_details(order_id):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
 
-    total_amount = sum(item.product.price * item.quantity for item in cart_items if item.product)
+    cursor.execute("""
+        SELECT 
+            oi.id,
+            oi.quantity,
+            oi.price,
+            p.name,
+            p.images
+        FROM order_items oi
+        JOIN products p ON oi.product_id = p.sku
+        WHERE oi.order_id = %s
+    """, (order_id,))
 
-    order = Order(
-        user_id=user_id,
-        delivery_address=order_data.delivery_address,
-        payment_method=order_data.payment_method,
-        total_amount=round(total_amount, 2),
-        status=OrderStatus.PENDING,
-    )
-    db.add(order)
-    db.flush()
+    items = cursor.fetchall()
 
-    for cart_item in cart_items:
-        order_item = OrderItem(
-            order_id=order.id,
-            product_id=cart_item.product_id,
-            quantity=cart_item.quantity,
-            unit_price=cart_item.product.price,
-        )
-        db.add(order_item)
+    formatted_items = []
 
-    # Clear cart after placing order
-    db.query(CartItem).filter(CartItem.user_id == user_id).delete()
-    db.commit()
-    db.refresh(order)
-    return order
+    for item in items:
+        try:
+            imgs = json.loads(item["images"]) if item["images"] else []
+            image_url = imgs[0] if imgs else None
+        except:
+            image_url = None
 
-
-def get_order_history(db: Session, user_id: int) -> List[Order]:
-    return db.query(Order).filter(Order.user_id == user_id).order_by(Order.created_at.desc()).all()
-
-
-def get_all_orders(db: Session) -> List[Order]:
-    return db.query(Order).order_by(Order.created_at.desc()).all()
-
-
-def update_order_status(db: Session, order_id: int, status_data: OrderStatusUpdate) -> Order:
-    order = db.query(Order).filter(Order.id == order_id).first()
-    if not order:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found")
-    order.status = status_data.status
-    db.commit()
-    db.refresh(order)
-    return order
+        formatted_items.append({
+            "id": item["id"],
+            "quantity": item["quantity"],
+            "price": float(item["price"]),
+            "product": {
+                "name": item["name"],
+                "image_url": image_url
+            }
+        })
+    return formatted_items

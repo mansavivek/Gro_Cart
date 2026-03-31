@@ -1,51 +1,31 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 
-
-class CategoryBase(BaseModel):
+class CategoryResponse(BaseModel):
+    id: int
     name: str
     description: Optional[str] = None
-    image_url: Optional[str] = None
 
+    class Config:
+        from_attributes = True
 
-class CategoryCreate(CategoryBase):
-    pass
-
-
-class CategoryResponse(CategoryBase):
+class ProductResponse(BaseModel):
     id: int
-    created_at: datetime
-
-    model_config = {"from_attributes": True}
-
-
-class ProductBase(BaseModel):
     name: str
     description: Optional[str] = None
     price: float
-    quantity: int = 0
+    quantity: int
     image_url: Optional[str] = None
-    category_id: Optional[int] = None
-
-
-class ProductCreate(ProductBase):
-    pass
-
-
-class ProductUpdate(BaseModel):
-    name: Optional[str] = None
-    description: Optional[str] = None
-    price: Optional[float] = None
-    quantity: Optional[int] = None
-    image_url: Optional[str] = None
-    category_id: Optional[int] = None
-
-
-class ProductResponse(ProductBase):
-    id: int
+    category_id: int
+    category_name: Optional[str] = None
     created_at: datetime
-    updated_at: datetime
-    category: Optional[CategoryResponse] = None
 
-    model_config = {"from_attributes": True}
+    class Config:
+        from_attributes = True
+
+class ProductListResponse(BaseModel):
+    items: List[ProductResponse]
+    total: int
+    page: int
+    limit: int
