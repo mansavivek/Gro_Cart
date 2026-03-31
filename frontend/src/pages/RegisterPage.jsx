@@ -164,8 +164,8 @@ export default function RegisterPage() {
               </div>
             </main>
 
-            <footer className="mt-auto px-6 py-8 border-t border-slate-200 dark:border-slate-800 text-center">
-              <p className="text-slate-400 text-sm">© 2024 Gro-Cart Delivery. All rights reserved.</p>
+            <footer className="mt-auto bg-surface-container-low border-t py-8 text-center text-sm text-on-surface-variant w-full">
+              <p>© {new Date().getFullYear()} Gro-Cart. All rights reserved.</p>
             </footer>
           </div>
         </div>

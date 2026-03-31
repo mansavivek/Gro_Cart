@@ -590,8 +590,24 @@ export const mockDataService = {
   },
 
   updateOrderStatus: (orderId, data) => {
+    const numericOrderId = Number(orderId);
+    let updatedOrder = null;
+
+    Object.keys(MOCK_ORDERS).forEach((userKey) => {
+      const list = MOCK_ORDERS[userKey] || [];
+      const target = list.find((order) => order.id === numericOrderId);
+      if (target) {
+        target.status = data.status;
+        updatedOrder = target;
+      }
+    });
+
+    if (!updatedOrder) {
+      return Promise.reject({ response: { status: 404, data: { detail: 'Order not found' } } });
+    }
+
     return Promise.resolve({
-      data: { id: orderId, status: data.status },
+      data: updatedOrder,
     });
   },
 

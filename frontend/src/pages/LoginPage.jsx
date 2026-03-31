@@ -8,11 +8,6 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: '', password: '', rememberMe: false });
 
-  // const classes = React.useStyleSheet({
-  //   'gro-green': '#2e8b57', // Derived from the Gro-Cart logo green
-  //   'gro-orange': '#f37021'
-  // })
-
   const getFriendlyLoginError = (rawError) => {
     if (!rawError) return '';
     const normalized = String(rawError).toLowerCase();
@@ -35,8 +30,8 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const user = await login(form.email, form.password);
-      navigate(user.is_admin ? '/admin' : '/');
+      await login(form.email, form.password);
+      navigate('/');
     } catch {
       // error shown via context
     }
@@ -95,13 +90,12 @@ export default function LoginPage() {
                   <label className="block text-sm font-medium text-gray-700" htmlFor="password">
                     Password
                   </label>
-                  <a
+                  <Link
                     className="text-sm font-semibold text-orange-600 hover:text-orange-700 transition duration-150"
-                    href="#"
-                    onClick={(e) => e.preventDefault()}
+                    to="/forgot-password"
                   >
                     Forgot Password?
-                  </a>
+                  </Link>
                 </div>
                 <input
                   className="block w-full px-4 py-3 rounded-lg border border-gray-300 shadow-sm focus:ring-gro-green focus:border-gro-green transition duration-150"
@@ -148,7 +142,9 @@ export default function LoginPage() {
         </main>
       </div>
 
-      <footer className="fixed bottom-0 left-0 w-full h-2 bg-gradient-to-r from-gro-green via-gro-orange to-gro-green" />
+      <footer className="bg-surface-container-low border-t py-8 text-center text-sm text-on-surface-variant">
+        © {new Date().getFullYear()} Gro-Cart. All rights reserved.
+      </footer>
     </>
   );
 }

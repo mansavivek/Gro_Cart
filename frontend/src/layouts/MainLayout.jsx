@@ -1,14 +1,6 @@
 import Navbar from '../components/Navbar';
-import { useLocation } from 'react-router-dom';
 
 export default function MainLayout({ children, contentClassName, hideFooter = false, navbarProps = {} }) {
-  const { pathname } = useLocation();
-  const isAdminRoute = pathname.startsWith('/admin');
-
-  if (isAdminRoute) {
-    return <div className="min-h-screen bg-surface">{children}</div>;
-  }
-
   return (
     <div className="min-h-screen bg-surface">
       <Navbar {...navbarProps} />
