@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Payment Summary - Gro-Cart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#aaaeb0",
+              "on-tertiary-container": "#583400",
+              "on-primary": "#ccffd8",
+              "outline": "#737779",
+              "on-error": "#ffefee",
+              "tertiary": "#835000",
+              "secondary": "#515c6f",
+              "secondary-fixed": "#d8e3fa",
+              "surface-container-highest": "#d8dee1",
+              "on-primary-fixed-variant": "#006c3c",
+              "on-secondary-container": "#475265",
+              "primary-fixed-dim": "#8aebac",
+              "on-secondary-fixed-variant": "#515c6f",
+              "on-secondary": "#eef2ff",
+              "tertiary-fixed": "#fcb259",
+              "primary": "#006a3b",
+              "tertiary-container": "#fcb259",
+              "on-error-container": "#570008",
+              "error": "#b31b25",
+              "on-surface-variant": "#585c5e",
+              "surface-tint": "#006a3b",
+              "inverse-primary": "#98fab9",
+              "error-container": "#fb5151",
+              "tertiary-fixed-dim": "#eca54d",
+              "background": "#f4f7f9",
+              "secondary-dim": "#455063",
+              "on-tertiary": "#fff0e4",
+              "primary-dim": "#005c33",
+              "surface-container": "#e4e9eb",
+              "primary-fixed": "#98fab9",
+              "surface-container-low": "#edf1f3",
+              "primary-container": "#98fab9",
+              "error-dim": "#9f0519",
+              "surface-container-high": "#dee3e6",
+              "secondary-container": "#d8e3fa",
+              "surface-container-lowest": "#ffffff",
+              "on-primary-container": "#006035",
+              "on-tertiary-fixed": "#3c2200",
+              "inverse-surface": "#0b0f10",
+              "surface": "#f4f7f9",
+              "secondary-fixed-dim": "#cad5ec",
+              "surface-bright": "#f4f7f9",
+              "on-surface": "#2b2f31",
+              "tertiary-dim": "#734500",
+              "on-background": "#2b2f31",
+              "inverse-on-surface": "#9a9d9f",
+              "surface-variant": "#d8dee1",
+              "on-secondary-fixed": "#354052",
+              "on-primary-fixed": "#004c29",
+              "surface-dim": "#cfd5d8",
+              "on-tertiary-fixed-variant": "#653c00"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex items-center justify-center p-4">
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-40 flex items-center justify-center p-4 md:p-6">
+<!-- Modal Content Canvas -->
+<div class="bg-surface-container-lowest w-full max-w-xl rounded-xl shadow-[0_20px_50px_rgba(43,47,49,0.15)] overflow-hidden flex flex-col max-h-[921px]">
+<!-- Header Section -->
+<div class="px-6 py-5 flex justify-between items-center bg-surface-container-low/50">
+<div>
+<span class="text-[10px] font-bold uppercase tracking-[0.15em] text-primary mb-1 block">Checkout Process</span>
+<h2 class="text-xl font-extrabold text-on-surface tracking-tight">Payment Summary</h2>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-2xl" data-icon="close">close</span>
+</button>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-6 py-6 space-y-8">
+<!-- 1. Delivery Address Section -->
+<section>
+<div class="flex justify-between items-end mb-3">
+<h3 class="text-sm font-bold text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="location_on">location_on</span>
+                            Delivery Address
+                        </h3>
+<button class="text-xs font-semibold text-primary hover:underline transition-all">Change</button>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg border border-outline-variant/10 flex gap-4">
+<div class="flex-1">
+<p class="font-bold text-on-surface">Alex Thompson</p>
+<p class="text-sm text-on-surface-variant leading-relaxed">4221 Oakwood Avenue, Apt 4B<br/>Silicon Valley, CA 94025</p>
+<p class="text-sm text-on-surface-variant mt-1 font-medium">+1 (555) 012-3456</p>
+</div>
+<div class="w-20 h-20 rounded-lg overflow-hidden shrink-0 grayscale opacity-70">
+<img class="w-full h-full object-cover" data-alt="minimalist overhead map view of a clean suburban street layout with green trees and soft shadows" data-location="Silicon Valley" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-JUrcwG2B-UwYHL74F1MWef_SMob3MHkGbxCisRZb97zbo3tISdSqO1N_Ol7G7182wchHBEXrp_GUYn-XtrIlgtjURdKr0lGnjFolDHDlzvGkKYoVMwQG6xmbNs4bqaLqHhFmUg3orlCSyu5oFUaNmTuIFdpOF8nFmvNYp-57jt6eB8TVwRzQ58N3gd54I1MBpWVqCg51yYeCo1HJDCfz_SUShFTfIvTSBILDh7mUpV8TxzZQ2nksG5wGkch1P48DvqWNwS68lQ"/>
+</div>
+</div>
+</section>
+<!-- 2. Payment Method Section -->
+<section>
+<h3 class="text-sm font-bold text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="payments">payments</span>
+                        Payment Method
+                    </h3>
+<div class="grid grid-cols-1 gap-3">
+<!-- Card Option -->
+<label class="relative flex items-center p-4 rounded-lg border-2 border-primary bg-primary-container/10 cursor-pointer transition-all">
+<input checked="" class="hidden" name="payment" type="radio"/>
+<span class="material-symbols-outlined text-primary mr-3" data-icon="credit_card">credit_card</span>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-primary-container">Credit / Debit Card</p>
+<p class="text-xs text-on-surface-variant">Visa ending in 4242</p>
+</div>
+<span class="material-symbols-outlined text-primary" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</label>
+<!-- UPI Option -->
+<label class="relative flex items-center p-4 rounded-lg border border-outline-variant/30 hover:bg-surface-container-high/40 cursor-pointer transition-all">
+<input class="hidden" name="payment" type="radio"/>
+<span class="material-symbols-outlined text-on-surface-variant mr-3" data-icon="account_balance">account_balance</span>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">UPI / Digital Wallet</p>
+<p class="text-xs text-on-surface-variant">Pay using G-Pay, PhonePe or Apple Pay</p>
+</div>
+</label>
+<!-- Cash Option -->
+<label class="relative flex items-center p-4 rounded-lg border border-outline-variant/30 hover:bg-surface-container-high/40 cursor-pointer transition-all">
+<input class="hidden" name="payment" type="radio"/>
+<span class="material-symbols-outlined text-on-surface-variant mr-3" data-icon="local_atm">local_atm</span>
+<div class="flex-1">
+<p class="text-sm font-bold text-on-surface">Cash on Delivery</p>
+<p class="text-xs text-on-surface-variant">Pay when your groceries arrive</p>
+</div>
+</label>
+</div>
+</section>
+<!-- 3. Order Summary Section -->
+<section>
+<h3 class="text-sm font-bold text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg text-primary" data-icon="receipt_long">receipt_long</span>
+                        Order Summary
+                    </h3>
+<!-- Collapsed Items List -->
+<div class="bg-surface-container-low rounded-lg p-4 space-y-3">
+<div class="flex items-center justify-between text-xs font-semibold text-on-surface-variant uppercase tracking-wider pb-2 border-b border-outline-variant/10">
+<span>Items (3)</span>
+<button class="text-primary normal-case">View Items</button>
+</div>
+<!-- Cost Breakdown -->
+<div class="space-y-2 pt-1">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Subtotal</span>
+<span class="font-medium">$42.50</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Delivery Fee</span>
+<span class="text-primary font-medium">FREE</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Service Tax (4%)</span>
+<span class="font-medium">$1.70</span>
+</div>
+<div class="pt-3 mt-2 border-t border-dashed border-outline-variant/30 flex justify-between items-center">
+<span class="text-base font-extrabold text-on-surface">Total Amount</span>
+<span class="text-xl font-black text-primary">$44.20</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Promo Code -->
+<div class="relative">
+<input class="w-full bg-surface-container-high/50 border-none rounded-lg py-3 px-4 text-sm focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-on-surface-variant/50" placeholder="Have a promo code?" type="text"/>
+<button class="absolute right-2 top-1.5 bg-surface-container-lowest text-primary font-bold text-xs px-3 py-1.5 rounded shadow-sm hover:bg-primary hover:text-on-primary transition-all">Apply</button>
+</div>
+</div>
+<!-- CTA Footer -->
+<div class="px-6 py-6 bg-surface-container-lowest border-t border-outline-variant/10">
+<button class="w-full bg-primary hover:bg-primary-dim text-on-primary font-headline font-extrabold text-lg py-4 rounded-lg shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-3">
+                    Place Order
+                    <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<p class="text-center text-[10px] text-on-surface-variant mt-4 font-medium px-4">
+                    By placing your order, you agree to Gro-Cart's 
+                    <a class="underline text-primary" href="#">Terms of Service</a> and 
+                    <a class="underline text-primary" href="#">Privacy Policy</a>.
+                </p>
+</div>
+</div>
+</div>
+<!-- Background Content (Simulated Dashboard) -->
+<div class="w-full max-w-7xl mx-auto p-8 opacity-20 pointer-events-none select-none">
+<header class="flex justify-between items-center mb-12">
+<div class="flex items-center gap-2 text-2xl font-black text-primary font-headline">
+<span class="material-symbols-outlined" data-icon="shopping_basket">shopping_basket</span>
+                Gro-Cart
+            </div>
+<div class="flex gap-6">
+<div class="w-32 h-4 bg-surface-container-highest rounded"></div>
+<div class="w-32 h-4 bg-surface-container-highest rounded"></div>
+<div class="w-10 h-10 bg-surface-container-highest rounded-full"></div>
+</div>
+</header>
+<div class="grid grid-cols-12 gap-8">
+<div class="col-span-8 space-y-6">
+<div class="h-64 bg-surface-container-highest rounded-xl"></div>
+<div class="grid grid-cols-3 gap-6">
+<div class="h-40 bg-surface-container-highest rounded-xl"></div>
+<div class="h-40 bg-surface-container-highest rounded-xl"></div>
+<div class="h-40 bg-surface-container-highest rounded-xl"></div>
+</div>
+</div>
+<div class="col-span-4 h-[500px] bg-surface-container-highest rounded-xl"></div>
+</div>
+</div>
+</body></html>

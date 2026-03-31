@@ -1,0 +1,34 @@
+You are an expert frontend developer.
+
+Task:
+Integrate existing JavaScript logic into static HTML UI files.
+
+Context:
+- The UI/UX design is already implemented in .html files (these define layout, structure, and styling).
+- Functional logic, including API calls and business logic, is implemented in separate .js files.
+- The goal is to connect the UI with the logic without breaking the existing design.
+
+Requirements:
+1. Preserve the existing HTML structure and styling.
+2. Identify interactive UI elements (buttons, forms, inputs, etc.) in the HTML.
+3. Bind these elements to corresponding functions in the JavaScript files using event listeners.
+4. Ensure API calls are triggered appropriately based on user actions.
+5. Dynamically update the DOM with API responses (e.g., render data, show loading states, handle errors).
+6. Keep the code modular and maintainable.
+7. Avoid inline JavaScript in HTML; use external JS files.
+8. Use modern JavaScript (ES6+) best practices.
+9. Ensure proper separation of concerns (UI vs logic).
+10. Add comments explaining integration points.
+
+Output:
+- Updated HTML (if needed for IDs/classes/hooks).
+- Integrated JavaScript code showing event bindings and DOM updates.
+- Clear explanation of how UI elements connect to logic.
+
+Optional:
+- Suggest improvements for scalability (e.g., component-based structure or framework migration).
+
+Do a second pass to make the Register page use exact Material Symbols fonts/icons from your HTML (instead of plain text icon labels) while keeping the same logic and structure.
+error states are not handled. handle them with red alert and relevant and customer friendly error message in the alert on login page and Register page.
+colours of the submit buttons and texts are not matching with the html files on login and register page. strictly stick to the html styling in .html page
+add the footer from html file in login and register file
