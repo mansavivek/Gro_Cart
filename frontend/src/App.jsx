@@ -19,7 +19,7 @@ import AdminDashboardPage from './pages/AdminDashboardPage';
 export default function App() {
   useEffect(() => {
     // Initialize mock mode if enabled
-    initMockMode();
+    // initMockMode();
   }, []);
 
   return (
