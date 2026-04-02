@@ -2,7 +2,8 @@ import axios from 'axios';
 import { isMockModeEnabled, mockDataService } from './mockData';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000',
+  baseURL: 'http://18.234.50.156:8000/', // if running BE from another machine, change api address here and use this
+  // baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000', // if running both UI BE on same machine, use this
   headers: { 'Content-Type': 'application/json' },
 });
 

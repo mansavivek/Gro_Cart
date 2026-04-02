@@ -241,7 +241,7 @@ cp .env.example .env
 # Start the server
 uvicorn app.main:app --reload
 ```
-If you want to change the BE endpoint, change it at this location - frontend/.env.example
+If you want to change the BE endpoint, change it at this location - /frontend/src/services/api.js
 Backend runs on: **http://localhost:8000**
 
 API docs (Swagger UI): **http://localhost:8000/docs**
