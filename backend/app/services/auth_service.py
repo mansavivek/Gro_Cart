@@ -1,5 +1,9 @@
-from app.database.connection import get_db
 import bcrypt
+import random
+from datetime import datetime, timedelta
+from app.utils.email_service import send_otp_email
+from app.database.connection import get_db
+from app.utils.jwt_service import generate_token
 
 # Register
 def register_user(data):
@@ -10,7 +14,7 @@ def register_user(data):
 
     try:
         cursor.execute(
-            "INSERT INTO Users (name, email, password_hash) VALUES (%s, %s, %s)",
+            "INSERT INTO users (name, email, password_hash) VALUES (%s, %s, %s)",
             (data["name"], data["email"], hashed_pw.decode())
         )
         conn.commit()
@@ -24,20 +28,99 @@ def login_user(data):
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM Users WHERE email=%s", (data["email"],))
+    cursor.execute("SELECT * FROM users WHERE email=%s", (data["email"],))
+    user = cursor.fetchone()
+
+    #User not found
+    if not user:
+        return {"error": "User not found"}, 404
+
+    #Wrong password
+    if not bcrypt.checkpw(
+        data["password"].encode(),
+        user["password_hash"].encode()
+    ):
+        return {"error": "Invalid password"}, 401
+
+    # Generate JWT token
+    token = generate_token(user["id"])
+
+    # Success response
+    return {
+        "message": "Login successful",
+        "token": token,   # 🔥 NEW
+        "user": {
+            "user_id": user["id"],
+            "name": user["name"],
+            "email": user["email"]
+        }
+    }
+
+#Forgot password
+def forgot_password(email):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    # check if user exists
+    cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
     user = cursor.fetchone()
 
     if not user:
-        return {"error": "User not found"}
+        return {"error": "Email not registered"}
 
-    if bcrypt.checkpw(data["password"].encode(), user["password_hash"].encode()):
-        return {
-            "message": "Login successful",
-            "user": {
-                "user_id": user["id"],
-                "name": user["name"],
-                "email": user["email"]
-            }
-        }
+    # generate OTP
+    otp = str(random.randint(100000, 999999))
 
-    return {"error": "Invalid password"}
+    expires_at = datetime.now() + timedelta(minutes=10)
+
+    # store OTP
+    cursor.execute("""
+        INSERT INTO password_resets (email, otp, expires_at)
+        VALUES (%s, %s, %s)
+    """, (email, otp, expires_at))
+
+    conn.commit()
+
+    # send email
+    sent = send_otp_email(email, otp)
+
+    if not sent:
+        return {"error": "Unable to send OTP"}
+
+    return {"message": "OTP sent successfully"}    
+
+#Verify otp
+def verify_otp(email, otp):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT * FROM password_resets
+        WHERE email=%s AND otp=%s
+        ORDER BY created_at DESC LIMIT 1
+    """, (email, otp))
+
+    record = cursor.fetchone()
+
+    if not record:
+        return {"error": "Invalid OTP"}
+
+    if datetime.now() > record["expires_at"]:
+        return {"error": "OTP expired"}
+
+    return {"message": "OTP verified"}    
+
+#Reset password
+def reset_password(email, new_password):
+    conn = get_db()
+    cursor = conn.cursor()
+
+    hashed_pw = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt())
+
+    cursor.execute("""
+        UPDATE users SET password_hash=%s WHERE email=%s
+    """, (hashed_pw.decode(), email))
+
+    conn.commit()
+
+    return {"message": "Password updated successfully"}    

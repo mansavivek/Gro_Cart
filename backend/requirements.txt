@@ -4,3 +4,4 @@ bcrypt
 flask-cors
 python-dotenv
 mysql-connector-python
+pandas
