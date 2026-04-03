@@ -1,4 +1,4 @@
-import sib_api_v3_sdk
+import sib_api_v3_sdk, os
 from sib_api_v3_sdk.rest import ApiException
 from dotenv import load_dotenv
 
