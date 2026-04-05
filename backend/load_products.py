@@ -12,10 +12,10 @@ file_path = "groceries_dataset_updated.xlsx"
 df = pd.read_excel(file_path)
 
 conn = mysql.connector.connect(
-    host=os.getenv("DB_HOST"),
-    user=os.getenv("DB_USER"),
-    password=os.getenv("DB_PASSWORD"),
-    database=os.getenv("DB_NAME")
+    host="",
+    user="",
+    password="",
+    database=""
 )
 
 cursor = conn.cursor()
