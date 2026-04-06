@@ -48,11 +48,12 @@ def login_user(data):
     # Success response
     return {
         "message": "Login successful",
-        "token": token,   # 🔥 NEW
+        "token": token,   
         "user": {
             "user_id": user["id"],
             "name": user["name"],
-            "email": user["email"]
+            "email": user["email"],
+            "role": user["role"]
         }
     }
 
