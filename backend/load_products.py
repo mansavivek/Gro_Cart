@@ -2,8 +2,13 @@ import pandas as pd
 import mysql.connector
 import json
 import re
+import os
+from dotenv import load_dotenv
+from pathlib import Path
 
-file_path = "groceries_dataset.xlsx"
+load_dotenv(Path(__file__).resolve().parent / "app" / ".env")
+
+file_path = "groceries_dataset_updated.xlsx"
 df = pd.read_excel(file_path)
 
 conn = mysql.connector.connect(

@@ -1,15 +1,13 @@
 from app.database.connection import get_db
 import json
 
-def place_order(user_id):
+def place_order(user_id, address_id):
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
+    # get cart
     cursor.execute("""
-        SELECT 
-            ci.product_id,
-            ci.quantity,
-            p.price
+        SELECT ci.product_id, ci.quantity, p.price
         FROM cart_items ci
         JOIN products p ON ci.product_id = p.sku
         WHERE ci.user_id = %s
@@ -22,13 +20,15 @@ def place_order(user_id):
 
     total_price = sum(i["quantity"] * float(i["price"]) for i in items)
 
+    # create order WITH address
     cursor.execute("""
-        INSERT INTO orders (user_id, total_price)
-        VALUES (%s, %s)
-    """, (user_id, total_price))
+        INSERT INTO orders (user_id, total_price, address_id)
+        VALUES (%s, %s, %s)
+    """, (user_id, total_price, address_id))
 
     order_id = cursor.lastrowid
 
+    # insert items
     for item in items:
         cursor.execute("""
             INSERT INTO order_items (order_id, product_id, quantity, price)
@@ -40,6 +40,7 @@ def place_order(user_id):
             float(item["price"])
         ))
 
+    # clear cart
     cursor.execute("DELETE FROM cart_items WHERE user_id = %s", (user_id,))
 
     conn.commit()

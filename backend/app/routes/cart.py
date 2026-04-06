@@ -1,5 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.services.cart_service import *
+from app.core.auth_middleware import auth_required
+from flask import g
 
 cart_routes = Blueprint("cart", __name__)
 
