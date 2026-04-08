@@ -8,7 +8,10 @@ export function useOrders() {
 
   useEffect(() => {
     getOrderHistory()
-      .then(({ data }) => setOrders(data))
+      .then(({ data }) => {
+        const normalizedOrders = Array.isArray(data) ? data : (Array.isArray(data?.orders) ? data.orders : []);
+        setOrders(normalizedOrders);
+      })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   }, []);

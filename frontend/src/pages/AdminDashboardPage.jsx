@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import Spinner from '../components/ui/Spinner';
 import { getProducts, getCategories, createProduct, updateProduct, deleteProduct } from '../services/productService';
-import { getAllOrders, updateOrderStatus } from '../services/orderService';
+import { getAdminOrders, updateOrderStatus } from '../services/orderService';
 
 const STATUS_OPTIONS = ['pending', 'in_progress', 'packed', 'out_for_delivery', 'delivered'];
 const emptyForm = { name: '', description: '', price: '', quantity: '', image_url: '', category_id: '' };
@@ -38,9 +38,9 @@ export default function AdminDashboardPage() {
   const load = async () => {
     setLoading(true);
     try {
-      const [p, o, c] = await Promise.all([getProducts(), getAllOrders(), getCategories()]);
+      const [p, o, c] = await Promise.all([getProducts(), getAdminOrders(), getCategories()]);
       setProducts(p.data || []);
-      setOrders(o.data || []);
+      setOrders(o.orders || []);
       setCategories(c.data || []);
     } finally {
       setLoading(false);
