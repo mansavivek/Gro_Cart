@@ -4,14 +4,16 @@ import Spinner from '../components/ui/Spinner';
 import { useOrders } from '../hooks/useOrders';
 
 function getStatusClass(status) {
+  const normalizedStatus = String(status || '').toLowerCase();
   const map = {
+    placed: 'bg-amber-100 text-amber-700',
     delivered: 'bg-emerald-100 text-primary',
     out_for_delivery: 'bg-blue-100 text-blue-700',
     in_progress: 'bg-blue-100 text-blue-700',
     packed: 'bg-blue-100 text-blue-700',
     pending: 'bg-surface-container-high text-on-surface-variant',
   };
-  return map[status] || 'bg-surface-container-high text-on-surface-variant';
+  return map[normalizedStatus] || 'bg-surface-container-high text-on-surface-variant';
 }
 
 export default function OrderHistoryPage() {
@@ -28,19 +30,20 @@ export default function OrderHistoryPage() {
   };
 
   const visibleOrders = useMemo(() => {
-    let list = [...orders];
+    let list = Array.isArray(orders) ? orders : [];
 
     if (statusFilter !== 'all') {
-      list = list.filter((order) => order.status === statusFilter);
+      list = list.filter((order) => String(order.status || '').toLowerCase() === statusFilter);
     }
 
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       list = list.filter((order) => {
         const byId = `${order.id}`.includes(q);
-        const byAddress = order.delivery_address.toLowerCase().includes(q);
+        const byStatus = String(order.status || '').toLowerCase().includes(q);
+        const byAddress = (order.delivery_address || '').toLowerCase().includes(q);
         const byItemName = order.items?.some((item) => item.product?.name?.toLowerCase().includes(q));
-        return byId || byAddress || byItemName;
+        return byId || byStatus || byAddress || byItemName;
       });
     }
 
@@ -70,6 +73,7 @@ export default function OrderHistoryPage() {
               <div className="relative">
                 <select className="appearance-none bg-surface-container-lowest border-none rounded-lg pl-4 pr-10 py-2.5 text-sm font-medium text-on-surface shadow-sm focus:ring-2 focus:ring-primary/20 cursor-pointer" onChange={(e) => setStatusFilter(e.target.value)} value={statusFilter}>
                   <option value="all">All Statuses</option>
+                  <option value="placed">Placed</option>
                   <option value="pending">Pending</option>
                   <option value="in_progress">In Progress</option>
                   <option value="packed">Packed</option>
@@ -116,7 +120,7 @@ export default function OrderHistoryPage() {
                     </div>
                     <div className="flex flex-col items-end gap-2">
                       <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${getStatusClass(order.status)}`}>
-                        {order.status.replace(/_/g, ' ')}
+                        {String(order.status || 'unknown').replace(/_/g, ' ')}
                       </span>
                       <p className="font-headline font-extrabold text-xl text-on-surface">${(order.total_amount ?? order.total_price ?? 0).toFixed(2)}</p>
                     </div>
@@ -127,14 +131,14 @@ export default function OrderHistoryPage() {
                       <span className="material-symbols-outlined text-primary" data-icon="location_on">location_on</span>
                       <div className="text-sm">
                         <p className="font-semibold text-on-surface">Delivery Address</p>
-                        <p className="text-on-surface-variant leading-relaxed">{order.delivery_address}</p>
+                        <p className="text-on-surface-variant leading-relaxed">{order.delivery_address || 'Address unavailable'}</p>
                       </div>
                     </div>
                     <div className="flex gap-3">
                       <span className="material-symbols-outlined text-primary" data-icon="local_shipping">local_shipping</span>
                       <div className="text-sm">
                         <p className="font-semibold text-on-surface">Order Status</p>
-                        <p className="text-on-surface-variant leading-relaxed capitalize">{order.status.replace(/_/g, ' ')}</p>
+                        <p className="text-on-surface-variant leading-relaxed capitalize">{String(order.status || 'unknown').replace(/_/g, ' ')}</p>
                       </div>
                     </div>
                   </div>
