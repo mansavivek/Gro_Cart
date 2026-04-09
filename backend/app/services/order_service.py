@@ -56,17 +56,31 @@ def get_orders(user_id):
     cursor = conn.cursor(dictionary=True)
 
     cursor.execute("""
-        SELECT id, total_price, status, created_at
-        FROM orders
-        WHERE user_id = %s
-        ORDER BY created_at DESC
+        SELECT
+            o.id,
+            o.total_price,
+            o.status,
+            o.created_at,
+            o.address_id,
+            a.full_name,
+            a.address_line1,
+            a.address_line2,
+            a.city,
+            a.state,
+            a.zip,
+            a.phone
+        FROM orders o
+        LEFT JOIN addresses a ON o.address_id = a.id
+        WHERE o.user_id = %s
+        ORDER BY o.created_at DESC
     """, (user_id,))
 
     orders = cursor.fetchall()
 
-    return {
-        "orders": orders
-    }
+    cursor.close()
+    conn.close()
+
+    return orders
 
 
 def get_order_details(order_id):
@@ -106,3 +120,60 @@ def get_order_details(order_id):
             }
         })
     return formatted_items
+
+def get_or_create_address(user_id, delivery_address):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    # Split string: "a, a, a, a, 1, 1"
+    parts = [p.strip() for p in delivery_address.split(",")]
+
+    address_line1 = parts[0] if len(parts) > 0 else ""
+    address_line2 = parts[1] if len(parts) > 1 else ""
+    city = parts[2] if len(parts) > 2 else ""
+    state = parts[3] if len(parts) > 3 else ""
+    zip_code = parts[4] if len(parts) > 4 else ""
+    phone = parts[5] if len(parts) > 5 else ""
+
+    # Try to find existing address (avoid duplicates)
+    cursor.execute("""
+        SELECT id
+        FROM addresses
+        WHERE user_id = %s
+          AND address_line1 = %s
+          AND address_line2 = %s
+          AND city = %s
+          AND state = %s
+          AND zip = %s
+          AND phone = %s
+        LIMIT 1
+    """, (user_id, address_line1, address_line2, city, state, zip_code, phone))
+
+    row = cursor.fetchone()
+
+    if row:
+        cursor.close()
+        conn.close()
+        return row["id"]
+
+    # Insert new address
+    cursor.execute("""
+        INSERT INTO addresses (
+            user_id,
+            address_line1,
+            address_line2,
+            city,
+            state,
+            zip,
+            phone
+        )
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+    """, (user_id, address_line1, address_line2, city, state, zip_code, phone))
+
+    conn.commit()
+    address_id = cursor.lastrowid
+
+    cursor.close()
+    conn.close()
+
+    return address_id    
