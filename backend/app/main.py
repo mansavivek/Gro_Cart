@@ -7,6 +7,7 @@ from app.routes.cart import cart_routes
 from app.routes.orders import order_routes
 from app.routes.address_routes import address_routes
 from app.routes.payment_routes import payment_routes
+from app.routes.admin import admin_routes
 
 
 app = Flask(__name__)
@@ -34,6 +35,7 @@ app.register_blueprint(cart_routes, url_prefix="/cart")
 app.register_blueprint(order_routes, url_prefix="/orders")
 app.register_blueprint(address_routes, url_prefix="/addresses")
 app.register_blueprint(payment_routes, url_prefix="/payments")
+app.register_blueprint(admin_routes, url_prefix="/admin")
 
 
 
