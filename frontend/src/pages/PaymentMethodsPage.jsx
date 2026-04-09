@@ -44,7 +44,7 @@ export default function PaymentMethodsPage() {
 
   const startAdd = () => {
     setEditingId('new');
-    setForm({ ...EMPTY_CARD, holderName: user?.name || '' });
+    setForm({ ...EMPTY_CARD });
   };
 
   const startEdit = (card) => {
@@ -149,7 +149,7 @@ export default function PaymentMethodsPage() {
           <div className="mt-8 rounded-xl border border-outline-variant/25 bg-surface-container-lowest p-6">
             <h2 className="text-xl font-headline font-extrabold text-on-surface mb-4">{editingId === 'new' ? 'Add Card' : 'Edit Card'}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input className="rounded-lg border border-outline-variant/30 bg-white px-3 py-2 text-sm text-on-surface" placeholder="Card holder name" value={form.holderName} onChange={(e) => setForm((prev) => ({ ...prev, holderName: e.target.value }))} />
+              <input className="rounded-lg border border-outline-variant/30 bg-white px-3 py-2 text-sm text-on-surface" placeholder="Card holder name" value={form.holderName} name="card-holder-name" autoComplete="off" onChange={(e) => setForm((prev) => ({ ...prev, holderName: e.target.value }))} />
               <input className="rounded-lg border border-outline-variant/30 bg-white px-3 py-2 text-sm text-on-surface" placeholder="Card brand (Visa, Mastercard...)" value={form.brand} onChange={(e) => setForm((prev) => ({ ...prev, brand: e.target.value }))} />
               <input className="rounded-lg border border-outline-variant/30 bg-white px-3 py-2 text-sm text-on-surface" placeholder="Card number" value={form.number} onChange={(e) => setForm((prev) => ({ ...prev, number: e.target.value }))} />
               <input className="rounded-lg border border-outline-variant/30 bg-white px-3 py-2 text-sm text-on-surface" placeholder="Expiry (MM/YY)" value={form.expiry} onChange={(e) => setForm((prev) => ({ ...prev, expiry: e.target.value }))} />

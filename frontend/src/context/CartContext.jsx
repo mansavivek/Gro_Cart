@@ -20,10 +20,15 @@ export function CartProvider({ children }) {
   }, [user]);
 
   useEffect(() => {
-    fetchCart();
-  }, [fetchCart]);
+    if (user) {
+     setCart({ items: [], total_items: 0, total_price: 0 });
+     fetchCart();
+    } else  {
+      setCart({ items: [], total_items: 0, total_price: 0 });
+    }
+  }, [user,fetchCart]);
 
-  const addItem = async (productId, quantity = 1) => {
+  async function addItem(productId, quantity = 1) {
     setLoading(true);
     try {
       await addToCart({ product_id: productId, quantity });
@@ -31,7 +36,7 @@ export function CartProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const updateItem = async (itemId, quantity) => {
     setLoading(true);

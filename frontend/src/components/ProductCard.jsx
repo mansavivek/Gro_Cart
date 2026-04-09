@@ -39,7 +39,7 @@ export default function ProductCard({ product }) {
 
   return (
     <div
-      className="group flex flex-col rounded-xl bg-white dark:bg-white/5 p-4 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 border border-transparent hover:border-primary/20 cursor-pointer"
+      className="group flex flex-col rounded-xl bg-white p-4 shadow-sm transition-all hover:shadow-xl hover:-translate-y-1 border border-transparent hover:border-primary/20 cursor-pointer"
       onClick={(event) => {
         if (event.target.closest('button')) return;
         navigate(`/products/${product.id}`);
@@ -72,7 +72,7 @@ export default function ProductCard({ product }) {
           <p className="text-xs font-bold uppercase text-gray-400">{product.category.name}</p>
         )}
         <Link to={`/products/${product.id}`}>
-          <h3 className="mb-1 text-lg font-bold text-[#111813] dark:text-white">{product.name}</h3>
+          <h3 className="mb-1 text-lg font-bold text-[#111813]">{product.name}</h3>
         </Link>
         <p className="mb-4 text-sm text-gray-500">{product.description || 'Fresh grocery item'}</p>
 

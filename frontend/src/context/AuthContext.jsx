@@ -29,13 +29,20 @@ export function AuthProvider({ children }) {
     setError(null);
     try {
       const { data } = await loginApi({ email, password });
+      if (!data?.token || !data?.user) {
+      throw new Error('Invalid login response');
+    }
       const normalizedUser = normalizeUser(data.user);
-      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(normalizedUser));
       setUser(normalizedUser);
       return normalizedUser;
     } catch (err) {
-      setError(err.response?.data?.detail || 'Login failed');
+      setError(
+        err.response?.data?.detail ||
+        err.response?.data?.error ||
+        err.message ||
+         'Login failed');
       throw err;
     } finally {
       setLoading(false);

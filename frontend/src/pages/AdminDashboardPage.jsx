@@ -486,14 +486,14 @@ export default function AdminDashboardPage() {
                         <div className="flex justify-between items-start">
                           <div>
                             <p className="text-[10px] text-primary font-bold uppercase tracking-widest">{categories.find((category) => `${category.id}` === form.category_id)?.name || 'Category'}</p>
-                            <h4 className="font-headline font-bold text-on-surface">{form.name || 'Product name preview'}</h4>
+                            <h4 className="font-headline font-bold text-gray-900">{form.name || 'Product name preview'}</h4>
                           </div>
                           <div className="text-right">
                             <p className="text-xs text-outline uppercase">Price</p>
                             <p className="font-black text-primary">${form.price || '0.00'}</p>
                           </div>
                         </div>
-                        <p className="text-xs text-on-surface-variant line-clamp-2">{form.description || 'Product description preview appears here.'}</p>
+                        <p className="text-xs text-gray-600 line-clamp-2">{form.description || 'Product description preview appears here.'}</p>
                       </div>
                     </div>
                   </div>
@@ -546,10 +546,10 @@ export default function AdminDashboardPage() {
                   <tbody>
                     {paginatedInventory.map((product) => (
                       <tr className="border-b border-surface-container" key={product.id}>
-                        <td className="px-5 py-4 font-semibold text-on-surface">{product.name}</td>
-                        <td className="px-5 py-4 text-sm text-on-surface-variant">{categories.find((category) => category.id === product.category_id)?.name || 'Uncategorized'}</td>
-                        <td className="px-5 py-4 text-sm text-on-surface">${product.price?.toFixed?.(2) || product.price}</td>
-                        <td className="px-5 py-4 text-sm text-on-surface">{product.quantity}</td>
+                        <td className="px-5 py-4 font-semibold text-gray-900">{product.name}</td>
+                        <td className="px-5 py-4 text-sm text-gray-600">{categories.find((category) => category.id === product.category_id)?.name || 'Uncategorized'}</td>
+                        <td className="px-5 py-4 text-sm text-gray-900">${product.price?.toFixed?.(2) || product.price}</td>
+                        <td className="px-5 py-4 text-sm text-gray-900">{product.quantity}</td>
                         <td className="px-5 py-4 text-right">
                           <div className="inline-flex items-center gap-2">
                             <button

@@ -59,16 +59,16 @@ export function saveAddressBook(user, data) {
 
 export function getPaymentMethods(user) {
   const key = storageKey('grocart-payments', user);
-  const fallbackCard = {
-    id: 'card-default',
-    holderName: user?.name || 'Card Holder',
-    brand: 'Visa',
-    last4: '4242',
-    expiry: '12/28',
-  };
+  // const fallbackCard = {
+  //   id: 'card-default',
+  //   holderName: user?.name || 'Card Holder',
+  //   brand: 'Visa',
+  //   last4: '4242',
+  //   expiry: '12/28',
+  // };
   const fallback = {
-    items: [fallbackCard],
-    selectedId: fallbackCard.id,
+    items: [],
+    selectedId: null,
   };
 
   const value = safeRead(key, fallback);
