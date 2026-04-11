@@ -34,7 +34,7 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
     setCards(methods.items);
     setSelectedCardId(methods.selectedId);
     setPaymentForm({
-      holderName: user?.name || '',
+      holderName:'',
       brand: '',
       number: '',
       expiry: '',
@@ -227,10 +227,11 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
                         placeholder="Card holder name"
                         value={paymentForm.holderName}
                       />
+
                       <input
                         className="rounded-lg border border-outline-variant/30 bg-white px-3 py-2 text-sm text-on-surface"
                         onChange={(e) => setPaymentForm((prev) => ({ ...prev, brand: e.target.value }))}
-                        placeholder="Card brand"
+                        placeholder="Card brand (Visa, Mastercard...)"
                         value={paymentForm.brand}
                       />
                       <input
