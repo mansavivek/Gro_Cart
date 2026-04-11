@@ -7,8 +7,8 @@ auth_routes = Blueprint("auth", __name__)
 @auth_routes.route("/register", methods=["POST"])
 def register():
     data = request.json
-    return jsonify(register_user(data))
-
+    response, status_code = register_user(data)
+    return jsonify(response), status_code
 
 # LOGIN
 @auth_routes.route("/login", methods=["POST"])
