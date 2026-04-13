@@ -6,7 +6,6 @@ from app.database.connection import get_db
 from app.utils.jwt_service import generate_token
 
 # Register
-
 def register_user(data):
     conn = get_db()
     cursor = conn.cursor()
@@ -21,15 +20,7 @@ def register_user(data):
         conn.commit()
         return {"message": "User registered successfully"}
     except Exception as e:
-        error_text = str(e).lower()
-        if "duplicate entry" in error_text and "users.email" in error_text:
-            return {"detail": "Email already registered"}, 409
-
-        return {"detail": "Registration failed"}, 500
-
-    finally:
-        cursor.close()
-        conn.close()
+        return {"error": str(e)}
 
 
 # Login
