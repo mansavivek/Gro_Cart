@@ -1,6 +1,7 @@
 from app.database.connection import get_db
 import json
 
+
 def place_order(user_id, address_id):
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
@@ -16,7 +17,21 @@ def place_order(user_id, address_id):
     items = cursor.fetchall()
 
     if not items:
+        cursor.close()
+        conn.close()
         return {"error": "Cart is empty"}
+
+    # optional safety check: address must belong to this user
+    cursor.execute("""
+        SELECT id FROM addresses
+        WHERE id = %s AND user_id = %s
+    """, (address_id, user_id))
+
+    address = cursor.fetchone()
+    if not address:
+        cursor.close()
+        conn.close()
+        return {"error": "Invalid address"}
 
     total_price = sum(i["quantity"] * float(i["price"]) for i in items)
 
@@ -44,12 +59,15 @@ def place_order(user_id, address_id):
     cursor.execute("DELETE FROM cart_items WHERE user_id = %s", (user_id,))
 
     conn.commit()
+    cursor.close()
+    conn.close()
 
     return {
         "message": "Order placed successfully",
         "order_id": order_id,
         "total_price": total_price
     }
+
 
 def get_orders(user_id):
     conn = get_db()
@@ -83,9 +101,23 @@ def get_orders(user_id):
     return orders
 
 
-def get_order_details(order_id):
+def get_order_details(user_id, order_id):
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
+
+    # first confirm this order belongs to the logged-in user
+    cursor.execute("""
+        SELECT id
+        FROM orders
+        WHERE id = %s AND user_id = %s
+    """, (order_id, user_id))
+
+    order = cursor.fetchone()
+
+    if not order:
+        cursor.close()
+        conn.close()
+        return {"error": "Order not found"}
 
     cursor.execute("""
         SELECT 
@@ -107,7 +139,7 @@ def get_order_details(order_id):
         try:
             imgs = json.loads(item["images"]) if item["images"] else []
             image_url = imgs[0] if imgs else None
-        except:
+        except Exception:
             image_url = None
 
         formatted_items.append({
@@ -119,7 +151,12 @@ def get_order_details(order_id):
                 "image_url": image_url
             }
         })
+
+    cursor.close()
+    conn.close()
+
     return formatted_items
+
 
 def get_or_create_address(user_id, delivery_address):
     conn = get_db()
@@ -176,4 +213,4 @@ def get_or_create_address(user_id, delivery_address):
     cursor.close()
     conn.close()
 
-    return address_id    
+    return address_id

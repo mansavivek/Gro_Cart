@@ -7,7 +7,7 @@ address_routes = Blueprint("addresses", __name__)
 @address_routes.route("/add", methods=["POST"])
 @auth_required
 def create_address():
-    data = request.json
+    data = request.get_json()
     return jsonify(add_address(g.user_id, data))
 
 @address_routes.route("", methods=["GET"])
@@ -23,9 +23,10 @@ def remove_address(address_id):
 @address_routes.route("/default/<address_id>", methods=["PUT"])
 @auth_required
 def make_default(address_id):
-    return jsonify(set_default_address(g.user_id, address_id))    
+    return jsonify(set_default_address(g.user_id, address_id))
 
 @address_routes.route("/<address_id>", methods=["PUT"])
 @auth_required
 def edit_address(address_id):
-    return jsonify(update_address(g.user_id, address_id, request.json))    
+    data = request.get_json()
+    return jsonify(update_address(g.user_id, address_id, data))
