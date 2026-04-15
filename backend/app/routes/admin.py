@@ -6,17 +6,22 @@ from app.services.admin_service import (
     update_admin_product,
     delete_admin_product,
 )
+from app.core.auth_middleware import auth_required, role_required
 
 admin_routes = Blueprint("admin_routes", __name__, url_prefix="/admin")
 
 
 @admin_routes.route("/orders", methods=["GET"])
+@auth_required
+@role_required("admin")
 def admin_get_orders():
     result = get_admin_orders()
     return jsonify(result["orders"]), 200
 
 
 @admin_routes.route("/orders/<int:order_id>/status", methods=["PUT"])
+@auth_required
+@role_required("admin")
 def admin_update_order_status(order_id):
     data = request.get_json() or {}
     status = data.get("status")
@@ -32,6 +37,8 @@ def admin_update_order_status(order_id):
 
 
 @admin_routes.route("/products", methods=["POST"])
+@auth_required
+@role_required("admin")
 def admin_create_product():
     data = request.get_json() or {}
 
@@ -45,6 +52,8 @@ def admin_create_product():
 
 
 @admin_routes.route("/products/<string:sku>", methods=["PUT"])
+@auth_required
+@role_required("admin")
 def admin_update_product(sku):
     data = request.get_json() or {}
     result = update_admin_product(sku, data)
@@ -56,6 +65,8 @@ def admin_update_product(sku):
 
 
 @admin_routes.route("/products/<string:sku>", methods=["DELETE"])
+@auth_required
+@role_required("admin")
 def admin_delete_product(sku):
     deleted = delete_admin_product(sku)
 

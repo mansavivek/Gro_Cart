@@ -8,22 +8,34 @@ from app.utils.jwt_service import generate_token
 # Register
 def register_user(data):
     conn = get_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
 
-    hashed_pw = bcrypt.hashpw(data["password"].encode(), bcrypt.gensalt())
+    name = data.get("name")
+    email = data.get("email")
+    password = data.get("password")
+
+    if not name or not email or not password:
+        return {"error": "Name, email, and password are required"}, 400
+
+    cursor.execute("SELECT id FROM users WHERE email = %s", (email,))
+    existing_user = cursor.fetchone()
+
+    if existing_user:
+        return {"error": "Email already exists"}, 409
+
+    hashed_pw = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
     try:
         cursor.execute(
-            "INSERT INTO users (name, email, password_hash) VALUES (%s, %s, %s)",
-            (data["name"], data["email"], hashed_pw.decode())
+            "INSERT INTO users (name, email, password_hash, role) VALUES (%s, %s, %s, %s)",
+            (name, email, hashed_pw, "customer")
         )
         conn.commit()
-        return {"message": "User registered successfully"}
+        return {"message": "User registered successfully"}, 201
     except Exception as e:
-        return {"error": str(e)}
+        return {"error": str(e)}, 500
 
 
-# Login
 def login_user(data):
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
@@ -31,31 +43,28 @@ def login_user(data):
     cursor.execute("SELECT * FROM users WHERE email=%s", (data["email"],))
     user = cursor.fetchone()
 
-    #User not found
     if not user:
         return {"error": "User not found"}, 404
 
-    #Wrong password
     if not bcrypt.checkpw(
         data["password"].encode(),
         user["password_hash"].encode()
     ):
         return {"error": "Invalid password"}, 401
 
-    # Generate JWT token
-    token = generate_token(user["id"])
+    token = generate_token(user)
 
-    # Success response
     return {
         "message": "Login successful",
-        "token": token,   
+        "token": token,
         "user": {
             "user_id": user["id"],
             "name": user["name"],
             "email": user["email"],
             "role": user["role"]
         }
-    }
+    }, 200
+
 
 #Forgot password
 def forgot_password(email):
@@ -124,4 +133,12 @@ def reset_password(email, new_password):
 
     conn.commit()
 
-    return {"message": "Password updated successfully"}    
+    return {"message": "Password updated successfully"}   
+
+
+def get_user_by_id(user_id):
+    conn = get_db()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT id, name, email, role FROM users WHERE id = %s", (user_id,))
+    return cursor.fetchone()     

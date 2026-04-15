@@ -1,40 +1,48 @@
-from flask import Blueprint, request, jsonify
-from app.services.cart_service import *
+from flask import Blueprint, request, jsonify, g
+from app.services.cart_service import (
+    get_cart,
+    add_to_cart,
+    update_cart_item,
+    remove_cart_item,
+    clear_cart
+)
 from app.core.auth_middleware import auth_required
-from flask import g
 
 cart_routes = Blueprint("cart", __name__)
 
-def get_user_id():
-    return 1 
 
 @cart_routes.route("", methods=["GET"])
+@auth_required
 def cart():
-    user_id = get_user_id()
-    return jsonify(get_cart(user_id))
+    result = get_cart(g.user_id)
+    return jsonify(result), 200
 
 
 @cart_routes.route("/add", methods=["POST"])
+@auth_required
 def add():
-    user_id = get_user_id()
-    data = request.json
-    return jsonify(add_to_cart(user_id, data))
+    data = request.get_json()
+    result = add_to_cart(g.user_id, data)
+    return jsonify(result), 200
 
 
 @cart_routes.route("/update/<item_id>", methods=["PUT"])
+@auth_required
 def update(item_id):
-    user_id = get_user_id()
-    data = request.json
-    return jsonify(update_cart_item(user_id, item_id, data))
+    data = request.get_json()
+    result = update_cart_item(g.user_id, item_id, data)
+    return jsonify(result), 200
 
 
 @cart_routes.route("/remove/<item_id>", methods=["DELETE"])
+@auth_required
 def remove(item_id):
-    user_id = get_user_id()
-    return jsonify(remove_cart_item(user_id, item_id))
+    result = remove_cart_item(g.user_id, item_id)
+    return jsonify(result), 200
 
 
 @cart_routes.route("/clear", methods=["DELETE"])
+@auth_required
 def clear():
-    user_id = get_user_id()
-    return jsonify(clear_cart(user_id))
+    result = clear_cart(g.user_id)
+    return jsonify(result), 200

@@ -1,4 +1,5 @@
-import json, random
+import json
+import random
 from app.database.connection import get_db
 
 
@@ -101,7 +102,7 @@ def update_admin_order_status(order_id, status):
         UPDATE orders
         SET status = %s
         WHERE id = %s
-    """, (status.upper(), order_id))
+    """, (status, order_id))
     conn.commit()
 
     cursor.execute("""
@@ -168,13 +169,15 @@ def update_admin_order_status(order_id, status):
     conn.close()
     return result
 
+
 def generate_unique_sku(cursor):
     while True:
-        sku = str(random.randint(100000000, 999999999))  # 9-digit numeric SKU
+        sku = str(random.randint(100000000, 999999999))
         cursor.execute("SELECT sku FROM products WHERE sku = %s", (sku,))
         exists = cursor.fetchone()
         if not exists:
             return sku
+
 
 def create_admin_product(data):
     conn = get_db()
@@ -183,11 +186,21 @@ def create_admin_product(data):
     sku = data.get("sku")
     if not sku:
         sku = generate_unique_sku(cursor)
+
     name = data.get("name")
     price = data.get("price")
     description = data.get("description")
     brand = data.get("brand")
-    images = data.get("image_url")
+    images = data.get("images")
+    if images is None:
+        images = data.get("image_url")
+
+    if isinstance(images, str):
+        images = [images] if images.strip() else []
+    elif images is None:
+        images = []
+    elif not isinstance(images, list):
+        images = [images]
 
     category_id = data.get("category_id")
     breadcrumbs = data.get("breadcrumbs") or data.get("category")
@@ -196,6 +209,7 @@ def create_admin_product(data):
         category_row = cursor.fetchone()
         if category_row:
             breadcrumbs = category_row.get("name")
+
     availability = data.get("availability", "InStock")
     currency = data.get("currency", "USD")
     pack_size = data.get("pack_size")
@@ -206,8 +220,7 @@ def create_admin_product(data):
     nutrition = data.get("nutrition")
     quantity = data.get("quantity", 0)
 
-    if isinstance(images, list):
-        images = json.dumps(images)
+    images = json.dumps(images)
 
     if isinstance(nutrition, (list, dict)):
         nutrition = json.dumps(nutrition)
@@ -262,7 +275,7 @@ def create_admin_product(data):
         "description": product.get("description"),
         "brand": product.get("brand"),
         "breadcrumbs": product.get("breadcrumbs"),
-        "images": product.get("images"),
+        "images": json.loads(product["images"]) if product.get("images") else [],
         "pack_size": product.get("pack_size"),
         "ingredients": product.get("ingredients"),
         "storage_details": product.get("storage_details"),
@@ -284,18 +297,31 @@ def update_admin_product(sku, data):
         cursor.close()
         conn.close()
         return None
+
     category_id = data.get("category_id")
     breadcrumbs = data.get("breadcrumbs") or data.get("category")
-
     if not breadcrumbs and category_id:
         cursor.execute("SELECT name FROM categories WHERE id = %s", (category_id,))
         category_row = cursor.fetchone()
         if category_row:
-            breadcrumbs = category_row.get("name")    
+            breadcrumbs = category_row.get("name")
 
-    raw_images = data.get("images") or data.get("image") or data.get("image_url")
-    if isinstance(raw_images, list):
+    raw_images = data.get("images")
+    if raw_images is None:
+        raw_images = data.get("image")
+    if raw_images is None:
+        raw_images = data.get("image_url")
+
+    if isinstance(raw_images, str):
+        raw_images = json.dumps([raw_images] if raw_images.strip() else [])
+    elif isinstance(raw_images, list):
         raw_images = json.dumps(raw_images)
+    elif raw_images is not None:
+        raw_images = json.dumps([raw_images])
+
+    nutrition = data.get("nutrition")
+    if isinstance(nutrition, (list, dict)):
+        nutrition = json.dumps(nutrition)
 
     updatable_fields = {
         "name": data.get("name"),
@@ -311,7 +337,7 @@ def update_admin_product(sku, data):
         "storage_details": data.get("storage_details"),
         "percentage_alcohol": data.get("percentage_alcohol"),
         "serving_size": data.get("serving_size"),
-        "nutrition": json.dumps(data.get("nutrition")) if isinstance(data.get("nutrition"), (list, dict)) else data.get("nutrition"),
+        "nutrition": nutrition,
     }
 
     set_clauses = []
@@ -364,7 +390,7 @@ def update_admin_product(sku, data):
         "description": product.get("description"),
         "brand": product.get("brand"),
         "breadcrumbs": product.get("breadcrumbs"),
-        "images": product.get("images"),
+        "images": json.loads(product["images"]) if product.get("images") else [],
         "pack_size": product.get("pack_size"),
         "ingredients": product.get("ingredients"),
         "storage_details": product.get("storage_details"),
@@ -372,7 +398,7 @@ def update_admin_product(sku, data):
         "serving_size": product.get("serving_size"),
         "nutrition": product.get("nutrition"),
         "created_at": product.get("created_at"),
-        "stock": 0
+        "stock": data.get("quantity", 0)
     }
 
 
