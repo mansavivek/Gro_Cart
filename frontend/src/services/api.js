@@ -46,6 +46,9 @@ function getMockHandler({ method, path, data, params }) {
 
   if (path === '/auth/login' && method === 'post') return () => mockDataService.login(data);
   if (path === '/auth/register' && method === 'post') return () => mockDataService.register(data);
+  if (path === '/auth/forgot-password' && method === 'post') return () => mockDataService.requestPasswordReset(data);
+  if (path === '/auth/verify-otp' && method === 'post') return () => mockDataService.verifyPasswordResetOtp(data);
+  if (path === '/auth/reset-password' && method === 'post') return () => mockDataService.resetPassword(data);
   if (path === '/products' && method === 'get') return () => mockDataService.getProducts(params);
   if (path.match(/^\/products\/\d+$/) && method === 'get') {
     const id = path.split('/').pop();
@@ -144,10 +147,14 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    const failedPath = getPathFromConfig(error.config?.url, error.config?.baseURL);
+    const isAuthPageRequest = failedPath === '/auth/login' || failedPath === '/auth/register';
+
+    if (error.response?.status === 401 && !isAuthPageRequest) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      const loginPath = `${import.meta.env.BASE_URL}login`;
+      window.location.assign(loginPath);
     }
     return Promise.reject(error);
   },

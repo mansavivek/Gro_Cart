@@ -196,7 +196,7 @@ def create_admin_product(data):
         category_row = cursor.fetchone()
         if category_row:
             breadcrumbs = category_row.get("name")
-    availability = data.get("availability", "In Stock")
+    availability = data.get("availability", "InStock")
     currency = data.get("currency", "USD")
     pack_size = data.get("pack_size")
     ingredients = data.get("ingredients")
@@ -204,6 +204,7 @@ def create_admin_product(data):
     percentage_alcohol = data.get("percentage_alcohol")
     serving_size = data.get("serving_size")
     nutrition = data.get("nutrition")
+    quantity = data.get("quantity", 0)
 
     if isinstance(images, list):
         images = json.dumps(images)
@@ -269,7 +270,7 @@ def create_admin_product(data):
         "serving_size": product.get("serving_size"),
         "nutrition": product.get("nutrition"),
         "created_at": product.get("created_at"),
-        "stock": 0
+        "stock": quantity
     }
 
 

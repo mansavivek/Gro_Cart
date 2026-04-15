@@ -9,6 +9,21 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState({ items: [], total_items: 0, total_price: 0 });
   const [loading, setLoading] = useState(false);
 
+  const buildCartWithTotals = (items) => {
+    const safeItems = Array.isArray(items) ? items : [];
+    const total_items = safeItems.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
+    const total_price = safeItems.reduce(
+      (sum, item) => sum + ((Number(item.quantity) || 0) * (Number(item.product?.price) || 0)),
+      0
+    );
+
+    return {
+      items: safeItems,
+      total_items,
+      total_price: Number(total_price.toFixed(2)),
+    };
+  };
+
   const fetchCart = useCallback(async () => {
     if (!user) return;
     try {
@@ -39,22 +54,34 @@ export function CartProvider({ children }) {
   }
 
   const updateItem = async (itemId, quantity) => {
-    setLoading(true);
+    const previousCart = cart;
+    setCart((prev) => {
+      const nextItems = prev.items.map((item) => (
+        item.id === itemId ? { ...item, quantity } : item
+      ));
+      return buildCartWithTotals(nextItems);
+    });
+
     try {
       await updateCartItem(itemId, { quantity });
-      await fetchCart();
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      setCart(previousCart);
+      throw error;
     }
   };
 
   const removeItem = async (itemId) => {
-    setLoading(true);
+    const previousCart = cart;
+    setCart((prev) => {
+      const nextItems = prev.items.filter((item) => item.id !== itemId);
+      return buildCartWithTotals(nextItems);
+    });
+
     try {
       await removeCartItem(itemId);
-      await fetchCart();
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      setCart(previousCart);
+      throw error;
     }
   };
 

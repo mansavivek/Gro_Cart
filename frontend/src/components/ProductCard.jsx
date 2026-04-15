@@ -10,7 +10,7 @@ export default function ProductCard({ product }) {
 
   const handleAddToCart = async () => {
     if (!user) {
-      window.location.href = '/login';
+      navigate('/login');
       return;
     }
     try {
@@ -74,7 +74,7 @@ export default function ProductCard({ product }) {
         <Link to={`/products/${product.id}`}>
           <h3 className="mb-1 text-lg font-bold text-[#111813]">{product.name}</h3>
         </Link>
-        <p className="mb-4 text-sm text-gray-500">{product.description || 'Fresh grocery item'}</p>
+        {/* <p className="mb-4 text-sm text-gray-500">{product.description || 'Fresh grocery item'}</p> */}
 
         <div className="mt-auto flex items-center justify-between">
           <span className="text-xl font-bold text-[#006837]">${product.price.toFixed(2)}</span>

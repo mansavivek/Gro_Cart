@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 from app.services.product_service import (
     get_products,
     get_product,
@@ -11,7 +11,9 @@ product_routes = Blueprint("products", __name__)
 @product_routes.route("", methods=["GET"])
 @product_routes.route("/", methods=["GET"])  
 def products():
-    return jsonify(get_products())
+    category_id = request.args.get("category_id")
+    category = request.args.get("category")
+    return jsonify(get_products(category_id=category_id, category=category))
 
 # Get single product
 @product_routes.route("/<product_id>", methods=["GET"])

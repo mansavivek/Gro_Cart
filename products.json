@@ -1,26 +1,10 @@
-/**
- * Mock Data Service
- * Provides realistic test data for end-to-end testing
- * Based on Tesco groceries dataset and design specifications
- */
-
-const CATEGORY_ICON_MAP = {
-  'Frozen Food': 'ac_unit',
-  'Food Cupboard': 'kitchen',
-  Drinks: 'local_bar',
-  Baby: 'child_care',
-  Bakery: 'bakery_dining',
-  'Health & Beauty': 'spa',
-  'Fresh Food': 'eco',
-};
-
-const DATASET_PRODUCTS = [
+[
   {
     "availability": "InStock",
     "avg_rating": 2.4,
     "brand": "TESCO FINEST",
     "breadcrumbs": "Bakery",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Crusty White Farmhouse 800g Sliced",
     "id": "250759508",
@@ -44,7 +28,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.4,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Sweetcorn",
     "id": "251788587",
@@ -64,13 +48,12 @@ const DATASET_PRODUCTS = [
     "sku": "251788587",
     "storage_details": null
   },
-  
   {
     "availability": "InStock",
     "avg_rating": 4.2,
     "brand": "NEUTROGENA",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Neutrogena Visibly Clear Blackhead Scrub 150Ml. Developed with Dermatologists,Clinically proven,Deeply purifies to help eliminate & prevent blackheads for a refined complexion,For Blackhead-Prone Skin,Oil-Free",
     "id": "252575478",
@@ -94,7 +77,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.2,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Chestnuts in shell",
     "id": "254033802",
@@ -118,7 +101,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.7,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Chicken breast, lemon and pepper mayonnaise, tomato, cucumber and lettuce in malted bread.",
     "id": "254279183",
@@ -142,7 +125,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.6,
     "brand": "WEETABIX",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Whole Wheat Cereal with Added Vitamins & Iron. 24 Biscuits. High in fibre,Low in sugar and salt,100% wholegrain wheat,Suitable for Vegetarians",
     "id": "254852996",
@@ -168,7 +151,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.5,
     "brand": "TESCO",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Sugar coated glazed biscuits filled with currants.",
     "id": "254921673",
@@ -192,7 +175,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.2,
     "brand": "TESCO",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Ready salted potato crisps.",
     "id": "254926662",
@@ -216,7 +199,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "DISARONNO",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Disaronno Amaretto 50Cl. For great cocktail ideas, visit: www.disaronno.com. The World's Favourite Italian Liqueur",
     "id": "255250290",
@@ -240,7 +223,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.5,
     "brand": "TESCO HOMEOFFICE",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Tesco 6 Inch Cash Box. Strong metal construction. Features sturdy plastic coin tray. H8xW15.2xD12cm. Black 6 inch cash box",
     "id": "257175220",
@@ -264,7 +247,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.0,
     "brand": "PENFOLDS",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Koonunga Hill Chardonnay 2019. For calorie information see - www.penfolds.com/calories. Wine of South Australia",
     "id": "258014871",
@@ -288,7 +271,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 1.3,
     "brand": "TESCO CELEBRATE",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Tesco Blue Candy Stripe 12 Candles & Holder",
     "id": "259423120",
@@ -312,7 +295,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.6,
     "brand": "ELNETT",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "L'oreal Paris Elnett Normal Strength Hair Spray 400Ml. Up to 24H normal hold,Iconic micro diffuser hairspray,Gives natural hair movement and shine,Protects your style against the effects of humidity,Brush out for hair that feels clean and ready to restyle,No stiffness, stickiness or visible residue",
     "id": "259880355",
@@ -338,7 +321,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 1.8,
     "brand": "TESCO",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Salt and vinegar flavour baked maize and potato snacks.",
     "id": "260085646",
@@ -362,7 +345,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.3,
     "brand": "VO5",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Vo5 Mega Hold Styling Gel 200Ml. VO5 Mega Hold Styling Gel offers 24 hour extra strong control for perfectly groomed hairstyles,With a hold level of 5/5, this VO5 hair gel gives you the ultimate hold for perfect control,VO5 Mega Hold Styling Gel is ideal for all cuts, whatever your hair styling wish,VO5 Mega Hold Styling Gel makes your hair styling effortless while giving you the confidence that none of your strands will go astray,The non-sticky, quick drying hair gel formula features Aquascreen, meaning your style will last in very high humidity,A styling gel with 24hr extra strong control that will always keep your hair in check",
     "id": "260567946",
@@ -389,7 +372,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "WILKINSON SWORD",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Wilkinson Sword Quattro For Women Disposable 3S",
     "id": "263645491",
@@ -413,7 +396,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "OPTREX",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Brightening Eye Drops. For dazzling eyes in an instant",
     "id": "263847471",
@@ -438,7 +421,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.7,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Chicken breast fillet pieces in a crispy southern fried coating.",
     "id": "264566997",
@@ -462,7 +445,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.0,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Sliced, cured and cooked formed ham made from selected cuts of pork leg meat, coated with gluten free breadcrumbs.",
     "id": "265085320",
@@ -487,7 +470,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.5,
     "brand": "TOMMEE TIPPEE",
     "breadcrumbs": "Baby",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Groclock Toddler Sleep Trainer. Perfect for showing toddlers when it's time to get up in the morning. Glowing screen shows images of stars & the sun. Includes fun bedtime storybook",
     "id": "266697648",
@@ -513,7 +496,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.8,
     "brand": "CAULDRON",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Falafels made with chickpeas, onion and coriander. For more exciting recipe inspiration visit: cauldronfoods.co.uk. Chickpeas, coriander and a pinch of cumin,Ready to eat,Source of protein,Low in saturated fat,High in fibre,Made with non GM ingredients,Suitable for vegans,Vegetarian Society Approved - Vegan",
     "id": "266727804",
@@ -537,7 +520,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "COW & GATE",
     "breadcrumbs": "Baby",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Fortified milk drink from 2 years. Fortified milk drink for young children aged 2-3 years. Delivers at least 100% of your toddler's daily vitamin D needs. Iron for brain development. All reviews are from parents with children older than 6 months and have not been edited by Nutricia. Use Toddler milk as part of a varied, balanced diet from 1 year.. Preparation instructions on pack must be followed.. Supports a balanced diet. With iron, calcium, vit. B12. High in Vitamin D. When your little one is 2 they are becoming even more active. Cow & Gate Toddler Milk from 2 years is high in Vitamin D and enriched with Calcium to support normal bone development. It is nutritionally tailored to support your toddler's development from 2 years old, with just two beakers a day as part of a varied and balanced diet. Also available as ready-to-use liquid.. No artificial preservatives*. *As per legislation. Supports a balanced diet,With iron, calcium, vit. B12,High in Vitamin D",
     "id": "268739729",
@@ -565,7 +548,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.8,
     "brand": "GRESSINGHAM",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Impressively Easy Duck Breast Portions. For recipes, how-to-videos and top tips, visit our website at: www.gressinghamduck.co.uk. From our British farmers,Cooks in 20 mins",
     "id": "268913536",
@@ -591,7 +574,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.6,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Battered haddock (Melanogrammus aeglefinus) fillet strips.",
     "id": "271284352",
@@ -615,7 +598,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.5,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Persimmon.",
     "id": "271531711",
@@ -640,7 +623,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.8,
     "brand": "VASELINE",
     "breadcrumbs": "Baby",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Vaseline Original Petroleum Jelly 100Ml. Moisturise your skin . Pure petroleum jelly . Suitable for all skin types . Made with triple-purified Petroleum Jelly, Vaseline Original protects dry, cracked skin and locks in moisture to keep it healthy,Vaseline Petroleum Jelly is clinically proven to help heal dry or damaged skin,The original wonder jelly can be used on dry skin, stressed skin, and sensitive skin to protect it from windburn or chapping,Vaseline provides dry skin relief and helps protect minor cuts, scrapes and burns,Petroleum Jelly is hypoallergenic, dermatologically tested and non-comedogenic, so it will not clog your pores,Vaseline cares for the skin you're born in, which is why our Petroleum Jelly works deep to moisturise dry, rough, and irritated skin",
     "id": "272455673",
@@ -666,7 +649,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.1,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Dry cured Spanish ham.",
     "id": "273429726",
@@ -691,7 +674,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.7,
     "brand": "PEDIGREE",
     "breadcrumbs": "Pets",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Complementary pet food for puppies aged 4-12 months. Pedigree DentaTubos puppy chews have a unique shape and texture specially designed to be kind to a puppy's developing teeth & gums because chewing on anything too hard could damage their teeth",
     "id": "273888320",
@@ -718,7 +701,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.4,
     "brand": "MAGGI",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Recipe mix for barbecue chicken. Full recipe available at maggi.co.uk. For other authentic and delicious meal ideas go to maggi.co.uk. Sweet 'n' sticky,No Artificial Colours, Flavours or Preservatives",
     "id": "273913061",
@@ -743,7 +726,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.5,
     "brand": "GENIUS",
     "breadcrumbs": "Bakery",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Gluten Free White Sliced Bread. Did you know you can recycle our bread bags at larger supermarkets along with other plastic bags?. High in fibre,Low in sugar and saturated fat,Gluten and milk free,Made without wheat,Suitable for Coeliacs and Vegetarians",
     "id": "273949444",
@@ -768,7 +751,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "PAKEEZA HENNA",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Pakeeza Henna Very Low Fat Natural Yogurt 1Kg. Made with British milk,Gluten free,No artificial flavourings or colours,Suitable for vegetarians",
     "id": "274308044",
@@ -792,7 +775,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "CORONA",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Beer. Find us on Facebook, Instagram, Twitter and our own channels:. www.coronaextra.co.uk. www.tapintoyourbeer.com. Brewed with 100% Natural Ingredients - Water, Barley Maize, Hops",
     "id": "274347579",
@@ -816,7 +799,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.5,
     "brand": "CORONA",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Beer. Find us on Facebook, Instagram, Twitter and our own channels:. www.coronaextra.co.uk. www.tapintoyourbeer.com. Brewed with 100% Natural Ingredients - Water, Barley, Maize, Hops,Only 4 Ingredients,No Artificial Flavours or Colours,No Added Preservatives",
     "id": "274360096",
@@ -840,7 +823,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "TESCO HOMEOFFICE",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Tesco A4 Document Box. A4 document box. Made from durable, sturdy plastic \\n . Stops important documents from bending",
     "id": "274658654",
@@ -864,7 +847,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "DELICATESSEN",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Chilli Rice Crackers. Chilli rating - 2,Spicy, crunchy chilli crackers, perfect for snacking,Suitable for vegetarians",
     "id": "274972178",
@@ -888,7 +871,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.6,
     "brand": "TESCO FINEST",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Unsmoked, dry cured rindless back bacon rashers.",
     "id": "275174349",
@@ -912,7 +895,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "MOOSEHEAD",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Grubby Putty . Wash out formula,Suitable for medium to longer lengths,Not tested on animals",
     "id": "276975004",
@@ -936,7 +919,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.9,
     "brand": "CATHEDRAL CITY",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cheddar cheese. For more details, please visit cathedralcity.co.uk. Approved by Our Master Grader,Creamy, Smooth & Full of Flavour,Made with 100% British Milk,Suitable for Vegetarians",
     "id": "277925449",
@@ -960,7 +943,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.3,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Stir fry vegetables with beansprouts.",
     "id": "280003281",
@@ -984,7 +967,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.7,
     "brand": "QUORN",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Meat free savoury flavour nuggets, made with mycoprotein, coated in a crispy batter. Sustainable nutrition. Quorn products are a source of protein because they contain Quorn mycoprotein; a nutritious and sustainable protein source. Quorn mycoprotein is footprinted by the carbon trust and has less impact on our planet's resources. Recommended Netmums. In a poll of 103 Netmums members, 98% would recommend Quorn Crispy Nuggets to a friend or family. To discover delicious recipes made with Quorn products and to find out more about our approach to sustainable nutrition visit www.quorn.co.uk and get social with us!. Deliciously meat free,Source of Protein,Low in Saturated Fat,Source of Fibre,No Soy,Vegetarian Society Approved",
     "id": "281572572",
@@ -1008,7 +991,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.5,
     "brand": "TESCO",
     "breadcrumbs": "Bakery",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "4 Chocolate flavour sponge cakes filled with chocolate sauce, topped with chocolate flavour frosting and decorated with a reindeer sugar plaque. 4 Vanilla flavour sponge cakes filled with strawberry sauce, topped with green coloured vanilla flavour frosting and decorated with sugar decorations and bronze coloured sugar star. 4 Chocolate flavour sponge cakes filled with chocolate sauce, topped with red and white coloured vanilla flavour frosting and decorated with white sugar decorations.",
     "id": "284515763",
@@ -1032,7 +1015,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "PILOT",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Pilot Frixion Black Set In Case. Remove your mistakes by rubbing with the eraser stud. 2x retractable rollerballs 0.7mm. Includes 2 erasable pens, 1 erasable highlighter, 3 refills &amp; a pencil case. Join us on:. https://www.facebook.com/pilotpenuk. Unique gel ink responds to the heat generated by rubbing out allowing you to write over your mistake immediately with the same pen,Set includes x 2 FriXion Ball Medium Erasable Pens, x 1 FriXion Light Erasable Highlighter and x 3 FriXion Ball Refills,0.7mm tip gives a 0.35mm medium line",
     "id": "287123980",
@@ -1056,7 +1039,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.3,
     "brand": "FREE FROM",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Egg free salad cream.",
     "id": "287547933",
@@ -1080,7 +1063,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.5,
     "brand": "TESCO",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Thai hom mali fragrant rice.",
     "id": "287967879",
@@ -1104,7 +1087,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Rosemary, sage, thyme.",
     "id": "289765781",
@@ -1128,7 +1111,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "SHAKEN UDDER",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "High Temperature Pasteurised Milk Drink. Discover Delicious Dairy,Made with Maldon Sea Salt,Love the Udder,Milkshake with no artificial colours, flavours or preservatives,Good source of calcium and protein,Less than 5% added sugar,Low fat,Gluten free,Suitable for vegetarians",
     "id": "291596570",
@@ -1152,7 +1135,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.5,
     "brand": "WOODSIDE FARMS",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Boneless pork loin steaks",
     "id": "292285031",
@@ -1177,7 +1160,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.9,
     "brand": "WOODSIDE FARMS",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Pork Belly Slices",
     "id": "292285964",
@@ -1201,7 +1184,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.5,
     "brand": "WOLF BLASS",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cabernet Sauvignon - Red Australian Wine. For calorie information see - www.wolfblass.com/calories. Wine of South Australia,The classic Yellow Label since 1966,The heartland of Wolf Blass wines,Created by Wolfgang Blass am in 1966",
     "id": "295163142",
@@ -1225,7 +1208,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.9,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Vegetable fat spread (70%).",
     "id": "296747441",
@@ -1249,7 +1232,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.4,
     "brand": "HEAD & SHOULDERS",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Head & Shoulders Anti-Dandruff Classic Clean Shampoo 90Ml. Classic Clean Anti Dandruff Shampoo cleans your hair while keeping it fresh and beautifully moisturised,Derma&Pure formula effectively fights Itchy Oily and Dry scalp to Stop dandruff before it even shows,Dermatologically tested, ph balanced and boosted with antioxidants for gentle care of hair and scalp,Keeps hair beautiful and up to 100% flake-free (with regular use),Formulated with no unwanted ingredients: 0% Parabens, 0% Phosphates, 0% Paraffins, 0% Colourants",
     "id": "296920800",
@@ -1277,7 +1260,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.5,
     "brand": "MR KIPLING",
     "breadcrumbs": "Bakery",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Lemon Flavoured Sponge with a Lemon Flavour Filling (12%), Topped with a Decorated Lemon Flavoured Icing (26%). Mr Kipling Lemon Layered Slices,Light lemon sponge slices with a zingy filling and icing,100% natural flavours,Suitable for vegetarians,Individually wrapped twin packs",
     "id": "296983713",
@@ -1301,7 +1284,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.0,
     "brand": "TESCO",
     "breadcrumbs": "Household",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Luxury Soft Coconut Oil toilet tissue 4 white rolls",
     "id": "297445007",
@@ -1329,7 +1312,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "LILY'S KITCHEN",
     "breadcrumbs": "Pets",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Lily's Kitchen Grain Free Variety 6X400g. Come and be social with us... Find us on Twitter, Facebook and Instagram. #LilysKitchen. @lilyskitchen. Proper food for dogs,With freshly prepared proper meat,No meat meal or fillers,Complete nutrition,Botanical herbs,Natural & holistic,No fillers or artificial jellies,No rendered meats or derivatives,No soya or wheat,No GMOs,No artificial colours or additives",
     "id": "298870567",
@@ -1353,7 +1336,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "BUTCHERS",
     "breadcrumbs": "Pets",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Butcher's Succulent Recipe Trays 4 X 150G. Nourishing Food for Dogs,Supporting Farmers,Offally Good",
     "id": "299271170",
@@ -1378,7 +1361,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.3,
     "brand": "HEARTY FOOD CO.",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cheese sauce with cooked macaroni pasta topped with red Cheddar cheese.",
     "id": "299555755",
@@ -1402,7 +1385,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.2,
     "brand": "TESCO FINEST",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Mango and passion fruit mousse.",
     "id": "299775235",
@@ -1426,7 +1409,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.9,
     "brand": "STOCKWELL CO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Vegetable fat spread (42%).",
     "id": "300346593",
@@ -1450,7 +1433,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.8,
     "brand": "MAGNERS",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Ashfield British Lager 4 X 440Ml. Brewed with Finest British Malted Barley for a Crisp Flavour",
     "id": "300554916",
@@ -1474,7 +1457,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.6,
     "brand": "COCONUT COLLABORATIVE",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Salted caramel chocolate ganache. Plant Based,Great taste 2017,122 Calories Per Pot,Free from Dairy but Not Temptation,Gluten Free,Palm Oil Free,Dairy Free,Only 122 Calories,Suitable for vegans",
     "id": "300876656",
@@ -1501,7 +1484,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.6,
     "brand": "JURASSIC WORLD",
     "breadcrumbs": "Bakery",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Sponge with a layer of raspberry jam and sweet filling, covered with soft icing and edible decorations. Nut free,Hand Decorated,No Artificial Colours or Flavours,Suitable for vegetarians",
     "id": "300903268",
@@ -1526,7 +1509,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.6,
     "brand": "SUPPLIER",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Texture Dino Gold S2 Hunters",
     "id": "301170153",
@@ -1550,7 +1533,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.7,
     "brand": "TESCO EXTRACTS",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Tesco Extracts Apple Shampoo",
     "id": "301281338",
@@ -1574,7 +1557,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.8,
     "brand": "FRED & FLO",
     "breadcrumbs": "Baby",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Fred & Flo Easy Fit Nappy Pant Size 4 42pk",
     "id": "301393557",
@@ -1601,7 +1584,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.8,
     "brand": "MERIDIAN",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Smooth Peanut Butter 100%. For more recipe ideas see www.meridianfoods.co.uk. No Palm Oil Ever!,100% Nuts,Plant Based Protein,Made From Natural Ingredients,We Don't Fly Our Ingredients",
     "id": "301638252",
@@ -1625,7 +1608,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.9,
     "brand": "Unbranded",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Smoked Processed Cheese. A processed smoked cheese with a mellow and smokey flavour",
     "id": "302312215",
@@ -1649,7 +1632,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "WRIGLEYS",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Sugarfree Chewing Gum with Sweeteners and Mint Flavour. A varied and balanced diet and a healthy lifestyle are important.. Sugarfree,Oral Health Foundation Approved,Irish Dental Association Approved,Extra sugarfree gum is beneficial for dental health as it helps to neutralise plaque acids,Suitable for Vegetarians",
     "id": "302318762",
@@ -1673,7 +1656,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.9,
     "brand": "CUSHELLE",
     "breadcrumbs": "Household",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cushelle Quilted 3 Ply 16 Roll Family Pack. Average roll length 18.5 m,Average sheet size 118 x 104 mm,Quilted for extra softness & strength,Average 157 sheets per roll,Available in 4 roll, 6 roll, 9 roll,16 roll and 24 roll,3-ply",
     "id": "302919425",
@@ -1697,7 +1680,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.7,
     "brand": "HALO TOP",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Peanut Butter Flavoured Ice Cream with Peanut Butter (12.9%), with Sugars and Sweeteners. 100 kcal per bar",
     "id": "303105989",
@@ -1721,7 +1704,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.5,
     "brand": "CREAMFIELDS",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Stabilised, sweetened low fat yogurt blended with strawberry compote.",
     "id": "303630999",
@@ -1745,7 +1728,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "BELAZU",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Tomato Paste with Rose Harissa. Mediterranean tomato pesto blended with our signature rose harissa,Chilli rating - 1,Live Life in Full Flavour,Great taste 2018,Suitable for vegans",
     "id": "303852075",
@@ -1769,7 +1752,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "VTECH",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Vtech Switch And Go Dino Assorted. Within a few steps, you can easily change your vehicle into a lively dinosaur!,Press the action buttons to activate dinosaur facts and sound effects,Educational flash card included",
     "id": "304328983",
@@ -1793,7 +1776,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.8,
     "brand": "TESCO PLANT CHEF",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Soya and wheat protein coated in breadcrumbs.",
     "id": "304784469",
@@ -1817,7 +1800,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.7,
     "brand": "PETFACE",
     "breadcrumbs": "Pets",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Petface Laser Chaser Cat Toy. Exercise & fun,5 laser images for your pet to chase!",
     "id": "304793684",
@@ -1841,7 +1824,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.5,
     "brand": "OATLY",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Oat drink chocolate. Life After Oats. One day we were sitting around the office thinking about how sad it is to finish a carton of oat drink. We can always go buy another carton but the carton's future was to be folded and sent to the recycling plant to be turned into a new carton. That didn't sound like much fun so we came up with a better idea. Each carton of Oatly is now designed to be turned into your own mini-indoor herb garden. All, you have to do is cut the package off on the line below, get some dirt and seeds and you' re set. The Original,No milk, no soy, no... eh... whatever,Wow no cow!,2.5 % fat,Totally vegan",
     "id": "305529640",
@@ -1867,7 +1850,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "IBIZA CLUB",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Ibiza Club Vape & E-Liquids 6Mg Apple&Blck Menth",
     "id": "305663105",
@@ -1891,7 +1874,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.4,
     "brand": "TESCO FINEST",
     "breadcrumbs": "Bakery",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Sliced wholemeal bread with mixed seeds and grains.",
     "id": "305737088",
@@ -1915,7 +1898,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 1.5,
     "brand": "BIRDS EYE",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Pancakes coated in breadcrumbs with a minced beef and onion filling, lightly fried. For a sustainable tomorrow. Making a difference with responsibly sourced and prepared food everyday. birdseye.co.uk/our-sustainable-path. The new & tasty,Ready in 10 mins",
     "id": "305829059",
@@ -1939,7 +1922,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.3,
     "brand": "HALO TOP",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Chocolate Brownie Flavoured Ice Cream with Brownie Sauce (4.9%) and Brownie Pieces (4.9%), with Sugars and Sweeteners. 380 kcal per tub",
     "id": "305830759",
@@ -1963,7 +1946,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.0,
     "brand": "POLYLINA",
     "breadcrumbs": "Household",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "POLYLINA LARGE P/TIC CONTAINER WITH LIDS 5 PACK . Ideal for storing batch cooking, reheating leftovers and defrosting food",
     "id": "305990414",
@@ -1987,7 +1970,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.2,
     "brand": "TESCO FINEST",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Smoked dry cured bacon with seasoned pork and West Country Cheddar cheese wrapped in an all butter puff pastry topped with Cheddar cheese crumb.",
     "id": "306494666",
@@ -2012,7 +1995,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 1.9,
     "brand": "TESCO",
     "breadcrumbs": "Household",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Tesco Kitchen Towel 1 roll",
     "id": "306495786",
@@ -2038,7 +2021,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.7,
     "brand": "PERSIL",
     "breadcrumbs": "Household",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Persil Biological Liquid Laundry Detergent 38 Washes 1026Ml. Persil Bio Laundry Washing Liquid Detergent provides brilliant stain removal first time, even on a quick wash cycle,This liquid detergent is made with plant-based, biodegradable stain removers \u2013 tough on stains, kinder to our planet,Persil Bio Liquid Detergent has been voted Product of the Year 2021 in the Laundry Detergent Category*,Persil Bio Laundry Liquid leaves your clothes with 7 days of lasting freshness, even when washed at 30\u00b0C,Our detergent bottle is now 100% recyclable and contains recycled plastic, reducing plastic use and caring for our planet,With a new super concentrated formula in a smaller bottle, now you only need 27 ml of detergent per use",
     "id": "306504309",
@@ -2065,7 +2048,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 1.2,
     "brand": "ICELANDIC SEACHILL",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cooked and peeled king prawns (Litopenaeus vannamei), defrosted. Cooked & Peeled,Ready to Eat",
     "id": "306934596",
@@ -2089,7 +2072,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.9,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Chopped hard-boiled egg in a seasoned mayonnaise with salt and pepper.",
     "id": "307154117",
@@ -2113,7 +2096,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.8,
     "brand": "FLING",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "A mix of Chinese leaf, carrot, spinach, spring onion and radish with sachets of a citrus mayonnaise, a sriracha dressing and rice crackers. 1 of Your Five a Day,Under 170 Calories Per Serving,Together Just the Way You Like it!,Suitable for Vegans",
     "id": "307158706",
@@ -2139,7 +2122,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "TOPO CHICO",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Tropical Mango - Alcoholic Sparkling Drink Tropical Mango\nTangy Lemon Lime - Alcoholic Sparkling Drink Tangy Lemon Lime\nCherry Acai - Alcoholic Sparkling Drink Cherry Acai. Topo Chico Hard Seltzer (sparkling water with alcohol) has been crafted with a delicious blend of natural flavours to create a refreshing, light tasting hard seltzer. Enjoy the simple complexity of Tropical Mango. With a bitter sweet taste, you'll be transported to the tropics. Topo Chico is the perfect sparkling water with alcohol* crafted with natural flavours. Think refreshing, delicious and gluten free with no added sweeteners or preservatives.. Oh, and we're 96 calories per can.. *mineral water has not been used for this product. We're inspired by the original Topo Chico sparkling water, who began bottling water way back in 1895. As the years flowed by, it became a favourite among master mixologists and bartenders.. That gave us an idea\u2026hard seltzer! In partnership with our bartender friends, using our expertise in flavours and bubbles, we created something we think you'll love\u2026. Hard Seltzer,Sparkling Water with Alcohol,96 kcal,No Sweeteners and Preservatives,Natural Flavours,This product is GMO free,This product is gluten free,This product is allergen free,This product is suitable for vegetarians/vegans",
     "id": "307752423",
@@ -2166,7 +2149,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.7,
     "brand": "TESCO FINEST",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "A blend of oat flakes and toasted wheat flakes with sweetened dried and freeze dried fruits.",
     "id": "307761654",
@@ -2190,7 +2173,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.7,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "2 Beef medallion steaks.",
     "id": "308079625",
@@ -2214,7 +2197,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.3,
     "brand": "KOPPARBERG",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Apple Cider with a Taste of Tropical Fruit",
     "id": "308099405",
@@ -2238,7 +2221,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 2.3,
     "brand": "DP",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Ultra Heat Treated Skimmed Milk. Longer lasting UHT milk,0.1% fat,British milk,No additives or preservatives",
     "id": "308100946",
@@ -2262,7 +2245,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.0,
     "brand": "TESCO PET",
     "breadcrumbs": "Pets",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "A complete pet food for adult dogs.",
     "id": "308103217",
@@ -2287,7 +2270,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.5,
     "brand": "TESCO HOME",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Tesco Plastic Measuring Jug 2L. Tesco Home,Made from 100% Food Grade & BPA-Free clear virgin plastic,Light weight and durable",
     "id": "308664559",
@@ -2311,7 +2294,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.8,
     "brand": "MEXICANA",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cheddar Cheese with Rehydrated Red and Green Dried Bell and Jalape\u00f1o Peppers, and Dried Spice Mix. Chilli rating - hot - 3,Blended with Spices, Jalape\u00f1o, Bell & Chilli Peppers,No Artificial Colours or Flavours,Suitable for vegetarians",
     "id": "309179563",
@@ -2335,7 +2318,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.5,
     "brand": "TESCO",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Mini doughnuts filled with a chocolate and hazelnut flavoured sauce with cinnamon sugar.",
     "id": "309449307",
@@ -2359,7 +2342,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.2,
     "brand": "TESCO ORGANIC",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Raspberries.",
     "id": "309450846",
@@ -2383,7 +2366,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "TESCO FINEST",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "All butter Parmesan and garlic puff pastry twists, gruyere and poppy seed puff pastry twists and rosemary breadsticks made with extra virgin olive oil (10%).",
     "id": "309454449",
@@ -2407,7 +2390,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "KRAKUS",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Pork sausage, medium ground, smoked, cooked, dried.",
     "id": "309466033",
@@ -2431,7 +2414,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.5,
     "brand": "ORAL-B",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Oral-B 3D Whitening Power Fresh Toothpaste 70Ml. Professionally designed & clinically proven,Stops issues before they start, preventing plaque effects for 24 hours when used twice a day,With Dual Action Cleaning Booster: Stannous Fluoride Complex + anti-plaque Mineral,Inhibits plaque regrowth in hard-to-reach areas,Attacks & helps lift away bacterial plaque,Recyclable Carton & Tube: please recycle me. For more info please check with your local recycling facility",
     "id": "309482261",
@@ -2459,7 +2442,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.9,
     "brand": "CLARENCE COURT",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "6 Medium Free Range Eggs. For guidance on achieving perfectly poached eggs or recipe inspiration from dinner party canap\u00e9s, to classic egg dishes please visit: clarencecourt.co.uk or @clarencecourt. With deep brown coloured shells",
     "id": "309494477",
@@ -2483,7 +2466,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.9,
     "brand": "OUMPH",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Sliced Kebab of pea protein, quick-frozen. Learn more at: www.oumph.se/en. Made of Peas!,Epic veggie eating for free range humans,Vegetarian Society Approved - Vegan",
     "id": "309742714",
@@ -2507,7 +2490,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "MILO",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Chocolate Flavoured Malt Milk Drink with vitamins and minerals. Sterilised. Have you tried MILO\u00ae malt chocolate powder? Delicious malty chocolate flavoured powder which can be enjoyed as part of a nutritious breakfast.. Delicious malt chocolate milk drink,Great for on the go in a 240ml can,Best served chilled,With added vitamins & minerals,Source of vitamin D, C, B6, riboflavin, niacin, phosphorus and iron",
     "id": "309753769",
@@ -2534,7 +2517,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.7,
     "brand": "KLEENEX",
     "breadcrumbs": "Household",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Kleenex The Original Brand Tissues 2 Pack. For more information on our sustainability journey visit www.kleenex.co.uk/sustainability #everystepcounts. www.kleenex.co.uk. With a touch of cotton",
     "id": "309764924",
@@ -2561,7 +2544,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 1.6,
     "brand": "TESCO",
     "breadcrumbs": "Household",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cling film.",
     "id": "309781137",
@@ -2585,7 +2568,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.5,
     "brand": "TURNER ROAD",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "White Zinfandel. Learn more at accoladewines.com/carbon. Wine of California, USA",
     "id": "309781258",
@@ -2610,7 +2593,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "SPIDEY",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Spidey Little Vehicles",
     "id": "309909622",
@@ -2634,7 +2617,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.4,
     "brand": "TESCO",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Vanilla flavour ice cream, covered in a milk chocolate flavour coating.",
     "id": "310135551",
@@ -2658,7 +2641,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.0,
     "brand": "WARBURTONS",
     "breadcrumbs": "Bakery",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "4 Sliced Gluten Free Brioche Rolls. High Calcium,Source of Fibre,Wheat and Milk Free,Low in Saturated Fat,Gluten Free,Suitable for Vegetarians",
     "id": "310144528",
@@ -2682,7 +2665,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 3.2,
     "brand": "THE GYM KITCHEN",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cooked Lasagne pasta sheets layered with a minced beef and lentil tomato and red wine sauce, and a white sauce topped with grilled peppers. Food to Fuel,High in Protein,24g Protein,352 Calories Per Serving,2 of Your a Day,Macro Friendly,Cook Straight from Frozen,38g Carbs Per Serving,10g Fat Per Meal,Low in Fat",
     "id": "310146434",
@@ -2706,7 +2689,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "LEGO",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "LEGO JURASSIC WORLD EMBARGO 76945",
     "id": "310163004",
@@ -2730,7 +2713,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "TALKING TABLES",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Watercolour Cup 10 Pack. 250ml approx",
     "id": "310647855",
@@ -2754,7 +2737,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.3,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cooked battered chicken breast pieces within a pineapple, rice vinegar and ginger sauce.",
     "id": "310687628",
@@ -2778,7 +2761,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "AMONG US",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Among Us Mystery Capsule",
     "id": "310687824",
@@ -2804,7 +2787,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.9,
     "brand": "TOMMEE TIPPEE",
     "breadcrumbs": "Baby",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "T/T CTN Newborn Starter Set 0+ Months . Here for you. Breastfeeding, bottle feeding or switching between the two. However you feed your baby, it can sometimes feel tough.. When you need support that's simple and straightforward, you can count on us.... Brighter futures\u2122. Is our plan to protect the planet, like the fact there is no single use plastic used in this pack. The most breast-like teat ever,Shaped like mum for a natural latch,Anti-colic teat to ease discomfort,Slow and medium flow,BPA free",
     "id": "310691732",
@@ -2828,7 +2811,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "WICKED KITCHEN",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Slices of coconut oil alternative to smoked Gouda style cheese",
     "id": "311228929",
@@ -2852,7 +2835,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.0,
     "brand": "YO!",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Yo! Chicken Poke 326g",
     "id": "311230897",
@@ -2876,7 +2859,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "THOMAS",
     "breadcrumbs": "Baby",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Thomas & Friends Push & Go Stunt Engines Assorted",
     "id": "311258093",
@@ -2900,7 +2883,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.5,
     "brand": "DOVE",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Dove 3In1 Beauty Cream Bar 2X90g. Dove Original Beauty Bar has a gentle cleansing formula that effectively cleans hands whilst helping to retain skin moisture,A moisturising beauty bar that leaves skin softer, smoother and healthier looking,Dove Original with \u00bc moisturising cream doesn\u2019t dry out your skin like ordinary bar soap and is suitable for all skin types,Mild cleansers and rich moisturisers in this beauty bar help protect your skin\u2019s natural balance,Dove Original Beauty Bar is sulphate SLES free and kind to your skin,Dermatologically tested beauty bar that\u2019s suitable for daily use on the face, body and hands",
     "id": "311264010",
@@ -2925,7 +2908,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.4,
     "brand": "PEPERAMI",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cooked, chopped and shaped chicken in a savoury glaze. WWW.PEPERAMI.TV. Made with 100% Chicken Breast,Great Lunchbox Filler",
     "id": "311272265",
@@ -2949,7 +2932,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.0,
     "brand": "FIRE PIT",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Sliced halloumi medium fat hard cheese made with pasteurised cow, goat and sheeps' milk.",
     "id": "311272490",
@@ -2973,7 +2956,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "VEETEE",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Rich Beetroot Risotto. Head over to www.veetee.com to see how we do it!. 100% Plant Based,With creamy risotto rice simmered in red wine & basil,No artificial colours flavours or preservatives,Suitable for vegans",
     "id": "311276140",
@@ -2997,7 +2980,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "CAREX",
     "breadcrumbs": "Health & Beauty",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "CAREX HYGIENE ANTIBAC WIPES B/DGRDBLE 15 PK . Cleans, cares and protects,Soft cleansing wipes for hands, face & body,Instant cleansing and refreshment,Dermatologically tested,Caring for the whole family,Made with 100% Biodegradable Plant Derived Fibres",
     "id": "311422175",
@@ -3022,7 +3005,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "HARRY POTTER",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "HARRY POTTER WATER BOTTLE",
     "id": "311426171",
@@ -3046,7 +3029,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.6,
     "brand": "THE SPICE TAILOR",
     "breadcrumbs": "Food Cupboard",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Chickpeas cooked in a hearty Indian gravy, mildly spiced and in individual pouches. It is important to maintain a varied and balance diet and healthy lifestyle.. Visit The Spice Tailor or Anjum Anand on: Instagram, Pinterest and YouTube. Discover quick, easy recipe ideas and more about our products at: thespicetailor.com. Chill rating - medium - 2,Plant powered,A delicious bowl of earthy chickpea goodness,No other ingredients required,No nasties,Low in sugar,Source of protein,No artificial preservatives, colourings or flavourings,Vegetarian",
     "id": "311429487",
@@ -3073,7 +3056,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Melon, kiwi fruit and strawberry.",
     "id": "311447192",
@@ -3098,7 +3081,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.9,
     "brand": "TROPICANA",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Orange Juice with Juicy Bits. Enjoy Tropicana as part of varied and balanced diet and healthy lifestyle. 100% Pure Pressed Fruit,Start Your Day with the Power of Goodness,1 of 5 a day per 150ml,Not from Concentrate",
     "id": "311673277",
@@ -3125,7 +3108,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.6,
     "brand": "PHILADELPHIA",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Full fat soft cheese. For delicious recipe ideas or any other comments, visit: www.philadelphia.co.uk. Fresh and creamy taste,Made with Simply Good Ingredients Milk, Cream, Pinch of Salt,No Preservatives,Made with pasteurised milk,Suitable for Vegetarians",
     "id": "311687892",
@@ -3151,7 +3134,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "TESCO HOME",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "TESCO MATTE TAUPE SOAP DISPENSER . Soap Dispenser,Matte Taupe,Bathroom Accessories",
     "id": "311735559",
@@ -3175,7 +3158,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 1.0,
     "brand": "WICKED KITCHEN",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Coconut oil alternative to Cheddar cheese with crushed black pepper.",
     "id": "311793489",
@@ -3199,7 +3182,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "IGLOO",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "UNICORN & DINO STORYBOOKS 4PK",
     "id": "311932942",
@@ -3225,7 +3208,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "MIGHTY",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "UHT pea protein-based drink with added vitamins and minerals. Each MIGHTY Salted Caramel shake is a tasty source of Vitamin D, B12 & Iodine,Free from dairy, nuts, soy and gluten.,Each m.lkshake is 100% vegan.,6g of protein per carton for a plant-based protein punch.",
     "id": "311939727",
@@ -3249,7 +3232,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "BLUE TREE",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "MINI PANCAKES PAN SET WITH NUTELLA",
     "id": "312092349",
@@ -3273,7 +3256,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "TESCO FINEST",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Lasered Marron chestnut.",
     "id": "312111674",
@@ -3297,7 +3280,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "THE CAKE CREW",
     "breadcrumbs": "Bakery",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "4 Vanilla flavour sponge cakes filled with a strawberry sauce, topped with vanilla flavour frosting, decorated with multicolored sugar sprinkles and a rainbow sugar decoration. Suitable for Vegetarians",
     "id": "312232507",
@@ -3321,7 +3304,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "GROOV-E",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "GROOV-E IPHONE 14 FOLIO WALLET CASE",
     "id": "312570918",
@@ -3347,7 +3330,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "TESCO",
     "breadcrumbs": "Fresh Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Reduced fat\u2020 dip made with chickpeas, tahini sesame seed paste, concentrated lemon juice and garlic.",
     "id": "312577404",
@@ -3371,7 +3354,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 4.0,
     "brand": "YOUNG'S",
     "breadcrumbs": "Frozen Food",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Cod and Alaska Pollock Fish Cakes with Parmesan and Parsley in Breadcrumb. Responsibly sourced fish for life\u00ae. Our fish for life\u00ae programme makes sure all our fish is responsibly sourced. To see how we do the right things to conserve fish for future generations visit www.youngsseafood.co.uk. Restaurant Quality Fish,Chunky",
     "id": "312714076",
@@ -3395,7 +3378,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "PHILIPS",
     "breadcrumbs": "Home & Ents",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "PHILIPS SMART LED AMBER GLASS 50W E27 BULB . Easy plug-and-play. Works with your existing Wi-Fi.,Smart dimming via app, voice or dimmer,Tunable warm to cool white and preset modes",
     "id": "312834711",
@@ -3423,7 +3406,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 5.0,
     "brand": "LIFT",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Instant Lemon Flavoured Tea with Sugars and Sweetener. Just add water,High in Vitamin C,All Lift instant flavour teas are suitable for vegans and vegetarians",
     "id": "312837322",
@@ -3447,7 +3430,7 @@ const DATASET_PRODUCTS = [
     "avg_rating": 0.0,
     "brand": "BREWDOG",
     "breadcrumbs": "Drinks",
-    "created_at": "Thu, 02 Apr 2026 03:48:14 GMT",
+    "created_at": "Wed, 15 Apr 2026 01:10:28 GMT",
     "currency": "USD",
     "description": "Alcohol Free Beer. BrewDog is the world's first. Carbon. Negative. Brewery. We're Carbon Negative. For every beer we make, we remove twice as much CO\u2082 from the air as we emit.. We're Planting Trees. Trees are nature's carbon killers so we created the Lost Forest where we will be planting millions and millions of trees.. Cheers to You. By drinking these beers. You're having a positive impact on the planet.. Discover More...brewdog.com/tomorrow. Brewed in Ellon,Enjoyed Worldwide",
     "id": "313010728",
@@ -3466,481 +3449,4 @@ const DATASET_PRODUCTS = [
     "sku": "313010728",
     "storage_details": "Store Cold."
   }
-];
-
-const uniqueCategoryNames = [...new Set(DATASET_PRODUCTS.map((item) => item.breadcrumbs))];
-
-export const MOCK_CATEGORIES = uniqueCategoryNames.map((name, index) => ({
-  id: index + 1,
-  name,
-  icon: CATEGORY_ICON_MAP[name] || 'shopping_basket',
-}));
-
-const categoryIdByName = Object.fromEntries(MOCK_CATEGORIES.map((category) => [category.name, category.id]));
-
-export const MOCK_PRODUCTS = DATASET_PRODUCTS.map((item, index) => {
-  const categoryName = item.breadcrumbs;
-  const category = MOCK_CATEGORIES.find((c) => c.id === categoryIdByName[categoryName]);
-  const inStock = item.availability === ('InStock' || 'In Stock'); ;
-
-  return {
-    id: index + 1,
-    name: item.name,
-    sku: item.sku,
-    gtin13: item.gtin13,
-    dataset_url: item.url,
-    category_id: category.id,
-    category,
-    price: Number(item.price),
-    currency: item.currency,
-    availability: item.availability,
-    image_url: item.image_url,
-    image_urls: item.images,
-    description: item.description,
-    brand: item.brand,
-    breadcrumbs: item.breadcrumbs,
-    avg_rating: item.avg_rating,
-    reviews_count: item.reviews_count,
-    pack_size: item.pack_size,
-    ingredients: item.ingredients,
-    storage_details: item.storage_details,
-    product_origin: item.product_origin,
-    serving_size: item.serving_size,
-    nutrition: item.nutrition,
-    in_stock: inStock,
-    quantity: inStock ? 25 : 0,
-  };
-});
-
-// Mock Users
-export const MOCK_USERS = {
-  legacyCustomer: {
-    id: 3,
-    name: 'Mansa Ganore',
-    email: 'mansa@gmail.com',
-    password: 'test1234',
-    role: 'customer',
-    address: '45 Market Street, Demo City',
-  },
-  customer: {
-    id: 1,
-    name: 'Sarah Johnson',
-    email: 'sarah@example.com',
-    password: 'password123',
-    role: 'customer',
-    address: '123 Fresh Lane, Garden City, GC 12345',
-  },
-  admin: {
-    id: 2,
-    name: 'Admin Manager',
-    email: 'admin@gmail.com',
-    password: 'admin123',
-    role: 'admin',
-    address: null,
-  },
-};
-
-const MOCK_ORDERS_STORAGE_KEY = 'grocart-mock-orders-v1';
-const MOCK_ORDERS_UPDATED_EVENT = 'grocart:mock-orders-updated';
-
-// Mock Orders
-const DEFAULT_MOCK_ORDERS = {
-  1: [
-    {
-      id: 101,
-      user_id: 1,
-      items: [
-        { id: 1, product: MOCK_PRODUCTS[0], quantity: 2 },
-        { id: 2, product: MOCK_PRODUCTS[3], quantity: 1 },
-      ],
-      total_price: 5.05,
-      status: 'delivered',
-      payment_method: 'Credit Card',
-      delivery_address: MOCK_USERS.customer.address,
-      created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: 102,
-      user_id: 1,
-      items: [
-        { id: 3, product: MOCK_PRODUCTS[8], quantity: 1 },
-        { id: 4, product: MOCK_PRODUCTS[1], quantity: 2 },
-      ],
-      total_price: 6.95,
-      status: 'processing',
-      payment_method: 'Debit Card',
-      delivery_address: MOCK_USERS.customer.address,
-      created_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-  ],
-};
-
-function cloneDefaultMockOrders() {
-  return JSON.parse(JSON.stringify(DEFAULT_MOCK_ORDERS));
-}
-
-function replaceMockOrdersInMemory(nextOrders) {
-  Object.keys(MOCK_ORDERS).forEach((key) => {
-    delete MOCK_ORDERS[key];
-  });
-
-  Object.entries(nextOrders || {}).forEach(([userKey, orders]) => {
-    MOCK_ORDERS[userKey] = Array.isArray(orders) ? orders : [];
-  });
-}
-
-function saveMockOrdersToStorage() {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem(MOCK_ORDERS_STORAGE_KEY, JSON.stringify(MOCK_ORDERS));
-  window.dispatchEvent(new CustomEvent(MOCK_ORDERS_UPDATED_EVENT));
-}
-
-function loadMockOrdersFromStorage() {
-  if (typeof window === 'undefined') return cloneDefaultMockOrders();
-
-  const raw = localStorage.getItem(MOCK_ORDERS_STORAGE_KEY);
-  if (!raw) return cloneDefaultMockOrders();
-
-  try {
-    const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === 'object' ? parsed : cloneDefaultMockOrders();
-  } catch {
-    return cloneDefaultMockOrders();
-  }
-}
-
-export const MOCK_ORDERS = loadMockOrdersFromStorage();
-
-if (typeof window !== 'undefined') {
-  window.addEventListener('storage', (event) => {
-    if (event.key !== MOCK_ORDERS_STORAGE_KEY || !event.newValue) return;
-
-    try {
-      const parsed = JSON.parse(event.newValue);
-      if (parsed && typeof parsed === 'object') {
-        replaceMockOrdersInMemory(parsed);
-        window.dispatchEvent(new CustomEvent(MOCK_ORDERS_UPDATED_EVENT));
-      }
-    } catch {
-      // ignore malformed cross-tab payloads
-    }
-  });
-}
-
-export const subscribeToMockOrderUpdates = (callback) => {
-  if (typeof window === 'undefined') return () => {};
-
-  const handler = () => callback();
-  window.addEventListener(MOCK_ORDERS_UPDATED_EVENT, handler);
-  return () => window.removeEventListener(MOCK_ORDERS_UPDATED_EVENT, handler);
-};
-
-const MOCK_CARTS = {
-  1: { items: [], total_items: 0, total_price: 0 },
-  2: { items: [], total_items: 0, total_price: 0 },
-};
-
-let nextCartItemId = 1000;
-let nextOrderId = 10000;
-const MOCK_PASSWORD_RESET_OTP = new Map();
-
-function calculateCartTotals(cart) {
-  const total_items = cart.items.reduce((sum, item) => sum + item.quantity, 0);
-  const total_price = cart.items.reduce((sum, item) => sum + item.quantity * (item.product?.price || 0), 0);
-  return {
-    ...cart,
-    total_items,
-    total_price: Number(total_price.toFixed(2)),
-  };
-}
-
-function ensureCart(userId) {
-  if (!MOCK_CARTS[userId]) {
-    MOCK_CARTS[userId] = { items: [], total_items: 0, total_price: 0 };
-  }
-  MOCK_CARTS[userId] = calculateCartTotals(MOCK_CARTS[userId]);
-  return MOCK_CARTS[userId];
-}
-
-/**
- * Transforms mock data to API response format
- */
-export const mockDataService = {
-  // Product endpoints
-  getProducts: (params) => {
-    let products = MOCK_PRODUCTS;
-    if (params?.category_id) {
-      const categoryId = Number(params.category_id);
-      products = products.filter((p) => p.category_id === categoryId);
-    }
-    return Promise.resolve({ data: products });
-  },
-
-  getProduct: (id) => {
-    const product = MOCK_PRODUCTS.find((p) => p.id === Number(id));
-    if (!product) return Promise.reject({ response: { status: 404 } });
-    return Promise.resolve({ data: product });
-  },
-
-  getCategories: () => {
-    return Promise.resolve({ data: MOCK_CATEGORIES });
-  },
-
-  // Auth endpoints
-  login: (credentials) => {
-    const user = Object.values(MOCK_USERS).find(
-      (u) => u.email === credentials.email && u.password === credentials.password
-    );
-    if (!user) {
-      return Promise.reject({
-        response: { status: 401, data: { detail: 'Invalid credentials' } },
-      });
-    }
-    const { password, ...safeUser } = user;
-    return Promise.resolve({
-      data: { user: safeUser, access_token: `mock-token-${user.id}`, token: `mock-token-${user.id}` },
-    });
-  },
-
-  register: (data) => {
-    const newUser = {
-      id: Date.now(),
-      name: data.name,
-      email: data.email,
-      password: data.password,
-      role: 'customer',
-      address: data.address || '',
-    };
-    return Promise.resolve({
-      data: {
-        user: { ...newUser, password: undefined },
-        access_token: `mock-token-${newUser.id}`,
-        token: `mock-token-${newUser.id}`,
-      },
-    });
-  },
-
-  requestPasswordReset: (data) => {
-    const email = String(data?.email || '').trim().toLowerCase();
-    const user = Object.values(MOCK_USERS).find((u) => u.email.toLowerCase() === email);
-
-    if (!user) {
-      return Promise.reject({ response: { status: 404, data: { detail: 'Email not registered' } } });
-    }
-
-    const otp = `${Math.floor(100000 + Math.random() * 900000)}`;
-    MOCK_PASSWORD_RESET_OTP.set(email, otp);
-    console.log(`[Mock OTP] ${email}: ${otp}`);
-    return Promise.resolve({ data: { message: 'OTP sent successfully' } });
-  },
-
-  verifyPasswordResetOtp: (data) => {
-    const email = String(data?.email || '').trim().toLowerCase();
-    const otp = String(data?.otp || '').trim();
-    const storedOtp = MOCK_PASSWORD_RESET_OTP.get(email);
-
-    if (!storedOtp || storedOtp !== otp) {
-      return Promise.reject({ response: { status: 400, data: { detail: 'Invalid OTP' } } });
-    }
-
-    return Promise.resolve({ data: { message: 'OTP verified' } });
-  },
-
-  resetPassword: (data) => {
-    const email = String(data?.email || '').trim().toLowerCase();
-    const newPassword = String(data?.new_password || '');
-    const userEntry = Object.entries(MOCK_USERS).find(([, user]) => user.email.toLowerCase() === email);
-
-    if (!userEntry) {
-      return Promise.reject({ response: { status: 404, data: { detail: 'Email not registered' } } });
-    }
-
-    const [userKey] = userEntry;
-    MOCK_USERS[userKey].password = newPassword;
-    MOCK_PASSWORD_RESET_OTP.delete(email);
-
-    return Promise.resolve({ data: { message: 'Password updated successfully' } });
-  },
-
-  // Cart endpoints
-  getCart: (userId) => {
-    const cart = ensureCart(userId);
-    return Promise.resolve({ data: cart });
-  },
-
-  addToCart: (userId, data) => {
-    const product = MOCK_PRODUCTS.find((p) => p.id === Number(data.product_id));
-    if (!product) {
-      return Promise.reject({ response: { status: 404, data: { detail: 'Product not found' } } });
-    }
-    if (!product.in_stock || product.quantity <= 0) {
-      return Promise.reject({ response: { status: 400, data: { detail: 'Product is out of stock' } } });
-    }
-
-    const cart = ensureCart(userId);
-    const qtyToAdd = Math.max(1, Number(data.quantity) || 1);
-    const existing = cart.items.find((item) => item.product_id === product.id);
-
-    if (existing) {
-      existing.quantity = Math.min(product.quantity, existing.quantity + qtyToAdd);
-    } else {
-      cart.items.push({
-        id: nextCartItemId++,
-        product_id: product.id,
-        product,
-        quantity: Math.min(product.quantity, qtyToAdd),
-      });
-    }
-
-    MOCK_CARTS[userId] = calculateCartTotals(cart);
-    return Promise.resolve({ data: MOCK_CARTS[userId] });
-  },
-
-  updateCartItem: (userId, itemId, data) => {
-    const cart = ensureCart(userId);
-    const target = cart.items.find((item) => item.id === Number(itemId));
-    if (!target) {
-      return Promise.reject({ response: { status: 404, data: { detail: 'Cart item not found' } } });
-    }
-
-    const maxQty = target.product?.quantity || 99;
-    const nextQuantity = Math.max(1, Math.min(maxQty, Number(data.quantity) || 1));
-    target.quantity = nextQuantity;
-    MOCK_CARTS[userId] = calculateCartTotals(cart);
-    return Promise.resolve({ data: MOCK_CARTS[userId] });
-  },
-
-  removeCartItem: (userId, itemId) => {
-    const cart = ensureCart(userId);
-    cart.items = cart.items.filter((item) => item.id !== Number(itemId));
-    MOCK_CARTS[userId] = calculateCartTotals(cart);
-    return Promise.resolve({ data: MOCK_CARTS[userId] });
-  },
-
-  clearCart: (userId) => {
-    MOCK_CARTS[userId] = { items: [], total_items: 0, total_price: 0 };
-    return Promise.resolve({ data: MOCK_CARTS[userId] });
-  },
-
-  // Order endpoints
-  getOrderHistory: (userId) => {
-    return Promise.resolve({ data: MOCK_ORDERS[userId] || [] });
-  },
-
-  getAllOrders: () => {
-    const allOrders = Object.values(MOCK_ORDERS).flat();
-    return Promise.resolve({ data: allOrders });
-  },
-
-  placeOrder: (userId, data) => {
-    const cart = ensureCart(userId);
-    if (!cart.items.length) {
-      return Promise.reject({ response: { status: 400, data: { detail: 'Cart is empty' } } });
-    }
-
-    const newOrder = {
-      id: nextOrderId++,
-      user_id: userId,
-      items: cart.items.map((item) => ({ ...item })),
-      total_price: cart.total_price,
-      total_amount: cart.total_price,
-      status: 'pending',
-      payment_method: data.payment_method,
-      delivery_address: data.delivery_address,
-      created_at: new Date().toISOString(),
-    };
-
-    if (!MOCK_ORDERS[userId]) {
-      MOCK_ORDERS[userId] = [];
-    }
-    MOCK_ORDERS[userId].unshift(newOrder);
-    saveMockOrdersToStorage();
-    MOCK_CARTS[userId] = { items: [], total_items: 0, total_price: 0 };
-
-    return Promise.resolve({ data: newOrder });
-  },
-
-  updateOrderStatus: (orderId, data) => {
-    const numericOrderId = Number(orderId);
-    let updatedOrder = null;
-
-    Object.keys(MOCK_ORDERS).forEach((userKey) => {
-      const list = MOCK_ORDERS[userKey] || [];
-      const target = list.find((order) => order.id === numericOrderId);
-      if (target) {
-        target.status = data.status;
-        updatedOrder = target;
-      }
-    });
-
-    if (!updatedOrder) {
-      return Promise.reject({ response: { status: 404, data: { detail: 'Order not found' } } });
-    }
-
-    saveMockOrdersToStorage();
-
-    return Promise.resolve({
-      data: updatedOrder,
-    });
-  },
-
-  // Admin - Product management
-  createProduct: (data) => {
-    const newProduct = {
-      id: Date.now(),
-      ...data,
-      category: MOCK_CATEGORIES.find((c) => c.id === data.category_id),
-    };
-    MOCK_PRODUCTS.push(newProduct);
-    return Promise.resolve({ data: newProduct });
-  },
-
-  updateProduct: (id, data) => {
-    const product = MOCK_PRODUCTS.find((p) => p.id === Number(id));
-    if (!product) return Promise.reject({ response: { status: 404 } });
-    Object.assign(product, data);
-    return Promise.resolve({ data: product });
-  },
-
-  deleteProduct: (id) => {
-    const index = MOCK_PRODUCTS.findIndex((p) => p.id === Number(id));
-    if (index === -1) return Promise.reject({ response: { status: 404 } });
-    MOCK_PRODUCTS.splice(index, 1);
-    return Promise.resolve({ data: { success: true } });
-  },
-};
-
-/**
- * Enable/disable mock mode for testing
- * When enabled, API calls will use mock data instead of real backend
- */
-let mockModeEnabled = false;
-
-export const setMockMode = (enabled) => {
-  mockModeEnabled = enabled;
-  if (enabled) {
-    console.log('%c✓ Mock mode enabled - using test data', 'color: green; font-weight: bold;');
-    console.log(
-      '%cTest Credentials:\nCustomer: sarah@example.com / password123\nAdmin: admin@example.com / admin123',
-      'color: blue; font-weight: bold;'
-    );
-  } else {
-    console.log('%c✗ Mock mode disabled', 'color: red; font-weight: bold;');
-  }
-};
-
-export const isMockModeEnabled = () => mockModeEnabled;
-
-/**
- * Initialize mock mode based on localStorage or environment
- */
-export const initMockMode = () => {
-  const mockModeFlag = localStorage.getItem('mock-mode');
-  const mockModeEnv = import.meta.env.VITE_MOCK_MODE;
-
-  const shouldEnableByDefault = import.meta.env.DEV && mockModeFlag === null && mockModeEnv == null;
-
-  if (mockModeFlag === 'true' || mockModeEnv === 'true' || mockModeEnv === true || shouldEnableByDefault) {
-    setMockMode(true);
-  }
-};
+]

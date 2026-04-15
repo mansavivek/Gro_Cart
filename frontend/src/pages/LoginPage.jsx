@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import grocartLogo from '../assets/grocart-logo1.png'; 
 
 export default function LoginPage() {
-  const { login, loading, error } = useAuth();
+  const { login, loading, loginError, clearLoginError } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: '', password: '', rememberMe: false });
+
+  useEffect(() => {
+    // Clear any existing login errors when the component mounts
+    clearLoginError();
+  }, []);
 
   const getFriendlyLoginError = (rawError) => {
     if (!rawError) return '';
@@ -23,6 +28,9 @@ export default function LoginPage() {
   // Integration point: bind HTML inputs to React state so form data is available to API logic.
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    if (loginError) {
+      clearLoginError();
+    }
     setForm({ ...form, [name]: type === 'checkbox' ? checked : value });
   };
 
@@ -61,10 +69,10 @@ export default function LoginPage() {
           </header>
 
           <section className="px-8 pb-10">
-            {error && (
+            {loginError && (
               <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm" role="alert">
                 <p className="font-semibold">Sign in failed</p>
-                <p>{getFriendlyLoginError(error)}</p>
+                <p>{getFriendlyLoginError(loginError)}</p>
               </div>
             )}
 

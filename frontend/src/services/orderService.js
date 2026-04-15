@@ -1,7 +1,42 @@
 import api from './api';
 
 export const placeOrder = (data) => api.post('/orders/place', data);
-export const getOrderHistory = () => api.get('/orders/history');
+
+function joinAddressParts(parts) {
+	return parts
+		.map((part) => String(part || '').trim())
+		.filter(Boolean)
+		.join(', ');
+}
+
+function buildDeliveryAddress(order = {}) {
+	if (order.delivery_address) return order.delivery_address;
+
+	const street = joinAddressParts([order.address_line1, order.address_line2]);
+	const locality = joinAddressParts([order.city, order.state, order.zip]);
+	const recipient = String(order.full_name || '').trim();
+	const phone = String(order.phone || '').trim();
+
+	return joinAddressParts([recipient, street, locality, phone]);
+}
+
+function normalizeOrderHistoryOrder(rawOrder = {}) {
+	const total = Number(rawOrder.total_amount ?? rawOrder.total_price ?? 0);
+	return {
+		...rawOrder,
+		status: normalizeOrderStatus(rawOrder.status),
+		total_amount: total,
+		total_price: total,
+		delivery_address: buildDeliveryAddress(rawOrder),
+	};
+}
+
+export const getOrderHistory = async () => {
+	const response = await api.get('/orders/history');
+	const raw = response.data;
+	const list = Array.isArray(raw) ? raw : (Array.isArray(raw?.orders) ? raw.orders : []);
+	return { ...response, data: list.map(normalizeOrderHistoryOrder) };
+};
 
 const ACTIVE_ADMIN_STATUSES = new Set(['placed', 'pending', 'in_progress', 'packed', 'out_for_delivery']);
 

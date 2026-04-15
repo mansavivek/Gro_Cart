@@ -1,23 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import grocartLogo from '../assets/grocart-logo1.png';
 import ErrorAlert from '../components/ui/ErrorAlert';
 
+const PASSWORD_RULE = /^[A-Za-z0-9]{8,13}$/;
+
 export default function RegisterPage() {
-  const { register, loading, error } = useAuth();
+  const { register, loading, registerError, clearRegisterError } = useAuth();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [validationError, setValidationError] = useState('');
+  const [successToast, setSuccessToast] = useState('');
   const [form, setForm] = useState({
     name: '', email: '', password: '', confirmPassword: '',
   });
 
+  useEffect(() => {
+    // Clear any existing register errors when the component mounts
+    clearRegisterError();
+  }, []);
+
+  useEffect(() => {
+    if (!successToast) return undefined;
+    const timer = setTimeout(() => setSuccessToast(''), 2200);
+    return () => clearTimeout(timer);
+  }, [successToast]);
+
   const getFriendlyRegisterError = (rawError) => {
     if (!rawError) return '';
     const normalized = String(rawError).toLowerCase();
-    if (normalized.includes('already') || normalized.includes('exists')) {
+    if (normalized.includes('already') || normalized.includes('exists') || normalized.includes('1062')) {
       return 'An account with this email already exists. Please sign in or use another email.';
     }
     if (normalized.includes('network') || normalized.includes('failed to fetch')) {
@@ -27,7 +41,12 @@ export default function RegisterPage() {
   };
 
   // Integration point: wire HTML inputs to local state.
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    if (registerError) {
+      clearRegisterError();
+    }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   // Integration point: submit HTML form -> existing AuthContext register API flow.
   const handleSubmit = async (e) => {
@@ -37,6 +56,10 @@ export default function RegisterPage() {
       setValidationError('Please agree to the Terms of Service and Privacy Policy to continue.');
       return;
     }
+    if (!PASSWORD_RULE.test(form.password)) {
+      setValidationError('Password must be 8-13 characters long and contain only letters and numbers (no special characters).');
+      return;
+    }
     if (form.password !== form.confirmPassword) {
       setValidationError('Your passwords do not match. Please re-enter them and try again.');
       return;
@@ -44,7 +67,12 @@ export default function RegisterPage() {
     try {
       const payload = { name: form.name, email: form.email, password: form.password };
       await register(payload);
-      navigate('/login');
+      console.log('Registration successful', payload);
+      // if(payload?.error)
+      setSuccessToast('Registered successfully.. navigating to login page');
+      setTimeout(() => {
+        navigate('/login');
+      }, 1400);
     } catch {
       // error shown via context
     }
@@ -61,6 +89,11 @@ export default function RegisterPage() {
       }}
     >
       <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        {successToast ? (
+          <div className="fixed top-6 right-6 z-50 rounded-xl bg-primary text-white px-4 py-3 shadow-lg shadow-primary/30 animate-[fadeIn_220ms_ease-out]">
+            <p className="text-sm font-semibold">{successToast}</p>
+          </div>
+        ) : null}
         <div className="layout-container flex h-full grow flex-col">
           <header className="flex items-center justify-between px-6 lg:px-20 pt-2 pb-0" />
           <div className="flex w-full flex-col items-center gap-3 mx-auto">
@@ -79,7 +112,7 @@ export default function RegisterPage() {
                 />
                 <ErrorAlert
                   title="Registration failed"
-                  message={error ? getFriendlyRegisterError(error) : ''}
+                  message={registerError ? getFriendlyRegisterError(registerError) : ''}
                 />
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">

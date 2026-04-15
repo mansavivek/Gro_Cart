@@ -3,6 +3,7 @@ import MainLayout from '../layouts/MainLayout';
 import Spinner from '../components/ui/Spinner';
 import { getProducts, getCategories, createProduct, updateProduct, deleteProduct } from '../services/productService';
 import { getAdminOrders, updateOrderStatus } from '../services/orderService';
+import { isMockModeEnabled, subscribeToMockOrderUpdates } from '../services/mockData';
 
 const STATUS_OPTIONS = ['pending', 'in_progress', 'packed', 'out_for_delivery', 'delivered'];
 const emptyForm = { name: '', description: '', price: '', quantity: '', image_url: '', category_id: '' };
@@ -49,6 +50,11 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     load();
+  }, []);
+
+  useEffect(() => {
+    if (!isMockModeEnabled()) return undefined;
+    return subscribeToMockOrderUpdates(() => load());
   }, []);
 
   useEffect(() => {
@@ -133,6 +139,8 @@ export default function AdminDashboardPage() {
         ...form,
         price: Number(parseFloat(form.price || 0).toFixed(2)),
         quantity: parseInt(form.quantity || '0', 10),
+        breadcrumbs: categories.find((c) => c.id === Number(form.category_id))?.name || null,
+        brand: 'GroCart',
         category_id: form.category_id ? parseInt(form.category_id, 10) : null,
       };
       if (editingProductId) {

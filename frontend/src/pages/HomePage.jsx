@@ -128,16 +128,6 @@ export default function HomePage() {
                     : 'Popular Grocery Items'}
                 </h2>
               </div>
-              <button
-                className="text-sm font-bold text-primary hover:underline"
-                onClick={() => {
-                  setSelectedCategory(null);
-                  setSearchQuery('');
-                }}
-                type="button"
-              >
-                View All
-              </button>
             </div>
 
             {/* Products Grid */}

@@ -2,9 +2,9 @@ import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import grocartLogo from '../assets/grocart-logo1.png';
 import {
-  // requestPasswordReset,
-  // verifyPasswordResetOtp,
-  // resetPassword,
+  requestPasswordReset,
+  verifyPasswordResetOtp,
+  resetPassword,
 } from '../services/authService';
 
 function maskEmail(email) {
@@ -16,6 +16,23 @@ function maskEmail(email) {
 
 function isStrongPassword(value) {
   return value.length >= 8 && /[A-Za-z]/.test(value) && /\d/.test(value);
+}
+
+function extractApiError(err, fallbackMessage) {
+  return (
+    err?.response?.data?.detail ||
+    err?.response?.data?.error ||
+    err?.message ||
+    fallbackMessage
+  );
+}
+
+function assertApiSuccess(response, fallbackMessage) {
+  const payload = response?.data ?? response;
+  if (payload?.error) {
+    throw new Error(payload.error);
+  }
+  return payload;
 }
 
 export default function ForgotPasswordPage() {
@@ -65,12 +82,13 @@ export default function ForgotPasswordPage() {
     setSubmitting(true);
     setApiError('');
     try {
-      await requestPasswordReset({ email: email.trim() });
+      const response = await requestPasswordReset({ email: email.trim() });
+      assertApiSuccess(response, 'Unable to send OTP right now.');
       setResendMessage(false);
       setOtp(['', '', '', '', '', '']);
       setStep('otp');
     } catch (err) {
-      setApiError(err.response?.data?.detail || 'Unable to send OTP right now.');
+      setApiError(extractApiError(err, 'Unable to send OTP right now.'));
     } finally {
       setSubmitting(false);
     }
@@ -125,10 +143,11 @@ export default function ForgotPasswordPage() {
     setSubmitting(true);
     setApiError('');
     try {
-      await verifyPasswordResetOtp({ email: email.trim(), otp: code });
+      const response = await verifyPasswordResetOtp({ email: email.trim(), otp: code });
+      assertApiSuccess(response, 'Invalid OTP. Please try again.');
       setStep('reset');
     } catch (err) {
-      setApiError(err.response?.data?.detail || 'Invalid OTP. Please try again.');
+      setApiError(extractApiError(err, 'Invalid OTP. Please try again.'));
     } finally {
       setSubmitting(false);
     }
@@ -143,12 +162,29 @@ export default function ForgotPasswordPage() {
     setSubmitting(true);
     setApiError('');
     try {
-      await resetPassword({ email: email.trim(), otp: otp.join(''), new_password: newPassword });
+      const response = await resetPassword({ email: email.trim(), new_password: newPassword });
+      assertApiSuccess(response, 'Could not update password. Please try again.');
       setSuccessMessage(true);
       setTimeout(() => navigate('/login'), 1000);
     } catch (err) {
-      setApiError(err.response?.data?.detail || 'Could not update password. Please try again.');
+      setApiError(extractApiError(err, 'Could not update password. Please try again.'));
       setSuccessMessage(false);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleResendCode = async () => {
+    setSubmitting(true);
+    setApiError('');
+    setResendMessage(false);
+    try {
+      const response = await requestPasswordReset({ email: email.trim() });
+      assertApiSuccess(response, 'Unable to resend OTP right now.');
+      setResendMessage(true);
+      setOtp(['', '', '', '', '', '']);
+    } catch (err) {
+      setApiError(extractApiError(err, 'Unable to resend OTP right now.'));
     } finally {
       setSubmitting(false);
     }
@@ -257,7 +293,7 @@ export default function ForgotPasswordPage() {
               <div className="text-center mt-6">
                 <p className="text-sm text-on-surface-variant font-medium">
                   Didn&apos;t receive the code?
-                  <button className="text-primary font-bold hover:underline ml-1" onClick={() => setResendMessage(true)} type="button">Resend Code</button>
+                  <button className="text-primary font-bold hover:underline ml-1" disabled={submitting} onClick={handleResendCode} type="button">Resend Code</button>
                 </p>
                 {resendMessage ? <p className="text-sm text-green-700 mt-2">A new code has been sent.</p> : null}
               </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import Spinner from '../components/ui/Spinner';
@@ -9,6 +9,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function ProductDetailsPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [qty, setQty] = useState(1);
@@ -36,7 +37,10 @@ export default function ProductDetailsPage() {
   }, [cartItem]);
 
   const handleAddToCart = async () => {
-    if (!user) { window.location.href = '/login'; return; }
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     if (cartItem) {
       await updateItem(cartItem.id, qty);
       return;

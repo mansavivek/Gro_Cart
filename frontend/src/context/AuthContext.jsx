@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { login as loginApi, register as registerApi } from '../services/authService';
 
 const AuthContext = createContext(null);
@@ -22,27 +22,28 @@ export function AuthProvider({ children }) {
     }
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loginError, setLoginError] = useState(null);
+  const [registerError, setRegisterError] = useState(null);
 
   const login = async (email, password) => {
     setLoading(true);
-    setError(null);
+    setLoginError(null);
     try {
       const { data } = await loginApi({ email, password });
       if (!data?.token || !data?.user) {
-      throw new Error('Invalid login response');
-    }
+        throw new Error('Invalid login response');
+      }
       const normalizedUser = normalizeUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(normalizedUser));
       setUser(normalizedUser);
       return normalizedUser;
     } catch (err) {
-      setError(
+      setLoginError(
         err.response?.data?.detail ||
         err.response?.data?.error ||
         err.message ||
-         'Login failed');
+        'Login failed');
       throw err;
     } finally {
       setLoading(false);
@@ -51,12 +52,22 @@ export function AuthProvider({ children }) {
 
   const register = async (userData) => {
     setLoading(true);
-    setError(null);
+    setRegisterError(null);
     try {
-      const { data } = await registerApi(userData);
+      const resp = await registerApi(userData);
+      const { data } = resp;
+      if (data?.error) {
+        setRegisterError(data.error);
+        throw new Error(data.error);
+      }
       return data;
     } catch (err) {
-      setError(err.response?.data?.detail || 'Registration failed');
+      setRegisterError(
+        err.response?.data?.detail ||
+        err.response?.data?.error ||
+        err.message ||
+        'Registration failed'
+      );
       throw err;
     } finally {
       setLoading(false);
@@ -67,10 +78,25 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
+    setLoginError(null);
+    setRegisterError(null);
   };
 
+  const clearLoginError = () => setLoginError(null);
+  const clearRegisterError = () => setRegisterError(null);
+
   return (
-    <AuthContext.Provider value={{ user, loading, error, login, register, logout }}>
+    <AuthContext.Provider value={{
+      user,
+      loading,
+      loginError,
+      registerError,
+      login,
+      register,
+      logout,
+      clearLoginError,
+      clearRegisterError,
+    }}>
       {children}
     </AuthContext.Provider>
   );
