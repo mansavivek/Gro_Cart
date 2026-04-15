@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
-import { useAuth } from '../context/AuthContext';
-import { getPaymentMethods, savePaymentMethods } from '../services/profileStore';
+import { addPaymentMethod, fetchPaymentMethods } from '../services/paymentMethodService';
 
 const EMPTY_CARD = {
   holderName: '',
@@ -12,33 +11,42 @@ const EMPTY_CARD = {
 };
 
 function toMaskedCard(form) {
-  const sanitized = form.number.replace(/\D/g, '');
   return {
-    holderName: form.holderName,
-    brand: form.brand || 'Card',
-    last4: sanitized.slice(-4) || '0000',
+    card_holder_name: form.holderName,
+    card_brand: form.brand || 'Card',
+    card_number: form.number,
     expiry: form.expiry,
   };
 }
 
 export default function PaymentMethodsPage() {
-  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [items, setItems] = useState([]);
   const [selectedId, setSelectedId] = useState(null);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState(EMPTY_CARD);
+  const [error, setError] = useState('');
   const pageBackgroundStyle = {
     backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
   };
 
   useEffect(() => {
-    if (!user) return;
-    const methods = getPaymentMethods(user);
-    setItems(methods.items);
-    setSelectedId(methods.selectedId);
-  }, [user]);
+    loadPayments();
+  }, []);
+
+  const loadPayments = async () => {
+    try {
+      setError('');
+      const { data } = await fetchPaymentMethods();
+      const list = Array.isArray(data) ? data : [];
+      setItems(list);
+      const active = list.find((item) => item.is_default) || list[0] || null;
+      setSelectedId(active?.id || null);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Unable to load payment methods.');
+    }
+  };
 
   const isEditing = useMemo(() => editingId !== null, [editingId]);
 
@@ -52,41 +60,38 @@ export default function PaymentMethodsPage() {
     setForm({
       holderName: card.holderName || '',
       brand: card.brand || '',
-      number: card.last4 ? `**** **** **** ${card.last4}` : '',
+      number: '',
       expiry: card.expiry || '',
     });
   };
 
-  const saveCard = () => {
-    if (!form.holderName.trim() || !form.brand.trim() || !form.expiry.trim()) return;
+  const saveCard = async () => {
+    if (!form.holderName.trim() || !form.brand.trim() || !form.expiry.trim() || !form.number.trim()) {
+      setError('Please fill all payment method fields.');
+      return;
+    }
     const nextCard = toMaskedCard(form);
-    const id = editingId === 'new' ? `card-${Date.now()}` : editingId;
-    const nextItems = editingId === 'new'
-      ? [...items, { id, ...nextCard }]
-      : items.map((item) => (item.id === id ? { ...item, ...nextCard } : item));
-    const nextSelectedId = selectedId || id;
-
-    setItems(nextItems);
-    setSelectedId(nextSelectedId);
-    savePaymentMethods(user, { items: nextItems, selectedId: nextSelectedId });
-    setEditingId(null);
-    setForm(EMPTY_CARD);
+    try {
+      setError('');
+      await addPaymentMethod(nextCard);
+      setEditingId(null);
+      setForm(EMPTY_CARD);
+      await loadPayments();
+    } catch (err) {
+      setError(err.response?.data?.error || 'Unable to save payment method.');
+    }
   };
 
   const selectCard = (id) => {
     setSelectedId(id);
-    savePaymentMethods(user, { items, selectedId: id });
     if (location.state?.openCheckoutModal) {
       navigate(location.state?.returnTo || '/cart', { state: { openCheckoutModal: true } });
     }
   };
 
   const deleteCard = (id) => {
-    const nextItems = items.filter((item) => item.id !== id);
-    const nextSelectedId = selectedId === id ? nextItems[0]?.id || null : selectedId;
-    setItems(nextItems);
-    setSelectedId(nextSelectedId);
-    savePaymentMethods(user, { items: nextItems, selectedId: nextSelectedId });
+    // Backend delete endpoint is not available yet.
+    setError('Delete payment method is not available from backend yet.');
   };
 
   const goBack = () => {
@@ -113,6 +118,12 @@ export default function PaymentMethodsPage() {
           </div>
         </div>
 
+        {error ? (
+          <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {error}
+          </div>
+        ) : null}
+
         <div className="grid grid-cols-1 gap-4">
           {items.map((card) => {
             const active = card.id === selectedId;
@@ -120,11 +131,11 @@ export default function PaymentMethodsPage() {
               <div className={`rounded-xl border p-5 ${active ? 'border-primary bg-primary/5' : 'border-outline-variant/25 bg-surface-container-lowest'}`} key={card.id}>
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <p className="text-base font-semibold text-on-surface">{card.brand} •••• {card.last4}</p>
-                    <p className="mt-1 text-sm text-on-surface-variant">{card.holderName} • Expires {card.expiry}</p>
+                    <p className="text-base font-semibold text-on-surface">{card.card_brand} •••• {card.last4}</p>
+                    <p className="mt-1 text-sm text-on-surface-variant">{card.card_holder_name} • Expires {card.expiry}</p>
                   </div>
                   <div className="flex gap-2">
-                    <button className="rounded-md border border-outline-variant/25 px-3 py-1.5 text-xs font-semibold text-on-surface" onClick={() => startEdit(card)} type="button">
+                    <button className="rounded-md border border-outline-variant/25 px-3 py-1.5 text-xs font-semibold text-on-surface" onClick={() => startEdit({ ...card, holderName: card.card_holder_name, brand: card.card_brand })} type="button">
                       Edit
                     </button>
                     <button

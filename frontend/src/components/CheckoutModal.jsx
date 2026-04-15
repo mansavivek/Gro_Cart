@@ -1,12 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { placeOrder } from '../services/orderService';
-import {
-  formatAddress,
-  getAddressBook,
-  getPaymentMethods,
-  savePaymentMethods,
-} from '../services/profileStore';
+import { fetchAddresses } from '../services/addressService';
+import { addPaymentMethod, fetchPaymentMethods } from '../services/paymentMethodService';
 
 export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) {
   const navigate = useNavigate();
@@ -25,14 +21,39 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
   const [error, setError] = useState('');
   const [orderPlaced, setOrderPlaced] = useState(false);
 
+  const formatAddress = (address) => {
+    return [
+      address.address_line1,
+      address.address_line2,
+      [address.city, address.state].filter(Boolean).join(', '),
+      address.zip,
+      address.phone,
+    ]
+      .filter(Boolean)
+      .join(', ');
+  };
+
+  const loadCheckoutData = async () => {
+    const [{ data: addressData }, { data: paymentData }] = await Promise.all([
+      fetchAddresses(),
+      fetchPaymentMethods(),
+    ]);
+
+    const addressList = Array.isArray(addressData) ? addressData : [];
+    const paymentList = Array.isArray(paymentData) ? paymentData : [];
+    setAddresses(addressList);
+    setCards(paymentList);
+
+    const selectedAddress = addressList.find((item) => item.is_default) || addressList[0] || null;
+    const selectedPayment = paymentList.find((item) => item.is_default) || paymentList[0] || null;
+    setSelectedAddressId(selectedAddress?.id || null);
+    setSelectedCardId(selectedPayment?.id || null);
+  };
+
   useEffect(() => {
     if (!open || !user) return;
-    const addressBook = getAddressBook(user);
-    const methods = getPaymentMethods(user);
-    setAddresses(addressBook.items);
-    setSelectedAddressId(addressBook.selectedId);
-    setCards(methods.items);
-    setSelectedCardId(methods.selectedId);
+
+    loadCheckoutData().catch(() => setError('Unable to load addresses or payment methods.'));
     setPaymentForm({
       holderName:'',
       brand: '',
@@ -57,30 +78,28 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
 
   const handleCardSelect = (id) => {
     setSelectedCardId(id);
-    savePaymentMethods(user, { items: cards, selectedId: id });
   };
 
-  const handleAddPaymentMethod = () => {
-    if (!paymentForm.holderName.trim() || !paymentForm.brand.trim() || !paymentForm.expiry.trim()) {
+  const handleAddPaymentMethod = async () => {
+    if (!paymentForm.holderName.trim() || !paymentForm.brand.trim() || !paymentForm.expiry.trim() || !paymentForm.number.trim()) {
       setError('Please complete the payment method form before saving.');
       return;
     }
 
-    const sanitized = paymentForm.number.replace(/\D/g, '');
-    const next = {
-      id: `card-${Date.now()}`,
-      holderName: paymentForm.holderName,
-      brand: paymentForm.brand,
-      last4: sanitized.slice(-4) || '0000',
-      expiry: paymentForm.expiry,
-    };
-    const nextCards = [next, ...cards];
-    setCards(nextCards);
-    setSelectedCardId(next.id);
-    savePaymentMethods(user, { items: nextCards, selectedId: next.id });
-    setPaymentForm({ holderName: user?.name || '', brand: '', number: '', expiry: '' });
-    setShowAddPaymentForm(false);
-    setError('');
+    try {
+      setError('');
+      await addPaymentMethod({
+        card_holder_name: paymentForm.holderName,
+        card_brand: paymentForm.brand,
+        card_number: paymentForm.number,
+        expiry: paymentForm.expiry,
+      });
+      await loadCheckoutData();
+      setPaymentForm({ holderName: '', brand: '', number: '', expiry: '' });
+      setShowAddPaymentForm(false);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Unable to save payment method.');
+    }
   };
 
   const handlePlaceOrder = async () => {
@@ -99,7 +118,7 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
     try {
       await placeOrder({
         delivery_address: formatAddress(selectedAddress),
-        payment_method: `${selectedCard.brand} •••• ${selectedCard.last4}`,
+        payment_method: `${selectedCard.card_brand} •••• ${selectedCard.last4}`,
       });
       await fetchCart();
       setOrderPlaced(true);
@@ -168,7 +187,7 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
                 </div>
                 {selectedAddress ? (
                   <div className="rounded-lg border border-primary/30 bg-primary/5 px-4 py-3">
-                    <p className="text-sm font-semibold text-on-surface">{selectedAddress.label} - {selectedAddress.recipient}</p>
+                    <p className="text-sm font-semibold text-on-surface">{selectedAddress.label} - {selectedAddress.full_name}</p>
                     <p className="mt-1 text-xs text-on-surface-variant">{formatAddress(selectedAddress)}</p>
                   </div>
                 ) : (
@@ -209,8 +228,8 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
                           type="radio"
                         />
                         <span className="text-sm text-on-surface">
-                          <span className="block font-semibold">{card.brand} •••• {card.last4}</span>
-                          <span className="block text-xs text-on-surface-variant">{card.holderName} • Expires {card.expiry}</span>
+                          <span className="block font-semibold">{card.card_brand} •••• {card.last4}</span>
+                          <span className="block text-xs text-on-surface-variant">{card.card_holder_name} • Expires {card.expiry}</span>
                         </span>
                       </label>
                     );

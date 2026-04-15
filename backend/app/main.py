@@ -24,7 +24,7 @@ CORS(
         }
     },
     methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization"],
+    allow_headers=["Content-Type", "Authorization", "X-User-Email", "X-User-Name"],
 )
 
 # register routes

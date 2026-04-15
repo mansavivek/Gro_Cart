@@ -123,9 +123,21 @@ function createMockAdapter(handler) {
 // Mock mode interceptor - intercept requests when mock mode is enabled
 api.interceptors.request.use(
   (config) => {
+    const path = getPathFromConfig(config.url, config.baseURL);
+    const isAuthRequest = path.startsWith('/auth/');
+    const loggedInUser = parseUserFromStorage();
+    config.headers = config.headers || {};
+
+    if (!isAuthRequest && loggedInUser?.email && loggedInUser?.name) {
+      config.headers['X-User-Email'] = loggedInUser.email;
+      config.headers['X-User-Name'] = loggedInUser.name;
+    } else {
+      delete config.headers['X-User-Email'];
+      delete config.headers['X-User-Name'];
+    }
+
     if (isMockModeEnabled()) {
       const method = (config.method || 'get').toLowerCase();
-      const path = getPathFromConfig(config.url, config.baseURL);
       const data = parseBody(config.data);
       const mockHandler = getMockHandler({ method, path, data, params: config.params });
 
