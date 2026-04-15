@@ -187,7 +187,16 @@ def create_admin_product(data):
     price = data.get("price")
     description = data.get("description")
     brand = data.get("brand")
-    images = data.get("image_url")
+    images = data.get("images")
+    if images is None:
+        images = data.get("image_url")
+
+    if isinstance(images, str):
+        images = [images] if images.strip() else []
+    elif images is None:
+        images = []
+    elif not isinstance(images, list):
+        images = [images]
 
     category_id = data.get("category_id")
     breadcrumbs = data.get("breadcrumbs") or data.get("category")
@@ -206,8 +215,7 @@ def create_admin_product(data):
     nutrition = data.get("nutrition")
     quantity = data.get("quantity", 0)
 
-    if isinstance(images, list):
-        images = json.dumps(images)
+    images = json.dumps(images)
 
     if isinstance(nutrition, (list, dict)):
         nutrition = json.dumps(nutrition)
@@ -262,7 +270,7 @@ def create_admin_product(data):
         "description": product.get("description"),
         "brand": product.get("brand"),
         "breadcrumbs": product.get("breadcrumbs"),
-        "images": product.get("images"),
+        "images": json.loads(product["images"]) if product.get("images") else [],
         "pack_size": product.get("pack_size"),
         "ingredients": product.get("ingredients"),
         "storage_details": product.get("storage_details"),
