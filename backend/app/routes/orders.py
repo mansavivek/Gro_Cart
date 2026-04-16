@@ -12,6 +12,7 @@ order_routes = Blueprint("orders", __name__)
 
 # Place Order
 @order_routes.route("/place", methods=["POST"])
+@order_routes.route("/place/", methods=["POST"], strict_slashes=False)
 @auth_required
 def create_order():
     data = request.get_json()
@@ -34,6 +35,7 @@ def create_order():
 
 # Get Order History
 @order_routes.route("/history", methods=["GET"])
+@order_routes.route("/history/", methods=["GET"], strict_slashes=False)
 @auth_required
 def get_order_history():
     result = get_orders(g.user_id)
@@ -42,6 +44,7 @@ def get_order_history():
 
 # Get Order Details
 @order_routes.route("/<order_id>", methods=["GET"])
+@order_routes.route("/<order_id>/", methods=["GET"], strict_slashes=False)
 @auth_required
 def order_details(order_id):
     result = get_order_details(g.user_id, order_id)
