@@ -71,19 +71,19 @@ def forgot_password(email):
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
-    # check if user exists
     cursor.execute("SELECT * FROM users WHERE email=%s", (email,))
     user = cursor.fetchone()
 
     if not user:
-        return {"error": "Email not registered"}
+        return {"error": "Email not registered"}, 404
 
-    # generate OTP
     otp = str(random.randint(100000, 999999))
-
     expires_at = datetime.now() + timedelta(minutes=10)
 
-    # store OTP
+    sent = send_otp_email(email, otp)
+    if not sent:
+        return {"error": "Unable to send OTP"}, 500
+
     cursor.execute("""
         INSERT INTO password_resets (email, otp, expires_at)
         VALUES (%s, %s, %s)
@@ -91,13 +91,7 @@ def forgot_password(email):
 
     conn.commit()
 
-    # send email
-    sent = send_otp_email(email, otp)
-
-    if not sent:
-        return {"error": "Unable to send OTP"}
-
-    return {"message": "OTP sent successfully"}    
+    return {"message": "OTP sent successfully"}, 200   
 
 #Verify otp
 def verify_otp(email, otp):
@@ -113,27 +107,37 @@ def verify_otp(email, otp):
     record = cursor.fetchone()
 
     if not record:
-        return {"error": "Invalid OTP"}
+        return {"error": "Invalid OTP"}, 400
 
     if datetime.now() > record["expires_at"]:
-        return {"error": "OTP expired"}
+        return {"error": "OTP expired"}, 400
 
-    return {"message": "OTP verified"}    
+    return {"message": "OTP verified"}, 200   
 
 #Reset password
 def reset_password(email, new_password):
     conn = get_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT id FROM users WHERE email=%s", (email,))
+    user = cursor.fetchone()
+
+    if not user:
+        return {"error": "User not found"}, 404
 
     hashed_pw = bcrypt.hashpw(new_password.encode(), bcrypt.gensalt())
 
     cursor.execute("""
-        UPDATE users SET password_hash=%s WHERE email=%s
+        UPDATE users
+        SET password_hash=%s
+        WHERE email=%s
     """, (hashed_pw.decode(), email))
+
+    cursor.execute("DELETE FROM password_resets WHERE email=%s", (email,))
 
     conn.commit()
 
-    return {"message": "Password updated successfully"}   
+    return {"message": "Password updated successfully"}, 200  
 
 
 def get_user_by_id(user_id):
