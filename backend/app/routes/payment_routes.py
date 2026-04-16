@@ -6,6 +6,7 @@ payment_routes = Blueprint("payments", __name__)
 
 
 @payment_routes.route("/add", methods=["POST"])
+@payment_routes.route("/add/", methods=["POST"], strict_slashes=False)
 @auth_required
 def add_payment():
     data = request.get_json()
@@ -14,6 +15,7 @@ def add_payment():
 
 
 @payment_routes.route("", methods=["GET"])
+@payment_routes.route("/", methods=["GET"], strict_slashes=False)
 @auth_required
 def fetch_payments():
     result = get_payment_methods(g.user_id)

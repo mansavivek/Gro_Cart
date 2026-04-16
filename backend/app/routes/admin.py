@@ -12,6 +12,7 @@ admin_routes = Blueprint("admin_routes", __name__, url_prefix="/admin")
 
 
 @admin_routes.route("/orders", methods=["GET"])
+@admin_routes.route("/orders/", methods=["GET"], strict_slashes=False)
 @auth_required
 @role_required("admin")
 def admin_get_orders():
@@ -20,6 +21,7 @@ def admin_get_orders():
 
 
 @admin_routes.route("/orders/<int:order_id>/status", methods=["PUT"])
+@admin_routes.route("/orders/<int:order_id>/status/", methods=["PUT"], strict_slashes=False)
 @auth_required
 @role_required("admin")
 def admin_update_order_status(order_id):
@@ -37,6 +39,7 @@ def admin_update_order_status(order_id):
 
 
 @admin_routes.route("/products", methods=["POST"])
+@admin_routes.route("/products/", methods=["POST"], strict_slashes=False)
 @auth_required
 @role_required("admin")
 def admin_create_product():
@@ -52,6 +55,7 @@ def admin_create_product():
 
 
 @admin_routes.route("/products/<string:sku>", methods=["PUT"])
+@admin_routes.route("/products/<string:sku>/", methods=["PUT"], strict_slashes=False)
 @auth_required
 @role_required("admin")
 def admin_update_product(sku):
@@ -65,6 +69,7 @@ def admin_update_product(sku):
 
 
 @admin_routes.route("/products/<string:sku>", methods=["DELETE"])
+@admin_routes.route("/products/<string:sku>/", methods=["DELETE"], strict_slashes=False)
 @auth_required
 @role_required("admin")
 def admin_delete_product(sku):

@@ -13,6 +13,7 @@ auth_routes = Blueprint("auth", __name__)
 
 # REGISTER
 @auth_routes.route("/register", methods=["POST"])
+@auth_routes.route("/register/", methods=["POST"], strict_slashes=False)
 def register():
     data = request.get_json()
     result, status = register_user(data)
@@ -21,6 +22,7 @@ def register():
 
 # LOGIN
 @auth_routes.route("/login", methods=["POST"])
+@auth_routes.route("/login/", methods=["POST"], strict_slashes=False)
 def login():
     data = request.get_json()
     result, status = login_user(data)
@@ -29,6 +31,7 @@ def login():
 
 # SEND OTP
 @auth_routes.route("/forgot-password", methods=["POST"])
+@auth_routes.route("/forgot-password/", methods=["POST"], strict_slashes=False)
 def forgot():
     data = request.get_json()
 
@@ -41,6 +44,7 @@ def forgot():
 
 # VERIFY OTP
 @auth_routes.route("/verify-otp", methods=["POST"])
+@auth_routes.route("/verify-otp/", methods=["POST"], strict_slashes=False)
 def verify():
     data = request.get_json()
 
@@ -53,6 +57,7 @@ def verify():
 
 # RESET PASSWORD
 @auth_routes.route("/reset-password", methods=["POST"])
+@auth_routes.route("/reset-password/", methods=["POST"], strict_slashes=False)
 def reset():
     data = request.get_json()
 
@@ -65,6 +70,7 @@ def reset():
 
 # CURRENT LOGGED-IN USER
 @auth_routes.route("/me", methods=["GET"])
+@auth_routes.route("/me/", methods=["GET"], strict_slashes=False)
 @auth_required
 def me():
     user = get_user_by_id(g.user_id)

@@ -17,6 +17,7 @@ def products():
 
 # Get single product
 @product_routes.route("/<product_id>", methods=["GET"])
+@product_routes.route("/<product_id>/", methods=["GET"], strict_slashes=False)
 def product(product_id):
     result = get_product(product_id)
 
@@ -27,5 +28,6 @@ def product(product_id):
 
 # Get Categories
 @product_routes.route("/categories", methods=["GET"])
+@product_routes.route("/categories/", methods=["GET"], strict_slashes=False)
 def categories():
     return jsonify(get_categories())
