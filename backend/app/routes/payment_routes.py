@@ -4,13 +4,19 @@ from app.core.auth_middleware import auth_required
 
 payment_routes = Blueprint("payments", __name__)
 
+
 @payment_routes.route("/add", methods=["POST"])
+@payment_routes.route("/add/", methods=["POST"], strict_slashes=False)
 @auth_required
 def add_payment():
-    return jsonify(save_payment_method(g.user_id, request.json))
+    data = request.get_json()
+    result = save_payment_method(g.user_id, data)
+    return jsonify(result), 200
+
 
 @payment_routes.route("", methods=["GET"])
+@payment_routes.route("/", methods=["GET"], strict_slashes=False)
 @auth_required
 def fetch_payments():
-    return jsonify(get_payment_methods(g.user_id))
-
+    result = get_payment_methods(g.user_id)
+    return jsonify(result), 200
