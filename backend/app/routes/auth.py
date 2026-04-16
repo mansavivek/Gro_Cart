@@ -31,6 +31,10 @@ def login():
 @auth_routes.route("/forgot-password", methods=["POST"])
 def forgot():
     data = request.get_json()
+
+    if not data or "email" not in data:
+        return jsonify({"error": "Email is required"}), 400
+
     result, status = forgot_password(data["email"])
     return jsonify(result), status
 
@@ -39,6 +43,10 @@ def forgot():
 @auth_routes.route("/verify-otp", methods=["POST"])
 def verify():
     data = request.get_json()
+
+    if not data or "email" not in data or "otp" not in data:
+        return jsonify({"error": "Email and OTP are required"}), 400
+
     result, status = verify_otp(data["email"], data["otp"])
     return jsonify(result), status
 
@@ -47,6 +55,10 @@ def verify():
 @auth_routes.route("/reset-password", methods=["POST"])
 def reset():
     data = request.get_json()
+
+    if not data or "email" not in data or "new_password" not in data:
+        return jsonify({"error": "Email and new password are required"}), 400
+
     result, status = reset_password(data["email"], data["new_password"])
     return jsonify(result), status
 
