@@ -152,7 +152,7 @@ export default function AdminDashboardPage() {
       setProducts(latest.data || []);
       setForm(emptyForm);
       setEditingProductId(null);
-      setToast(' Item added ');
+      setToast(editingProductId ? ' Item updated ' : ' Item added ');
     } catch (err) {
       setError(err.response?.data?.detail || 'Unable to add product right now.');
     } finally {
@@ -486,9 +486,6 @@ export default function AdminDashboardPage() {
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-outline">No image selected</div>
                         )}
-                        <div className="absolute top-3 left-3 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-tighter">
-                          Organic
-                        </div>
                       </div>
                       <div className="p-4 space-y-2">
                         <div className="flex justify-between items-start">
