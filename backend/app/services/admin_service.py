@@ -229,13 +229,13 @@ def create_admin_product(data):
         INSERT INTO products (
             sku, name, price, currency, availability, description, brand,
             breadcrumbs, images, pack_size, ingredients, storage_details,
-            percentage_alcohol, serving_size, nutrition
+            percentage_alcohol, serving_size, nutrition, quantity
         )
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
     """, (
         sku, name, price, currency, availability, description, brand,
         breadcrumbs, images, pack_size, ingredients, storage_details,
-        percentage_alcohol, serving_size, nutrition
+        percentage_alcohol, serving_size, nutrition, quantity
     ))
     conn.commit()
 
@@ -256,6 +256,7 @@ def create_admin_product(data):
             percentage_alcohol,
             serving_size,
             nutrition,
+            quantity,
             created_at
         FROM products
         WHERE sku = %s
@@ -283,7 +284,7 @@ def create_admin_product(data):
         "serving_size": product.get("serving_size"),
         "nutrition": product.get("nutrition"),
         "created_at": product.get("created_at"),
-        "stock": quantity
+        "stock": product.get("quantity", 0)
     }
 
 
@@ -338,6 +339,7 @@ def update_admin_product(sku, data):
         "percentage_alcohol": data.get("percentage_alcohol"),
         "serving_size": data.get("serving_size"),
         "nutrition": nutrition,
+        "quantity": data.get("quantity"),
     }
 
     set_clauses = []
@@ -371,6 +373,7 @@ def update_admin_product(sku, data):
             percentage_alcohol,
             serving_size,
             nutrition,
+            quantity,
             created_at
         FROM products
         WHERE sku = %s
