@@ -8,7 +8,7 @@ def place_order(user_id, address_id):
 
     # get cart
     cursor.execute("""
-        SELECT ci.product_id, ci.quantity, p.price
+        SELECT ci.product_id, ci.quantity, p.price, p.quantity AS stock_quantity
         FROM cart_items ci
         JOIN products p ON ci.product_id = p.sku
         WHERE ci.user_id = %s
@@ -33,7 +33,34 @@ def place_order(user_id, address_id):
         conn.close()
         return {"error": "Invalid address"}
 
+    # check stock before placing order
+    for item in items:
+        stock_quantity = item.get("stock_quantity", 0)
+        if stock_quantity is None or stock_quantity < item["quantity"]:
+            cursor.close()
+            conn.close()
+            return {
+                "error": f"Not enough stock for product {item['product_id']}"
+            }    
+
     total_price = sum(i["quantity"] * float(i["price"]) for i in items)
+
+    # reduce stock first
+    for item in items:
+        new_quantity = item["stock_quantity"] - item["quantity"]
+        new_availability = "InStock" if new_quantity > 0 else "OutOfStock"
+
+        cursor.execute("""
+            UPDATE products
+            SET quantity = %s,
+                availability = %s
+            WHERE sku = %s
+        """, (
+            new_quantity,
+            new_availability,
+            item["product_id"]
+        ))
+
 
     # create order WITH address
     cursor.execute("""
