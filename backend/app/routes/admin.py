@@ -1,3 +1,5 @@
+"""Admin routes: order status management and full product CRUD, restricted to admin role"""
+
 from flask import Blueprint, jsonify, request
 from app.services.admin_service import (
     get_admin_orders,

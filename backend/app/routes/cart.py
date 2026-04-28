@@ -1,3 +1,5 @@
+"""Cart routes: get, add, update, remove and clear items in the authenticated user's cart"""
+
 from flask import Blueprint, request, jsonify, g
 from app.services.cart_service import (
     get_cart,

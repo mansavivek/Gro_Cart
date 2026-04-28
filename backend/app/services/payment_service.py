@@ -1,11 +1,13 @@
+"""Payment service: save and retrieve stored card details for a user"""
+
 from app.database.connection import get_db
 
-# SAVE PAYMENT METHOD
+
 def save_payment_method(user_id, data):
+    """Store a payment method, persisting only the last 4 digits of the card number"""
     conn = get_db()
     cursor = conn.cursor()
 
-    # only store last 4 digits
     last4 = data["card_number"][-4:]
 
     cursor.execute("""
@@ -24,8 +26,8 @@ def save_payment_method(user_id, data):
 
     return {"message": "Saved successfully"}
 
-#Get payment
 def get_payment_methods(user_id):
+    """Return all saved payment methods for a user, default card first"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -37,19 +39,4 @@ def get_payment_methods(user_id):
     """, (user_id,))
 
     return cursor.fetchall()    
-
-# #Set default payment
-# def set_default_payment(user_id, payment_id):
-#     conn = get_db()
-#     cursor = conn.cursor()
-
-#     cursor.execute("UPDATE payment_methods SET is_default = FALSE WHERE user_id=%s", (user_id,))
-#     cursor.execute("""
-#         UPDATE payment_methods
-#         SET is_default = TRUE
-#         WHERE id=%s AND user_id=%s
-#     """, (payment_id, user_id))
-
-#     conn.commit()
-
-#     return {"message": "Default payment set"}    
+  

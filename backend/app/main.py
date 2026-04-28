@@ -1,3 +1,5 @@
+"""Flask app factory: registers all blueprints and configures CORS for the Gro-Cart API"""
+
 from flask import Flask
 from flask_cors import CORS
 from app.routes.auth import auth_routes
@@ -27,7 +29,6 @@ CORS(
     allow_headers=["Content-Type", "Authorization", "X-User-Email", "X-User-Name"],
 )
 
-# register routes
 app.register_blueprint(auth_routes, url_prefix="/auth")
 app.register_blueprint(product_routes, url_prefix="/products")
 app.register_blueprint(category_routes, url_prefix="/categories")

@@ -1,7 +1,10 @@
+"""Address service: manage saved delivery addresses for a user"""
+
 from app.database.connection import get_db
 
-#Add Address
+
 def add_address(user_id, data):
+    """Insert a new delivery address for the user"""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -27,8 +30,8 @@ def add_address(user_id, data):
         "message": "Address saved successfully"
     }
 
-#Get Address
 def get_addresses(user_id):
+    """Return all addresses for a user, default address first"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -40,8 +43,8 @@ def get_addresses(user_id):
 
     return cursor.fetchall()    
 
-#Delete Address
 def delete_address(user_id, address_id):
+    """Delete an address owned by the user"""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -54,19 +57,17 @@ def delete_address(user_id, address_id):
 
     return {"message": "Address deleted"}
 
-#Set default address
 def set_default_address(user_id, address_id):
+    """Mark one address as default"""
     conn = get_db()
     cursor = conn.cursor()
 
-    # remove old default
     cursor.execute("""
         UPDATE addresses
         SET is_default = FALSE
         WHERE user_id = %s
     """, (user_id,))
 
-    # set new default
     cursor.execute("""
         UPDATE addresses
         SET is_default = TRUE
@@ -77,8 +78,8 @@ def set_default_address(user_id, address_id):
 
     return {"message": "Default address updated"}    
 
-#Edit Address
 def update_address(user_id, address_id, data):
+    """Update all fields of an existing address owned by the user"""
     conn = get_db()
     cursor = conn.cursor()
 

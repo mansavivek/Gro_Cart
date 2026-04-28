@@ -1,12 +1,14 @@
+"""Order service: place orders from cart, retrieve order history and details"""
+
 from app.database.connection import get_db
 import json
 
 
 def place_order(user_id, address_id):
+    """Convert the user's cart into an order; clears the cart on success"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
-    # get cart
     cursor.execute("""
         SELECT ci.product_id, ci.quantity, p.price
         FROM cart_items ci
@@ -21,7 +23,6 @@ def place_order(user_id, address_id):
         conn.close()
         return {"error": "Cart is empty"}
 
-    # optional safety check: address must belong to this user
     cursor.execute("""
         SELECT id FROM addresses
         WHERE id = %s AND user_id = %s
@@ -35,7 +36,6 @@ def place_order(user_id, address_id):
 
     total_price = sum(i["quantity"] * float(i["price"]) for i in items)
 
-    # create order WITH address
     cursor.execute("""
         INSERT INTO orders (user_id, total_price, address_id)
         VALUES (%s, %s, %s)
@@ -43,7 +43,6 @@ def place_order(user_id, address_id):
 
     order_id = cursor.lastrowid
 
-    # insert items
     for item in items:
         cursor.execute("""
             INSERT INTO order_items (order_id, product_id, quantity, price)
@@ -55,7 +54,6 @@ def place_order(user_id, address_id):
             float(item["price"])
         ))
 
-    # clear cart
     cursor.execute("DELETE FROM cart_items WHERE user_id = %s", (user_id,))
 
     conn.commit()
@@ -70,6 +68,7 @@ def place_order(user_id, address_id):
 
 
 def get_orders(user_id):
+    """Return all orders for a user, newest first, with address details joined"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -102,10 +101,10 @@ def get_orders(user_id):
 
 
 def get_order_details(user_id, order_id):
+    """Return line items for a specific order; 404-style error if order doesn't belong to user"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
-    # first confirm this order belongs to the logged-in user
     cursor.execute("""
         SELECT id
         FROM orders
@@ -159,10 +158,10 @@ def get_order_details(user_id, order_id):
 
 
 def get_or_create_address(user_id, delivery_address):
+    """Parse a comma-separated address string and return an existing or new address ID"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
-    # Split string: "a, a, a, a, 1, 1"
     parts = [p.strip() for p in delivery_address.split(",")]
 
     address_line1 = parts[0] if len(parts) > 0 else ""
@@ -172,7 +171,6 @@ def get_or_create_address(user_id, delivery_address):
     zip_code = parts[4] if len(parts) > 4 else ""
     phone = parts[5] if len(parts) > 5 else ""
 
-    # Try to find existing address (avoid duplicates)
     cursor.execute("""
         SELECT id
         FROM addresses
@@ -193,7 +191,6 @@ def get_or_create_address(user_id, delivery_address):
         conn.close()
         return row["id"]
 
-    # Insert new address
     cursor.execute("""
         INSERT INTO addresses (
             user_id,
