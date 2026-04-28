@@ -1,3 +1,5 @@
+"""User authentication service: registration, login, OTP-based password reset"""
+
 import bcrypt
 import random
 from datetime import datetime, timedelta
@@ -5,8 +7,9 @@ from app.utils.email_service import send_otp_email
 from app.database.connection import get_db
 from app.utils.jwt_service import generate_token
 
-# Register
+
 def register_user(data):
+    """Create a new customer account with a bcrypt-hashed password"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -37,6 +40,7 @@ def register_user(data):
 
 
 def login_user(data):
+    """Verify credentials and return a JWT token on success"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -66,8 +70,8 @@ def login_user(data):
     }, 200
 
 
-#Forgot password
 def forgot_password(email):
+    """Generate and email a 6-digit OTP valid for 10 minutes"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -93,8 +97,8 @@ def forgot_password(email):
 
     return {"message": "OTP sent successfully"}, 200   
 
-#Verify otp
 def verify_otp(email, otp):
+    """Check the OTP against the latest password_resets record; reject if expired"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -114,8 +118,8 @@ def verify_otp(email, otp):
 
     return {"message": "OTP verified"}, 200   
 
-#Reset password
 def reset_password(email, new_password):
+    """Hash and store the new password, then purge all OTP records for that email"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -141,6 +145,7 @@ def reset_password(email, new_password):
 
 
 def get_user_by_id(user_id):
+    """Return id, name, email, and role for the given user or None if not found"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 

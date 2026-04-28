@@ -1,8 +1,11 @@
+"""Flask route decorators for JWT authentication and role-based access control"""
+
 from functools import wraps
 from flask import request, jsonify, g
 from app.utils.jwt_service import decode_token
 
 def auth_required(f):
+    """Decode the Bearer JWT and attach user_id, email and role to Flask's g; returns 401 on failure"""
     @wraps(f)
     def wrapper(*args, **kwargs):
         auth_header = request.headers.get("Authorization")
@@ -29,6 +32,7 @@ def auth_required(f):
 
 
 def role_required(*allowed_roles):
+    """Allow access only if g.user_role matches one of the allowed roles; returns 403 otherwise"""
     def decorator(f):
         @wraps(f)
         def wrapper(*args, **kwargs):

@@ -1,3 +1,5 @@
+"""Auth routes: register, login, OTP forgot-password and current-user endpoints"""
+
 from flask import Blueprint, request, jsonify, g
 from app.services.auth_service import (
     register_user,
@@ -11,7 +13,6 @@ from app.core.auth_middleware import auth_required
 
 auth_routes = Blueprint("auth", __name__)
 
-# REGISTER
 @auth_routes.route("/register", methods=["POST"])
 @auth_routes.route("/register/", methods=["POST"], strict_slashes=False)
 def register():
@@ -20,7 +21,6 @@ def register():
     return jsonify(result), status
 
 
-# LOGIN
 @auth_routes.route("/login", methods=["POST"])
 @auth_routes.route("/login/", methods=["POST"], strict_slashes=False)
 def login():
@@ -29,7 +29,6 @@ def login():
     return jsonify(result), status
 
 
-# SEND OTP
 @auth_routes.route("/forgot-password", methods=["POST"])
 @auth_routes.route("/forgot-password/", methods=["POST"], strict_slashes=False)
 def forgot():
@@ -42,7 +41,6 @@ def forgot():
     return jsonify(result), status
 
 
-# VERIFY OTP
 @auth_routes.route("/verify-otp", methods=["POST"])
 @auth_routes.route("/verify-otp/", methods=["POST"], strict_slashes=False)
 def verify():
@@ -55,7 +53,6 @@ def verify():
     return jsonify(result), status
 
 
-# RESET PASSWORD
 @auth_routes.route("/reset-password", methods=["POST"])
 @auth_routes.route("/reset-password/", methods=["POST"], strict_slashes=False)
 def reset():
@@ -68,7 +65,6 @@ def reset():
     return jsonify(result), status
 
 
-# CURRENT LOGGED-IN USER
 @auth_routes.route("/me", methods=["GET"])
 @auth_routes.route("/me/", methods=["GET"], strict_slashes=False)
 @auth_required

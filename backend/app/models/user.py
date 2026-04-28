@@ -1,3 +1,5 @@
+"""SQLAlchemy ORM model for the users table"""
+
 from sqlalchemy import Column, Integer, String, Boolean, Text, Date, DateTime
 from sqlalchemy.sql import func
 from app.database.base import Base

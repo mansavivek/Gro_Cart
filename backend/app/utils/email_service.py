@@ -1,4 +1,7 @@
-import sib_api_v3_sdk, os
+"""Transactional OTP email delivery via the Brevo API"""
+
+import sib_api_v3_sdk
+import os
 from sib_api_v3_sdk.rest import ApiException
 from dotenv import load_dotenv
 
@@ -7,7 +10,8 @@ load_dotenv()
 BREVO_API_KEY = os.getenv("BREVO_API_KEY")
 
 
-def send_otp_email(to_email, otp):
+def send_otp_email(to_email: str, otp: str) -> bool:
+    """Send an OTP verification email to the given address. Returns True on success."""
     configuration = sib_api_v3_sdk.Configuration()
     configuration.api_key['api-key'] = BREVO_API_KEY
 
@@ -20,7 +24,7 @@ def send_otp_email(to_email, otp):
     <html>
       <body style="margin:0; padding:0; background-color:#ffffff; font-family:Arial, Helvetica, sans-serif; color:#222222;">
         <div style="max-width:600px; margin:0 auto; padding:40px 30px;">
-          
+
           <p style="font-size:18px; margin:0 0 24px 0;">Welcome back!</p>
 
           <p style="font-size:18px; line-height:1.6; margin:0 0 30px 0;">

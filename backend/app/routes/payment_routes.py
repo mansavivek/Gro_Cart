@@ -1,3 +1,5 @@
+"""Payment routes: save a new card and list stored payment methods for the logged-in user."""
+
 from flask import Blueprint, request, jsonify, g
 from app.services.payment_service import save_payment_method, get_payment_methods
 from app.core.auth_middleware import auth_required

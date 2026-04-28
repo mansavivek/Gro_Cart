@@ -1,3 +1,5 @@
+"""SQLAlchemy ORM model for the products table; SKU is the primary key"""
+
 from sqlalchemy import Column, String, Float, Text, Integer, DateTime
 from sqlalchemy.sql import func
 from app.database.base import Base

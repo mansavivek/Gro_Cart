@@ -1,3 +1,5 @@
+"""Product routes: list all products and fetch a single product"""
+
 from flask import Blueprint, jsonify, request
 from app.services.product_service import (
     get_products,
@@ -7,7 +9,7 @@ from app.services.product_service import (
 
 product_routes = Blueprint("products", __name__)
 
-# Get all products
+
 @product_routes.route("", methods=["GET"])
 @product_routes.route("/", methods=["GET"])  
 def products():
@@ -15,7 +17,7 @@ def products():
     category = request.args.get("category")
     return jsonify(get_products(category_id=category_id, category=category))
 
-# Get single product
+
 @product_routes.route("/<product_id>", methods=["GET"])
 @product_routes.route("/<product_id>/", methods=["GET"], strict_slashes=False)
 def product(product_id):
@@ -26,7 +28,7 @@ def product(product_id):
 
     return jsonify(result)
 
-# Get Categories
+
 @product_routes.route("/categories", methods=["GET"])
 @product_routes.route("/categories/", methods=["GET"], strict_slashes=False)
 def categories():

@@ -1,7 +1,10 @@
+"""Cart service: add, retrieve, update and remove items in a user's cart"""
+
 from app.database.connection import get_db
 
-# Add to cart
+
 def add_to_cart(user_id, data):
+    """Add a product to the cart or increment quantity if it already exists"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -30,8 +33,8 @@ def add_to_cart(user_id, data):
     conn.commit()
     return {"message": "Added to cart"}
 
-# Get cart
 def get_cart(user_id):
+    """Return all cart items with product details, total item count and total price"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -87,8 +90,8 @@ def get_cart(user_id):
         "total_price": total_price
     }
 
-# Update cart
 def update_cart_item(user_id, item_id, data):
+    """Set the quantity of a specific cart item"""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -103,8 +106,8 @@ def update_cart_item(user_id, item_id, data):
     conn.commit()
     return {"message": "Updated"}
 
-# Remove cart
 def remove_cart_item(user_id, item_id):
+    """Delete a single item from the user's cart"""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -116,8 +119,8 @@ def remove_cart_item(user_id, item_id):
     conn.commit()
     return {"message": "Removed"}
 
-# Clear cart
 def clear_cart(user_id):
+    """Remove all items from the user's cart"""
     conn = get_db()
     cursor = conn.cursor()
 

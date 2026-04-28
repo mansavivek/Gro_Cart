@@ -1,14 +1,18 @@
+"""Product service: fetch, filter, create, update, and delete products and categories."""
+
 from app.database.connection import get_db
 import json
 
 
 def get_primary_category_name(breadcrumbs):
+    """Extract the top-level category name from a breadcrumb string"""
     if not breadcrumbs:
         return None
     return str(breadcrumbs).split(">")[0].strip()
 
 
 def normalize_stock_fields(product):
+    """Normalise availability and quantity fields into consistent `in_stock` / `quantity` values"""
     availability = str(product.get("availability") or "").strip().lower()
     is_available = availability in {"instock", "in stock", "available", "true", "1"}
 
@@ -26,6 +30,7 @@ def normalize_stock_fields(product):
     return product
 
 def transform_product(p):
+    """Enrich a raw DB product row with parsed images, image_url, category_name and stock fields"""
 
     p["id"] = p.get("sku")
     images = []
@@ -56,8 +61,8 @@ def transform_product(p):
     return p
 
 
-# Get products
 def get_products(category_id=None, category=None):
+    """Return all products, optionally filtered by category name or category ID"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -86,8 +91,8 @@ def get_products(category_id=None, category=None):
     return transformed
 
 
-# Get single product
 def get_product(product_id):
+    """Return a single transformed product by SKU or None if not found"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -100,8 +105,8 @@ def get_product(product_id):
     return None
 
 
-# Get categories
 def get_categories():
+    """Derive a deduplicated list of top-level categories from product breadcrumbs"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -122,8 +127,8 @@ def get_categories():
     return categories
 
 
-# Create product
 def create_product(data):
+    """Insert a new product row into the DB"""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -149,8 +154,8 @@ def create_product(data):
     return {"message": "Product created"}
 
 
-# Update product
 def update_product(product_id, data):
+    """Update name, price and description for a product by SKU"""
     conn = get_db()
     cursor = conn.cursor()
 
@@ -169,8 +174,8 @@ def update_product(product_id, data):
     return {"message": "Product updated"}
 
 
-# Delete product
 def delete_product(product_id):
+    """Delete a product by SKU"""
     conn = get_db()
     cursor = conn.cursor()
 

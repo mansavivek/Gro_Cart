@@ -1,3 +1,5 @@
+"""Address routes: add, list, delete, set-default and edit delivery addresses for the logged-in user"""
+
 from flask import Blueprint, request, jsonify, g
 from app.services.address_service import add_address, get_addresses, delete_address, set_default_address, update_address
 from app.core.auth_middleware import auth_required

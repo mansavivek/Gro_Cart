@@ -1,3 +1,5 @@
+"""SQLAlchemy ORM model for the categories table"""
+
 from sqlalchemy import Column, Integer, String, Text
 from app.database.base import Base
 

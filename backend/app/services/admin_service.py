@@ -1,9 +1,12 @@
+"""Admin service: order management and full product CRUD for admin users"""
+
 import json
 import random
 from app.database.connection import get_db
 
 
 def _format_delivery_address(row):
+    """Format address fields from a DB row into a single comma-separated string"""
     parts = [
         row.get("address_line1"),
         row.get("address_line2"),
@@ -15,6 +18,7 @@ def _format_delivery_address(row):
 
 
 def get_admin_orders():
+    """Return all orders with customer info, address and line items for the admin dashboard"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -88,6 +92,7 @@ def get_admin_orders():
 
 
 def update_admin_order_status(order_id, status):
+    """Update an order's status and return the updated order object or None if not found"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -171,6 +176,7 @@ def update_admin_order_status(order_id, status):
 
 
 def generate_unique_sku(cursor):
+    """Generate a random 9-digit SKU guaranteed to be unique in the products table"""
     while True:
         sku = str(random.randint(100000000, 999999999))
         cursor.execute("SELECT sku FROM products WHERE sku = %s", (sku,))
@@ -180,6 +186,7 @@ def generate_unique_sku(cursor):
 
 
 def create_admin_product(data):
+    """Insert a new product and return the created row"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -289,6 +296,7 @@ def create_admin_product(data):
 
 
 def update_admin_product(sku, data):
+    """Patch only the provided fields on a product and return the updated row or None if not found"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 
@@ -406,6 +414,7 @@ def update_admin_product(sku, data):
 
 
 def delete_admin_product(sku):
+    """Delete a product by SKU; returns False if the SKU doesn't exist"""
     conn = get_db()
     cursor = conn.cursor(dictionary=True)
 

@@ -1,3 +1,5 @@
+"""Category routes: single endpoint that returns all top-level product categories"""
+
 from flask import Blueprint, jsonify
 from app.services.product_service import get_categories
 

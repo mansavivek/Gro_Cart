@@ -1,3 +1,5 @@
+"""Order routes: place an order, fetch order history and get order details"""
+
 from flask import Blueprint, jsonify, request, g
 from app.services.order_service import (
     place_order,
@@ -10,7 +12,6 @@ from app.core.auth_middleware import auth_required
 order_routes = Blueprint("orders", __name__)
 
 
-# Place Order
 @order_routes.route("/place", methods=["POST"])
 @order_routes.route("/place/", methods=["POST"], strict_slashes=False)
 @auth_required
@@ -33,7 +34,6 @@ def create_order():
     return jsonify(result), 201
 
 
-# Get Order History
 @order_routes.route("/history", methods=["GET"])
 @order_routes.route("/history/", methods=["GET"], strict_slashes=False)
 @auth_required
@@ -42,7 +42,6 @@ def get_order_history():
     return jsonify(result), 200
 
 
-# Get Order Details
 @order_routes.route("/<order_id>", methods=["GET"])
 @order_routes.route("/<order_id>/", methods=["GET"], strict_slashes=False)
 @auth_required
