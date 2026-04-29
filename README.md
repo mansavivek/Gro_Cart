@@ -8,7 +8,6 @@ A full-stack online grocery delivery system built with **React + Vite** (fronten
 
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
-- [Database Schema](#database-schema)
 - [API Endpoints](#api-endpoints)
 - [Setup & Running](#setup--running)
 - [Testing](#testing)
@@ -21,9 +20,9 @@ A full-stack online grocery delivery system built with **React + Vite** (fronten
 | Layer    | Technology                               |
 |----------|------------------------------------------|
 | Frontend | React 19, Vite, Tailwind CSS, React Router, Axios |
-| Backend  | Python 3.11+, FastAPI, SQLAlchemy ORM, Pydantic, JWT |
-| Database | SQLite (dev) / AWS RDS PostgreSQL or DynamoDB (prod) |
-| Auth     | JWT (python-jose) + bcrypt               |
+| Backend  | Python 3.11+, FastAPI, SQLAlchemy ORM, JWT |
+| Database | SQLite |
+| Auth     | JWT (python-jose)               |
 
 ---
 
@@ -109,71 +108,6 @@ grocery-delivery-system/
 │
 └── README.md
 ```
-
----
-
-## Database Schema
-
-### `users`
-| Column        | Type    | Notes                |
-|---------------|---------|----------------------|
-| id            | INTEGER | PK, auto-increment   |
-| name          | VARCHAR | required             |
-| email         | VARCHAR | unique, required     |
-| hashed_password | VARCHAR | bcrypt hash        |
-| phone_number  | VARCHAR | optional             |
-| address       | TEXT    | optional             |
-| date_of_birth | DATE    | optional             |
-| is_admin      | BOOLEAN | default false        |
-| created_at    | DATETIME| auto                 |
-
-### `categories`
-| Column      | Type    | Notes              |
-|-------------|---------|--------------------|
-| id          | INTEGER | PK                 |
-| name        | VARCHAR | unique, required   |
-| description | TEXT    | optional           |
-
-### `products`
-| Column      | Type    | Notes                |
-|-------------|---------|----------------------|
-| id          | INTEGER | PK                   |
-| name        | VARCHAR | required             |
-| description | TEXT    | optional             |
-| price       | FLOAT   | required             |
-| quantity    | INTEGER | stock count          |
-| image_url   | VARCHAR | optional             |
-| category_id | INTEGER | FK → categories.id   |
-| created_at  | DATETIME| auto                 |
-
-### `cart_items`
-| Column     | Type    | Notes                |
-|------------|---------|----------------------|
-| id         | INTEGER | PK                   |
-| user_id    | INTEGER | FK → users.id        |
-| product_id | INTEGER | FK → products.id     |
-| quantity   | INTEGER | required             |
-| created_at | DATETIME| auto                 |
-
-### `orders`
-| Column           | Type    | Notes                              |
-|------------------|---------|------------------------------------|
-| id               | INTEGER | PK                                 |
-| user_id          | INTEGER | FK → users.id                      |
-| status           | ENUM    | pending/in_progress/packed/out_for_delivery/delivered |
-| delivery_address | TEXT    | required                           |
-| payment_method   | VARCHAR | required                           |
-| total_amount     | FLOAT   | calculated at placement            |
-| created_at       | DATETIME| auto                               |
-
-### `order_items`
-| Column     | Type    | Notes               |
-|------------|---------|---------------------|
-| id         | INTEGER | PK                  |
-| order_id   | INTEGER | FK → orders.id      |
-| product_id | INTEGER | FK → products.id    |
-| quantity   | INTEGER | required            |
-| unit_price | FLOAT   | snapshot at purchase|
 
 ---
 
@@ -295,8 +229,6 @@ npm test
 ```env
 # Database
 DATABASE_URL=sqlite:///./grocart.db
-# For AWS RDS PostgreSQL:
-# DATABASE_URL=postgresql://user:password@your-rds-endpoint:5432/grocart
 
 # JWT
 SECRET_KEY=your-super-secret-key-change-in-production
@@ -305,24 +237,6 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 # CORS
 FRONTEND_URL=http://localhost:5173
-```
-
-#### AWS RDS (PostgreSQL) configuration
-
-Replace `DATABASE_URL` with:
-```env
-DATABASE_URL=postgresql://username:password@your-rds-instance.region.rds.amazonaws.com:5432/grocart
-```
-
-#### AWS DynamoDB (alternative)
-
-Install `boto3` and switch the `database/connection.py` to use DynamoDB via the AWS SDK.
-Required environment variables:
-```env
-AWS_ACCESS_KEY_ID=your-key
-AWS_SECRET_ACCESS_KEY=your-secret
-AWS_REGION=us-east-1
-DYNAMODB_TABLE_PREFIX=grocart_
 ```
 
 ### Frontend (`frontend/.env`)
