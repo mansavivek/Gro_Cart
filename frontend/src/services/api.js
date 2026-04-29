@@ -1,12 +1,16 @@
 import axios from 'axios';
 import { isMockModeEnabled, mockDataService } from './mockData';
 
+// API client instance used across the frontend. The baseURL can be
+// changed to point to a backend server if needed.
 const api = axios.create({
   baseURL: '/', // if running BE from another machine, change api address here and use this
   // baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000', // if running both UI BE on same machine, use this
   headers: { 'Content-Type': 'application/json' },
 });
 
+// parseUserFromStorage
+// Safely parse the persisted `user` object from localStorage.
 function parseUserFromStorage() {
   try {
     const raw = localStorage.getItem('user');
@@ -16,6 +20,9 @@ function parseUserFromStorage() {
   }
 }
 
+// parseBody
+// Helper to ensure axios config.data is returned as an object when
+// attempting to hand the payload to mock handlers.
 function parseBody(data) {
   if (!data) return {};
   if (typeof data === 'string') {
@@ -28,6 +35,9 @@ function parseBody(data) {
   return data;
 }
 
+// getPathFromConfig
+// Normalizes a request URL to a path component used by mock routing
+// and for detecting auth endpoints.
 function getPathFromConfig(url = '', baseURL = '') {
   if (!url) return '';
   if (url.startsWith('/')) {
@@ -41,6 +51,9 @@ function getPathFromConfig(url = '', baseURL = '') {
   }
 }
 
+// getMockHandler
+// Returns a function that simulates an API response when mock mode
+// is enabled. This maps paths & methods to mockDataService helpers.
 function getMockHandler({ method, path, data, params }) {
   const userId = parseUserFromStorage()?.id || 1;
 
@@ -90,6 +103,9 @@ function getMockHandler({ method, path, data, params }) {
   return null;
 }
 
+// createMockAdapter
+// Adapter wrapper that converts a mock handler into an axios-style
+// adapter function so the mock response mirrors axios behavior.
 function createMockAdapter(handler) {
   return async (config) => {
     try {
@@ -121,6 +137,9 @@ function createMockAdapter(handler) {
 }
 
 // Mock mode interceptor - intercept requests when mock mode is enabled
+// Request interceptor
+// - Attach Authorization header from localStorage
+// - Wire up mock adapter when mock mode is enabled
 api.interceptors.request.use(
   (config) => {
     const path = getPathFromConfig(config.url, config.baseURL);
@@ -156,6 +175,9 @@ api.interceptors.request.use(
 );
 
 // Response interceptor – handle 401 globally and mock mode
+// Response interceptor
+// - On 401 (except during login/register requests) clear auth and
+//   redirect the browser to the login page.
 api.interceptors.response.use(
   (response) => response,
   (error) => {

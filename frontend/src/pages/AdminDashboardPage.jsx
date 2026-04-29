@@ -8,6 +8,13 @@ import { isMockModeEnabled, subscribeToMockOrderUpdates } from '../services/mock
 const STATUS_OPTIONS = ['pending', 'in_progress', 'packed', 'out_for_delivery', 'delivered'];
 const emptyForm = { name: '', description: '', price: '', quantity: '', image_url: '', category_id: '' };
 
+/**
+ * AdminDashboardPage
+ *
+ * Single-page admin console for managing orders and inventory. Loads
+ * products, categories and admin orders in parallel on mount and
+ * exposes controls for filtering, editing and status updates.
+ */
 export default function AdminDashboardPage() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('orders');
@@ -39,6 +46,7 @@ export default function AdminDashboardPage() {
   const load = async () => {
     setLoading(true);
     try {
+      // Fetch initial data in parallel for a faster initial render.
       const [p, o, c] = await Promise.all([getProducts(), getAdminOrders(), getCategories()]);
       setProducts(p.data || []);
       setOrders(o.orders || []);
@@ -53,6 +61,8 @@ export default function AdminDashboardPage() {
   }, []);
 
   useEffect(() => {
+    // When mock mode is enabled, subscribe to fake order events so
+    // the dashboard can refresh in response to simulated updates.
     if (!isMockModeEnabled()) return undefined;
     return subscribeToMockOrderUpdates(() => load());
   }, []);

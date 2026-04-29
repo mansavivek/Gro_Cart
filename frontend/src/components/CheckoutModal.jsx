@@ -4,6 +4,19 @@ import { placeOrder } from '../services/orderService';
 import { fetchAddresses } from '../services/addressService';
 import { addPaymentMethod, fetchPaymentMethods } from '../services/paymentMethodService';
 
+/**
+ * Checkout modal component
+ *
+ * Props:
+ * - `open` boolean: whether the modal is visible
+ * - `onClose` function: called to close the modal
+ * - `cart` object: current cart containing items and total_price
+ * - `fetchCart` function: reloads cart data after placing an order
+ * - `user` object: current authenticated user (used to gate loading)
+ *
+ * Handles selecting delivery address, payment method, adding a new card,
+ * and placing orders using the backend services.
+ */
 export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) {
   const navigate = useNavigate();
   const [addresses, setAddresses] = useState([]);
@@ -21,6 +34,12 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
   const [error, setError] = useState('');
   const [orderPlaced, setOrderPlaced] = useState(false);
 
+  /**
+   * formatAddress
+   *
+   * Convert an address object into a single-line human readable string.
+   * Filters out falsy values to avoid extra commas and empty segments.
+   */
   const formatAddress = (address) => {
     return [
       address.address_line1,
@@ -33,6 +52,13 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
       .join(', ');
   };
 
+  /**
+   * loadCheckoutData
+   *
+   * Fetches addresses and payment methods in parallel, normalizes
+   * the responses and sets local component state. Also picks default
+   * selections when available.
+   */
   const loadCheckoutData = async () => {
     const [{ data: addressData }, { data: paymentData }] = await Promise.all([
       fetchAddresses(),
@@ -50,6 +76,8 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
     setSelectedCardId(selectedPayment?.id || null);
   };
 
+  // When the modal is opened (and user exists) we load addresses and cards,
+  // reset any transient form state, and clear errors/flags.
   useEffect(() => {
     if (!open || !user) return;
 
@@ -76,10 +104,22 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
 
   if (!open) return null;
 
+  /**
+   * handleCardSelect
+   *
+   * Set the selected payment card id when a radio input is chosen.
+   */
   const handleCardSelect = (id) => {
     setSelectedCardId(id);
   };
 
+  /**
+   * handleAddPaymentMethod
+   *
+   * Validate the local payment form and call the service to persist
+   * the new payment method. On success reloads the payment methods
+   * and clears the form UI.
+   */
   const handleAddPaymentMethod = async () => {
     if (!paymentForm.holderName.trim() || !paymentForm.brand.trim() || !paymentForm.expiry.trim() || !paymentForm.number.trim()) {
       setError('Please complete the payment method form before saving.');
@@ -102,6 +142,13 @@ export default function CheckoutModal({ open, onClose, cart, fetchCart, user }) 
     }
   };
 
+  /**
+   * handlePlaceOrder
+   *
+   * Validate selected address and payment method, then call the
+   * `placeOrder` service. On success, refresh the cart and show a
+   * success state before redirecting to order history.
+   */
   const handlePlaceOrder = async () => {
     if (!selectedAddress) {
       setError('Please choose a delivery address.');

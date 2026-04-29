@@ -1,3 +1,10 @@
+/**
+ * Button
+ *
+ * Reusable button component that supports visual `variant` and size
+ * presets. Accepts all standard button props and forwards them to the
+ * underlying `<button>` element.
+ */
 export default function Button({ children, variant = 'primary', size = 'md', disabled, className = '', ...props }) {
   const base = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
 

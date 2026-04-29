@@ -1,5 +1,7 @@
 import api from './api';
 
+// Thin wrappers around auth-related endpoints. Kept small so callers
+// can `await` the axios promise and inspect `response.data` as needed.
 export const register = (data) => api.post('/auth/register', data);
 export const login = (data) => api.post('/auth/login', data);
 export const getMe = () => api.get('/auth/me');

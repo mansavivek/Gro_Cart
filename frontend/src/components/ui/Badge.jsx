@@ -1,3 +1,9 @@
+/**
+ * Badge
+ *
+ * Small visual label used to surface statuses or categories. The
+ * `color` prop selects a preset color style.
+ */
 export default function Badge({ children, color = 'gray' }) {
   const colors = {
     gray: 'bg-gray-100 text-gray-700',
@@ -14,6 +20,7 @@ export default function Badge({ children, color = 'gray' }) {
 }
 
 export function orderStatusBadge(status) {
+  // Map backend order status strings to badge color keywords used above.
   const map = {
     pending: 'yellow',
     in_progress: 'blue',

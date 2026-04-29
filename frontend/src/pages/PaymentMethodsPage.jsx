@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import { addPaymentMethod, fetchPaymentMethods } from '../services/paymentMethodService';
 
+// Local form shape used for adding/editing card details in the UI.
 const EMPTY_CARD = {
   holderName: '',
   brand: '',
@@ -10,6 +11,7 @@ const EMPTY_CARD = {
   expiry: '',
 };
 
+// Convert the local form representation into the API payload shape.
 function toMaskedCard(form) {
   return {
     card_holder_name: form.holderName,
@@ -19,6 +21,13 @@ function toMaskedCard(form) {
   };
 }
 
+/**
+ * PaymentMethodsPage
+ *
+ * Lets the user manage saved payment cards. Supports adding a new
+ * card, selecting a default card, and a simple edit flow. Backend
+ * delete support is not implemented yet (shows a friendly message).
+ */
 export default function PaymentMethodsPage() {
   const navigate = useNavigate();
   const location = useLocation();

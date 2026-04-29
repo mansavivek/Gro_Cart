@@ -21,6 +21,13 @@ const EMPTY_FORM = {
   phone: '',
 };
 
+/**
+ * AddressesPage
+ *
+ * Manage delivery addresses: list, add, edit, delete and set default.
+ * The page coordinates with `CheckoutModal` through `location.state`
+ * to optionally re-open checkout after selecting an address.
+ */
 export default function AddressesPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -51,6 +58,7 @@ export default function AddressesPage() {
     }
   };
 
+  // Helper to format address fields into a single readable line.
   const formatAddress = (address) => {
     return [
       address.address_line1,

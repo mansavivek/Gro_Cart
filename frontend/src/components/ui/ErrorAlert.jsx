@@ -1,3 +1,9 @@
+/**
+ * ErrorAlert
+ *
+ * Small alert box used to show errors. If `message` is falsy the
+ * component renders null to keep markup minimal.
+ */
 export default function ErrorAlert({ title, message, className = '' }) {
   if (!message) return null;
 

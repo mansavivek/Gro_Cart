@@ -1,3 +1,9 @@
+/**
+ * Input
+ *
+ * Simple styled input wrapper that optionally renders a label and inline
+ * error message. Forwards all other props to the input element.
+ */
 export default function Input({ label, error, className = '', ...props }) {
   return (
     <div className="w-full">

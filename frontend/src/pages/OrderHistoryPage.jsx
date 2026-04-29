@@ -3,6 +3,9 @@ import MainLayout from '../layouts/MainLayout';
 import Spinner from '../components/ui/Spinner';
 import { useOrders } from '../hooks/useOrders';
 
+// Map internal order status values to badge CSS classes used across
+// the UI. Keeping this mapping local makes it easy to tune visuals
+// without touching order logic elsewhere.
 function getStatusClass(status) {
   const normalizedStatus = String(status || '').toLowerCase();
   const map = {
@@ -16,6 +19,12 @@ function getStatusClass(status) {
   return map[normalizedStatus] || 'bg-surface-container-high text-on-surface-variant';
 }
 
+/**
+ * OrderHistoryPage
+ *
+ * Shows the user's past orders with filtering and sorting controls.
+ * Uses `useOrders` which handles fetching and caching of orders.
+ */
 export default function OrderHistoryPage() {
   const { orders, loading } = useOrders();
   const [statusFilter, setStatusFilter] = useState('all');

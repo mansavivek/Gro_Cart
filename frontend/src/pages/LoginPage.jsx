@@ -3,6 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import grocartLogo from '../assets/grocart-logo1.png'; 
 
+/**
+ * LoginPage
+ *
+ * Authentication entry point for users. Binds form inputs to local
+ * state and uses `useAuth()` to call the login flow. Shows friendlier
+ * error messages via `getFriendlyLoginError`.
+ */
 export default function LoginPage() {
   const { login, loading, loginError, clearLoginError } = useAuth();
   const navigate = useNavigate();

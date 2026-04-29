@@ -6,6 +6,12 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import CheckoutModal from '../components/CheckoutModal';
 
+/**
+ * CartPage
+ *
+ * Renders the shopping cart, item list and order summary. Provides
+ * controls to update quantities and open the `CheckoutModal`.
+ */
 export default function CartPage() {
   const { cart, loading, updateItem, removeItem, emptyCart, fetchCart } = useCart();
   const { user } = useAuth();

@@ -7,6 +7,13 @@ import { getProduct } from '../services/productService';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 
+/**
+ * ProductDetailsPage
+ *
+ * Loads a single product by id, allows selecting images, adjusting
+ * quantity and adding/updating the cart. Reflects cart state via
+ * `useCart` so UI stays in sync with server state.
+ */
 export default function ProductDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -21,6 +28,8 @@ export default function ProductDetailsPage() {
     backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
   };
 
+  // Load product details when `id` changes and set an initial
+  // selected image for the gallery preview.
   useEffect(() => {
     getProduct(id)
       .then(({ data }) => {
@@ -30,6 +39,8 @@ export default function ProductDetailsPage() {
       .finally(() => setLoading(false));
   }, [id]);
 
+  // Synchronize the local quantity selector with cart state when the
+  // cart item changes (e.g. if updated elsewhere in the app).
   useEffect(() => {
     if (cartItem) {
       setQty(cartItem.quantity);

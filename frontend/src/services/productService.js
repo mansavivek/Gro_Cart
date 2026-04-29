@@ -2,11 +2,15 @@ import api from './api';
 
 let categoryIdByName = new Map();
 
+// toNumberOrFallback
+// Safely convert values to numbers with a fallback for malformed data.
 function toNumberOrFallback(value, fallback = 0) {
 	const n = Number(value);
 	return Number.isFinite(n) ? n : fallback;
 }
 
+// normalizeImageUrls
+// Normalizes various shapes where images may be provided by the backend.
 function normalizeImageUrls(raw) {
 	if (Array.isArray(raw?.image_urls)) return raw.image_urls.filter(Boolean);
 	if (Array.isArray(raw?.images)) return raw.images.filter(Boolean);
@@ -23,6 +27,8 @@ function normalizeImageUrls(raw) {
 	return raw?.image_url ? [raw.image_url] : [];
 }
 
+// normalizeCategoryName
+// Extracts category information from multiple possible backend fields.
 function normalizeCategoryName(raw) {
 	if (raw?.category?.name) return raw.category.name;
 	if (raw?.category_name) return raw.category_name;
@@ -30,6 +36,9 @@ function normalizeCategoryName(raw) {
 	return null;
 }
 
+// normalizeStock
+// Produces a consistent `in_stock`, `quantity` and `availability`
+// for components to rely on regardless of backend shape.
 function normalizeStock(raw) {
 	if (typeof raw?.in_stock === 'boolean') {
 		const qty = raw?.quantity == null ? (raw.in_stock ? 25 : 0) : toNumberOrFallback(raw.quantity, raw.in_stock ? 25 : 0);
@@ -52,6 +61,9 @@ function normalizeStock(raw) {
 	};
 }
 
+// normalizeProduct
+// Convert a potentially inconsistent backend product object into a
+// stable shape used by components across the app.
 function normalizeProduct(raw = {}) {
 	const categoryName = normalizeCategoryName(raw);
 	const categoryId = raw.category_id ?? (categoryName ? categoryIdByName.get(categoryName) ?? null : null);
@@ -105,7 +117,7 @@ export const getCategories = async () => {
 	return { ...response, data: normalized };
 };
 
-// Admin
+// Admin helpers
 export const createProduct = (data) => api.post('/admin/products', data);
 export const updateProduct = (id, data) => api.put(`/admin/products/${id}`, data);
 export const deleteProduct = (id) => api.delete(`/admin/products/${id}`);

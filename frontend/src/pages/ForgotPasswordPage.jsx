@@ -7,6 +7,8 @@ import {
   resetPassword,
 } from '../services/authService';
 
+// Mask an email for display when indicating where the OTP was sent.
+// Keeps only the first character of the local part visible for privacy.
 function maskEmail(email) {
   const [name, domain] = email.split('@');
   if (!name || !domain) return '';
@@ -14,10 +16,13 @@ function maskEmail(email) {
   return `Code sent to ${visible}${'*'.repeat(Math.max(1, name.length - 1))}@${domain}`;
 }
 
+// Simple client-side password strength check used to guide users
+// before submitting a new password. Server performs full validation.
 function isStrongPassword(value) {
   return value.length >= 8 && /[A-Za-z]/.test(value) && /\d/.test(value);
 }
 
+// Try to extract a helpful error message from axios API errors.
 function extractApiError(err, fallbackMessage) {
   return (
     err?.response?.data?.detail ||
@@ -27,6 +32,8 @@ function extractApiError(err, fallbackMessage) {
   );
 }
 
+// Assert that an API response indicates success; throw otherwise so
+// calling code can display standardized errors via `extractApiError`.
 function assertApiSuccess(response, fallbackMessage) {
   const payload = response?.data ?? response;
   if (payload?.error) {
@@ -35,6 +42,13 @@ function assertApiSuccess(response, fallbackMessage) {
   return payload;
 }
 
+/**
+ * ForgotPasswordPage
+ *
+ * Multi-step flow for password resets: request OTP, verify OTP and set
+ * a new password. Keeps the flow client-driven and uses small helpers
+ * to interact with `authService`.
+ */
 export default function ForgotPasswordPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState('forgot');

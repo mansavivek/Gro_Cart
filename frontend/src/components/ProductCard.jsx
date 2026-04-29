@@ -2,12 +2,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 
+/**
+ * ProductCard
+ *
+ * Displays a single product, its image, price and controls to
+ * add/update/remove the product in the user's cart.
+ *
+ * All cart mutations come from `useCart()` so the component only
+ * handles UI interactions and delegates persistence to the context.
+ */
 export default function ProductCard({ product }) {
   const { cart, addItem, updateItem, removeItem } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
   const cartItem = cart.items.find((item) => item.product_id === product.id);
 
+  // Attempt to add the product to cart. If not authenticated, redirect to login.
   const handleAddToCart = async () => {
     if (!user) {
       navigate('/login');
@@ -20,6 +30,7 @@ export default function ProductCard({ product }) {
     }
   };
 
+  // Increase quantity for an existing cart item, or add it if missing.
   const handleIncrease = async () => {
     if (!cartItem) {
       await handleAddToCart();
@@ -28,6 +39,7 @@ export default function ProductCard({ product }) {
     await updateItem(cartItem.id, cartItem.quantity + 1);
   };
 
+  // Decrease quantity, removing the item if it reaches zero.
   const handleDecrease = async () => {
     if (!cartItem) return;
     if (cartItem.quantity <= 1) {

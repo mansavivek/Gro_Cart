@@ -1,7 +1,11 @@
 import api from './api';
 
+// placeOrder
+// Submit a new order to the backend.
 export const placeOrder = (data) => api.post('/orders/place', data);
 
+// joinAddressParts
+// Utility to safely join address parts into a readable string.
 function joinAddressParts(parts) {
 	return parts
 		.map((part) => String(part || '').trim())
@@ -9,6 +13,9 @@ function joinAddressParts(parts) {
 		.join(', ');
 }
 
+// buildDeliveryAddress
+// Construct a delivery address string from various possible fields
+// present on an order/address object.
 function buildDeliveryAddress(order = {}) {
 	if (order.delivery_address) return order.delivery_address;
 
@@ -20,6 +27,9 @@ function buildDeliveryAddress(order = {}) {
 	return joinAddressParts([recipient, street, locality, phone]);
 }
 
+// normalizeOrderHistoryOrder
+// Ensures stable fields for order history including `total_amount` and
+// a formatted `delivery_address` for display.
 function normalizeOrderHistoryOrder(rawOrder = {}) {
 	const total = Number(rawOrder.total_amount ?? rawOrder.total_price ?? 0);
 	return {
@@ -40,12 +50,17 @@ export const getOrderHistory = async () => {
 
 const ACTIVE_ADMIN_STATUSES = new Set(['placed', 'pending', 'in_progress', 'packed', 'out_for_delivery']);
 
+// normalizeOrderStatus
+// Canonicalize status strings to a smaller set used by the admin UI.
 function normalizeOrderStatus(status) {
 	const normalized = String(status || 'pending').toLowerCase();
 	if (normalized === 'processing') return 'in_progress';
 	return normalized;
 }
 
+// normalizeAdminOrder
+// Normalize the admin-facing order shape, providing defaults for
+// missing fields and ensuring counts and totals are numbers.
 function normalizeAdminOrder(rawOrder = {}) {
 	const total = Number(rawOrder.total_amount ?? rawOrder.total_price ?? 0);
 	const items = Array.isArray(rawOrder.items) ? rawOrder.items : [];

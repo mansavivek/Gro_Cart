@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import { getProducts, getCategories } from '../services/productService';
 
+/**
+ * useProducts
+ *
+ * Loads products optionally filtered by `categoryId`. Returns
+ * `products`, `loading` and `error`.
+ */
 export function useProducts(categoryId) {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +24,11 @@ export function useProducts(categoryId) {
   return { products, loading, error };
 }
 
+/**
+ * useCategories
+ *
+ * Loads product categories used for filtering and navigation.
+ */
 export function useCategories() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);

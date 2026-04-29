@@ -17,6 +17,13 @@ function getCategoryIcon(categoryName = '') {
   return 'shopping_basket';
 }
 
+/**
+ * HomePage
+ *
+ * Displays categories and product grid. Supports searching and
+ * category filtering. Uses `useProducts` and `useCategories` hooks to
+ * fetch data and shows loading states via `Spinner`.
+ */
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -26,7 +33,9 @@ export default function HomePage() {
     backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuDeX4zOPo9TX3mkIqXejygJX8y9j01whBwv0ZKx080l-wfAJttySxhoIoNkAKEQS7lYt9gZkH3fcWUc-OTSSyc5WSWss1pXtjWpBi22Lkf5_syDMf1g_-Dm3sIoZ-hgsVs3_K32J6NUT11S3_WoqLe3O5ahFXC65EgH2rwf8mZNnqgDHB4lc7G0JKAYMdOw7M_F36tHRTDgGygRlz6ZWhC1gOlaiLstaG3z05Dxt3JlKDWNzagnylvAcIdG16Cp0TnbaR6j-P8UXKE)",
   };
 
-  // Filter products by search query
+  // Filter products by search query (case-insensitive). This is a
+  // lightweight client-side filter for UX; server-side filtering is
+  // still possible via the `useProducts` hook when category changes.
   const filteredProducts = products.filter(
     (p) =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

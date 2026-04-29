@@ -4,8 +4,17 @@ import { useAuth } from '../context/AuthContext';
 import grocartLogo from '../assets/grocart-logo1.png';
 import ErrorAlert from '../components/ui/ErrorAlert';
 
+// Enforce a conservative password rule used locally for registration
+// validation. This mirrors server-side constraints where possible.
 const PASSWORD_RULE = /^[A-Za-z0-9]{8,13}$/;
 
+/**
+ * RegisterPage
+ *
+ * Collects user details and performs client-side validation before
+ * delegating to `useAuth().register`. Shows success and error
+ * messages using small toasts and `ErrorAlert`.
+ */
 export default function RegisterPage() {
   const { register, loading, registerError, clearRegisterError } = useAuth();
   const navigate = useNavigate();

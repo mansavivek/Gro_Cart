@@ -2,6 +2,13 @@ import { useState, useEffect } from 'react';
 import { getOrderHistory } from '../services/orderService';
 import { isMockModeEnabled, subscribeToMockOrderUpdates } from '../services/mockData';
 
+/**
+ * useOrders
+ *
+ * Custom hook to load order history. Returns `orders`, `loading` and
+ * `error`. When mock mode is enabled it subscribes to simulated order
+ * updates and refreshes orders without showing the loading indicator.
+ */
 export function useOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);

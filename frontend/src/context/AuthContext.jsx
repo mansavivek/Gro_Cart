@@ -3,6 +3,9 @@ import { login as loginApi, register as registerApi } from '../services/authServ
 
 const AuthContext = createContext(null);
 
+// normalizeUser
+// Ensures the shape of the user object includes a boolean `is_admin` flag
+// (some backends return `role` while others supply `is_admin`).
 function normalizeUser(user) {
   if (!user) return null;
   const isAdmin = Boolean(user.is_admin) || user.role === 'admin';
@@ -13,6 +16,7 @@ function normalizeUser(user) {
 }
 
 export function AuthProvider({ children }) {
+  // Initialize `user` from localStorage when present.
   const [user, setUser] = useState(() => {
     try {
       const stored = localStorage.getItem('user');
@@ -25,6 +29,9 @@ export function AuthProvider({ children }) {
   const [loginError, setLoginError] = useState(null);
   const [registerError, setRegisterError] = useState(null);
 
+  // login
+  // Calls the `loginApi`, persists token/user to localStorage and
+  // returns the normalized user object.
   const login = async (email, password) => {
     setLoading(true);
     setLoginError(null);
@@ -50,6 +57,9 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // register
+  // Wrapper around the registration API that surfaces server-side
+  // validation messages via `registerError` state.
   const register = async (userData) => {
     setLoading(true);
     setRegisterError(null);
@@ -74,6 +84,8 @@ export function AuthProvider({ children }) {
     }
   };
 
+  // logout
+  // Clear persisted auth info and reset local error state.
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');

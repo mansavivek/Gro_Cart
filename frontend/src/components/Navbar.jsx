@@ -4,6 +4,17 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 import grocartLogo from '../assets/grocart-logo.png';
 
+/**
+ * Navbar component
+ *
+ * Props:
+ * - `showSearch` boolean: show the search input when true
+ * - `searchQuery` string: controlled value for the search input
+ * - `onSearchChange` function: callback invoked when search text changes
+ *
+ * Responsible for rendering top navigation links, cart badge and
+ * an account menu. It also handles outside clicks to close the menu.
+ */
 export default function Navbar({ showSearch = false, searchQuery = '', onSearchChange }) {
   const { user, logout } = useAuth();
   const { cart } = useCart();
@@ -16,12 +27,14 @@ export default function Navbar({ showSearch = false, searchQuery = '', onSearchC
   const adminActive = pathname.startsWith('/admin');
   const storeActive = pathname === '/';
 
+  // Close menu, perform logout and redirect to login page.
   const handleLogout = () => {
     setMenuOpen(false);
     logout();
     navigate('/login');
   };
 
+  // Close the account menu when clicking outside of it.
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
