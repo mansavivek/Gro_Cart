@@ -20,8 +20,8 @@ A full-stack online grocery delivery system built with **React + Vite** (fronten
 | Layer    | Technology                               |
 |----------|------------------------------------------|
 | Frontend | React 19, Vite, Tailwind CSS, React Router, Axios |
-| Backend  | Python 3.11+, FastAPI, SQLAlchemy ORM, JWT |
-| Database | SQLite |
+| Backend  | Python 3.11+, Flask, SQLAlchemy ORM, JWT |
+| Database | MySQL |
 | Auth     | JWT (python-jose)               |
 
 ---
