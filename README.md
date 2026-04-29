@@ -1,4 +1,4 @@
-# 🛒 Gro-Cart – Online Grocery Delivery System
+# 🛒 Gro-Cart – Your Grocery Buddy
 
 A full-stack online grocery delivery system built with **React + Vite** (frontend) and **Python FastAPI** (backend).
 
