@@ -10,7 +10,6 @@ A full-stack online grocery delivery system built with **React + Vite** (fronten
 - [Project Structure](#project-structure)
 - [API Endpoints](#api-endpoints)
 - [Setup & Running](#setup--running)
-- [Testing](#testing)
 - [Environment Variables](#environment-variables)
 
 ---
@@ -201,24 +200,6 @@ npm run dev
 ```
 
 Frontend runs on: **http://localhost:5173**
-
----
-
-## Testing
-
-### Backend tests (pytest)
-
-```bash
-cd backend
-pytest tests/ -v
-```
-
-### Frontend tests (Vitest)
-
-```bash
-cd frontend
-npm test
-```
 
 ---
 
